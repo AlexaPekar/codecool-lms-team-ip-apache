@@ -15,8 +15,8 @@
     <div class="form-div">
         <form name="login" action="login" method="POST">
             <div class="input-div">
-                <h2>Logging in</h2>Name:<br>
-                <input type="text" name="name"><br> Password:<br>
+                <h2>Logging in</h2>E-mail:<br>
+                <input type="email" name="email"><br> Password:<br>
                 <input type=password name="password"><br>
             </div>
             <div class="button-div">
