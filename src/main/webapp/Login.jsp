@@ -10,7 +10,7 @@
 
 <body>
     <header>
-        <h1>Welcome!</h1>
+        <h1>${message}</h1>
     </header>
     <div class="form-div">
         <form name="login" action="login" method="POST">
