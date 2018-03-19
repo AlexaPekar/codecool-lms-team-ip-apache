@@ -1,0 +1,72 @@
+html,
+body {
+    margin-top: 0;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 1)), url(img/hero.jpeg);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    font-family: "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
+    font-weight: 300;
+    font-size: 20px;
+    color: #fff;
+    text-rendering: optimizeLegibility;
+}
+
+.form-div {
+    margin-top: 120px;
+}
+
+header {
+    font-size: 20px;
+    font-family: sans-serif;
+    font-weight: bold;
+    text-align: center;
+}
+
+.login {
+    margin-left: 20px;
+    width: 300px;
+    height: 500px;
+    text-align: center;
+}
+
+.input-div {
+    text-align: center;
+    color: black;
+    padding-bottom: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 30px;
+    border: 2px;
+    border-style: ridge;
+    border-color: black;
+    width: 300px;
+    background-color: white;
+}
+
+.btn {
+    color: #fff;
+    margin-top: 8px;
+    padding: 5px 15px;
+    font-weight: 500;
+    border-radius: 100px;
+    border: 2px;
+    border-style: ridge;
+    background-color: transparent;
+    border-color: #fff;
+    transition: background-color 0.5s;
+    transition: color 0.5s;
+}
+
+.btn:active,
+.btn:hover {
+    color: red;
+    background-color: black;
+    transition: background-color 0.5s;
+    transition: color 0.5s;
+    cursor: pointer;
+}
+
+.button-div {
+    text-align: center;
+}
