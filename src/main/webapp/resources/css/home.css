@@ -2,25 +2,51 @@
 #head {
     margin: 0;
     padding: 0;
-    height: 50px;
+    height: 45px;
     weight: 100px;
     background-color: #293d3d;
     text-align: center;
     color: white;
 }
 
+a.ex1:hover, a.ex1:active {color: #c2d6d6;}
+
 .center {
     margin: auto;
     width: 100%;
     border-style: solid dashed dotted solid;
-    border-top:    2px solid  #0B4C5F;
-    border-right:  2px solid #0B4C5F;
-    border-bottom: 2px solid #0B4C5F;
-    border-left:   2px solid  #0B4C5F;
+    border-top:    2px solid  #669999;
+    border-right:  2px solid #669999;
+    border-bottom: 2px solid #669999;
+    border-left:   2px solid  #669999;
     background-color: #F2F2F2;
 
     text-align: center;
     word-wrap: break-word;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.column {
+    float: left;
+    padding: 10px;
+    height: 600px; /* could be auto */
+}
+
+.left, .right {
+  width: 20%;
+}
+
+.middle {
+  width: 60%;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
 }
 
 div.container {
@@ -33,37 +59,28 @@ header, footer {
     clear: left;
     text-align: center;
 }
-
-nav {
-    float: left;
-    max-width: 160px;
-    margin: 0;
-}
-
-nav ul {
+ul {
     list-style-type: none;
+    margin: 0;
     padding: 0;
+    width: 270px;
+    background-color: #f1f1f1;
 }
 
-.vertical-menu {
-    width: 170px;
-    margin: auto;
-}
-
-.vertical-menu a {
-    background-color: #eee;
-    color: black;
+li a {
     display: block;
-    padding: 12px;
+    color: #000;
+    padding: 8px 16px;
     text-decoration: none;
 }
 
-.vertical-menu a:hover {
-    background-color: #ccc;
+li a.active {
+    background-color: #293d3d;
+    color: white;
 }
 
-.vertical-menu a.active {
-    background-color: #0B4C5F;
+li a:hover:not(.active) {
+    background-color: #555;
     color: white;
 }
 
