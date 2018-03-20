@@ -16,8 +16,8 @@ public class UserServiceImpl implements UserService {
     private List<User> users = new ArrayList<>();
     private User currentUser;
 
-
-    private UserServiceImpl() {}
+    //Visible for testing
+    UserServiceImpl() {}
 
     public static UserServiceImpl getUserService() {
         return userService;
