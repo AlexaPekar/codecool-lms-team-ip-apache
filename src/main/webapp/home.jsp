@@ -21,9 +21,14 @@
         <nav>
             <div class="vertical-menu">
                 <ul>
-                    <li><a href="#"><img src="resources/icons/titleIcon.png" width="50" height="50"></a></li>
+
+                    <li><a href=""><img src="resources/icons/titleIcon.png" width="50" height="50"></a></li>
                     <li><a href="#"><img src="resources/icons/documentIcon.png" width="50" height="50"></a></li>
-                    <li><a href="#"><img src="resources/icons/peoplesIcon.png" width="50" height="50"></a></li>
+                    <li>
+                        <form action="users" method="GET">
+                            <input type="image" src="resources/icons/peoplesIcon.png" width="50" height="50" alt="Users"/>
+                        </form>
+                    </li>
                 </ul>
             </div>
         </nav>
