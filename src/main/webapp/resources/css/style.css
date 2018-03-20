@@ -73,4 +73,8 @@ body {
 .student-el{
     margin-left: 8px;
 }
+.redirect{
+    vertical-align: middle;
+    text-align: center;
+    }
 
