@@ -19,7 +19,7 @@ function validateRegisterForm() {
         document.getElementById("password-again").value = "";
         return false;
     }
-    if (password.length < 9) {
+    if (password.length < 8) {
         document.getElementById("message-field").innerText = "Password must be longer than 8 character!";
         return false;
     }
