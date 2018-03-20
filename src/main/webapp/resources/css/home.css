@@ -4,20 +4,20 @@
     padding: 0;
     height: 45px;
     weight: 100px;
-    background-color: #293d3d;
+    background-color: #d30000;
     text-align: center;
     font-size: 2.35em;
     color: white;
 }
 
-a.ex1:hover, a.ex1:active {color: #c2d6d6;}
+a.ex1:hover, a.ex1:active {color: white;}
 
 nav a {
 	outline: none;
 	color: #fff;
-	text-decoration: none;
+	text-decoration: red;
 	letter-spacing: 1px;
-	text-shadow: 0 0 1px rgba(255,255,255,0.3);
+	text-shadow: 0 0 7px black;
 }
 
 nav a:hover,
@@ -63,11 +63,7 @@ nav a:focus {
 .center {
     margin: auto;
     width: 100%;
-    border-style: solid dashed dotted solid;
-    border-top:    2px solid  #669999;
-    border-right:  2px solid #669999;
-    border-bottom: 2px solid #669999;
-    border-left:   2px solid  #669999;
+    border:2px solid  darkred;
     background-color: #F2F2F2;
 
     text-align: center;
@@ -81,15 +77,18 @@ nav a:focus {
 .column {
     float: left;
     padding: 10px;
-    height: 600px; /* could be auto */
+    height: 650px; /* could be auto */
 }
 
-.left, .right {
-  width: 20%;
+.left {
+    width: 7%;
 }
+
+.right {
+    width: 7%;}
 
 .middle {
-  width: 60%;
+    width: 86%;
 }
 
 .row:after {
@@ -110,9 +109,9 @@ header, footer {
 }
 ul {
     list-style-type: none;
-    margin: 0;
+    margin: auto;
     padding: 0;
-    width: 270px;
+    width: 80px;
     background-color: #f1f1f1;
 }
 
@@ -124,7 +123,7 @@ li a {
 }
 
 li a.active {
-    background-color: #293d3d;
+    background-color: #5c0000;
     color: white;
 }
 
