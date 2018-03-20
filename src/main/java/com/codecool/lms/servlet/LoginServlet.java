@@ -2,15 +2,17 @@ package com.codecool.lms.servlet;
 
 import com.codecool.lms.exception.UserNotFoundException;
 import com.codecool.lms.exception.WrongPasswordException;
+import com.codecool.lms.model.Page;
+import com.codecool.lms.service.PageServiceImpl;
 import com.codecool.lms.service.UserServiceImpl;
-
-import javax.servlet.http.HttpServlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 
 @WebServlet("/login")
@@ -28,7 +30,9 @@ public class LoginServlet extends HttpServlet {
         if (userServiceImpl.containsUser(email)) {
             try {
                 userServiceImpl.setCurrentUser(userServiceImpl.findUserByEmail(email, password));
-                req.getRequestDispatcher("home.jsp").forward(req, resp);
+                List<Page> pages = PageServiceImpl.getPageService().getPages();
+                req.setAttribute("pages", pages);
+                req.getRequestDispatcher("loginForward.jsp").forward(req, resp);
 
             } catch (UserNotFoundException e) {
                 req.setAttribute("message", "No user found with the given email.");
