@@ -1,7 +1,10 @@
 package com.codecool.lms.service;
 
+import com.codecool.lms.exception.UserAlreadyRegisteredException;
 import com.codecool.lms.exception.UserNotFoundException;
 import com.codecool.lms.exception.WrongPasswordException;
+import com.codecool.lms.model.Mentor;
+import com.codecool.lms.model.Student;
 import com.codecool.lms.model.User;
 
 import java.util.ArrayList;
@@ -37,8 +40,12 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
-    public void register(User user) {
-        users.add(user);
+    public void register(User user) throws UserAlreadyRegisteredException {
+        if (!containsUser(user.getEmail())) {
+            users.add(user);
+        } else {
+            throw new UserAlreadyRegisteredException();
+        }
     }
 
     public void setCurrentUser(User user) {
@@ -55,5 +62,13 @@ public class UserServiceImpl implements UserService {
             }
         }
         throw new UserNotFoundException();
+    }
+
+    public User createUser(String email, String name, String password, String type) {
+        if (type.equals("Mentor")) {
+            return new Mentor(name, email, password);
+        } else {
+            return new Student(name, email, password);
+        }
     }
 }
