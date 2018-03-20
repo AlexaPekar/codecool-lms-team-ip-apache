@@ -9,7 +9,7 @@
 
 <header>
     <nav class="ij-effect-1">
-    <h1 id="head"><a class="ex1" href="home.html">Canvas 2.0</a></h1>
+    <h1 class="head"><a class="ex1" href="home.jsp">Canvas 2.0</a></h1>
     </nav>
 </header>
 
@@ -21,11 +21,9 @@
         <nav>
             <div class="vertical-menu">
                 <ul>
-                    <li><a href="#" class="active">Menu</a></li>
-                    <li><a href="#">Link1</a></li>
-                    <li><a href="#">Link2</a></li>
-                    <li><a href="#">Link3</a></li>
-                    <li><a href="#">Link4</a></li>
+                    <li><a href="#"><img src="resources/icons/titleIcon.png" width="50" height="50"></a></li>
+                    <li><a href="#"><img src="resources/icons/documentIcon.png" width="50" height="50"></a></li>
+                    <li><a href="#"><img src="resources/icons/peoplesIcon.png" width="50" height="50"></a></li>
                 </ul>
             </div>
         </nav>
@@ -60,11 +58,9 @@
 
 <footer>
     <nav class="ij-effect-1">
-        <h1 id="head"></h1>
+        <h1 class="head"><h2>2018</></h1>
     </nav>
 </footer>
-
-
 
 </body>
 </html>

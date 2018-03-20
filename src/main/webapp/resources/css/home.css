@@ -1,5 +1,5 @@
 
-#head {
+.head {
     margin: 0;
     padding: 0;
     height: 45px;
@@ -15,7 +15,7 @@ a.ex1:hover, a.ex1:active {color: white;}
 nav a {
 	outline: none;
 	color: #fff;
-	text-decoration: red;
+	text-decoration: black;
 	letter-spacing: 1px;
 	text-shadow: 0 0 7px black;
 }
@@ -77,8 +77,12 @@ nav a:focus {
 .column {
     float: left;
     padding: 10px;
-    height: 650px; /* could be auto */
+    height: 100vh; /* could be auto */
 }
+
+.vertical-menu {
+    height: wrap;
+    }
 
 .left {
     width: 7%;
@@ -105,6 +109,8 @@ div.container {
 header, footer {
     color: white;
     clear: left;
+
+    height: auto;
     text-align: center;
 }
 ul {
@@ -112,7 +118,7 @@ ul {
     margin: auto;
     padding: 0;
     width: 80px;
-    background-color: #f1f1f1;
+    background-color: white;
 }
 
 li a {
