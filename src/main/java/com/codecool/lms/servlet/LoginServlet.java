@@ -32,7 +32,7 @@ public class LoginServlet extends HttpServlet {
                 userServiceImpl.setCurrentUser(userServiceImpl.findUserByEmail(email, password));
                 List<Page> pages = PageServiceImpl.getPageService().getPages();
                 req.setAttribute("pages", pages);
-                req.getRequestDispatcher("loginForward.jsp").forward(req, resp);
+                req.getRequestDispatcher("home.jsp").forward(req, resp);
 
             } catch (UserNotFoundException e) {
                 req.setAttribute("message", "No user found with the given email.");
