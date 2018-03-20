@@ -2,7 +2,7 @@ package com.codecool.lms.servlet;
 
 import com.codecool.lms.exception.UserNotFoundException;
 import com.codecool.lms.exception.WrongPasswordException;
-import com.codecool.lms.service.UserService;
+import com.codecool.lms.service.UserServiceImpl;
 
 import javax.servlet.http.HttpServlet;
 
@@ -16,7 +16,7 @@ import java.io.IOException;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
-    UserService userService = new UserService();
+    UserServiceImpl userServiceImpl = UserServiceImpl.getUserService();
 
 
     @Override
@@ -25,9 +25,9 @@ public class LoginServlet extends HttpServlet {
 
         String password = req.getParameter("password");
 
-        if (userService.containsUser(email)) {
+        if (userServiceImpl.containsUser(email)) {
             try {
-                userService.setCurrentUser(userService.findUserByEmail(email, password));
+                userServiceImpl.setCurrentUser(userServiceImpl.findUserByEmail(email, password));
                 req.getRequestDispatcher("home.html").forward(req, resp);
 
             } catch (UserNotFoundException e) {

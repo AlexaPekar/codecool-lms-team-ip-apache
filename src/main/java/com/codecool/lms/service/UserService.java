@@ -1,52 +1,19 @@
 package com.codecool.lms.service;
 
+import com.codecool.lms.exception.PageNotFoundException;
 import com.codecool.lms.exception.UserNotFoundException;
 import com.codecool.lms.exception.WrongPasswordException;
+import com.codecool.lms.model.Page;
 import com.codecool.lms.model.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class UserService {
+public interface UserService {
 
-    private List<User> users = new ArrayList<>();
-
-    private static User currentUser;
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public static User getCurrentUser() {
-        return currentUser;
-    }
-
-    public boolean containsUser(String email) {
-        for (User user : users) {
-            if (user.getEmail().equals(email)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void register(User user) {
-        users.add(user);
-    }
-
-    public void setCurrentUser(User user) {
-        currentUser = user;
-    }
-
-    public User findUserByEmail(String email, String password) throws UserNotFoundException, WrongPasswordException {
-        for (User user : users) {
-            if (user.getEmail().equals(email)) {
-                if (user.getPassword().equals(password)) {
-                    return user;
-                }
-                throw new WrongPasswordException();
-            }
-        }
-        throw new UserNotFoundException();
-    }
+    List<User> getUsers();
+    User getCurrentUser();
+    boolean containsUser(String email);
+    void register(User user);
+    void setCurrentUser(User user);
+    User findUserByEmail(String email, String password) throws UserNotFoundException, WrongPasswordException;
 }
