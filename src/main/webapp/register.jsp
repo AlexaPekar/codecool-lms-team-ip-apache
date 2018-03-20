@@ -5,7 +5,7 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="resources/css/style.css">
-    <script type="text/javascript" src="resources/js/login.js"></script>
+    <script type="text/javascript" src="resources/js/register.js"></script>
     <title>Register</title>
 </head>
 
@@ -14,7 +14,7 @@
         <h1 id="message-field">${message}</h1>
     </header>
     <div class="form-div">
-        <form id="myForm" name="register" action="register" onsubmit="return validateRegisterForm();"method="POST">
+        <form id="myForm" name="register" action="register" onsubmit="return validateRegisterForm();" method="Post">
             <div class="input-div">
                 <h2 id="h2">Registration</h2>Name:<br>
                 <input type="text" name="name" class="form-el" id="name"><br>E-mail:<br>
