@@ -21,9 +21,14 @@
         <nav>
             <div class="vertical-menu">
                 <ul>
-                    <li><a href="#"><img src="resources/icons/titleIcon.png" width="50" height="50"></a></li>
+
+                    <li><a href=""><img src="resources/icons/titleIcon.png" width="50" height="50"></a></li>
                     <li><a href="#"><img src="resources/icons/documentIcon.png" width="50" height="50"></a></li>
-                    <li><a href="#"><img src="resources/icons/peoplesIcon.png" width="50" height="50"></a></li>
+                    <li>
+                        <form action="users" method="GET">
+                            <input type="image" src="resources/icons/peoplesIcon.png" width="50" height="50" alt="Users"/>
+                        </form>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -31,13 +36,10 @@
 
     <div class="column middle" style="background-color:white;">
         <div class="center">
-            <table>
-                <c:forEach items="${pages}" var="item">
-                    <tr>
-                      <td><c:out value="${item.title}" /></td>
-                    </tr>
-                </c:forEach>
-            </table>
+            <h2>Text page</h2>
+            <b>this is a test.</b>
+            <p>test text content.</p>
+            <h5>Ip-Apache</h5>
         </div>
         <br>
         <div class="center">
