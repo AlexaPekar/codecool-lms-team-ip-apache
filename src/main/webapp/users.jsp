@@ -9,21 +9,28 @@
     <title>Users</title>
 </head>
 <body>
-<div>
 
-    <p>Users:</p>
+    <table class = "usersTable">
+        <tr>
+            <td>Name</td>
+            <td>E-mail address</td>
+            <td>Role</td>
+        </tr>
+        <c:forEach var="user" items="${users}">
+            <tr>
+                <td><c:out value="${user.name}" /></td>
+                <td><c:out value="${user.email}" /></td>
+                <td>
+                    <c:if test = "${user.getClass().name == 'com.codecool.lms.model.Student'}">
+                       Student
+                    </c:if>
+                    <c:if test = "${user.getClass().name == 'com.codecool.lms.model.Mentor'}">
+                        Mentor
+                    </c:if>
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
 
-    <c:forEach var="user" items="${users}">
-        <p><c:out value="${user.name}" /></p>
-        <p><c:out value="${user.email}" /></p>
-        <c:if test = "${user.getClass().name == 'com.codecool.lms.model.Student'}">
-           <p>Student<p>
-        </c:if>
-        <c:if test = "${user.getClass().name == 'com.codecool.lms.model.Mentor'}">
-            <p>Mentor<p>
-        </c:if>
-    </c:forEach>
-
-</div>
 </body>
 </html>
