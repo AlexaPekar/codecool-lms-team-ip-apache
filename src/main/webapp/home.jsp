@@ -1,3 +1,5 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,10 +38,13 @@
 
     <div class="column middle" style="background-color:white;">
         <div class="center">
-            <h2>Text page</h2>
-            <b>this is a test.</b>
-            <p>test text content.</p>
-            <h5>Ip-Apache</h5>
+            <table>
+              <c:forEach items="${pages}" var="page">
+                <tr>
+                  <td><c:out value="${page.title}" /></td>
+                </tr>
+              </c:forEach>
+            </table>
         </div>
         <br>
         <div class="center">
