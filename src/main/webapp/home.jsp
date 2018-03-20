@@ -31,10 +31,13 @@
 
     <div class="column middle" style="background-color:white;">
         <div class="center">
-            <h2>Text page</h2>
-            <b>this is a test.</b>
-            <p>test text content.</p>
-            <h5>Ip-Apache</h5>
+            <table>
+                <c:forEach items="${pages}" var="item">
+                    <tr>
+                      <td><c:out value="${item.title}" /></td>
+                    </tr>
+                </c:forEach>
+            </table>
         </div>
         <br>
         <div class="center">
