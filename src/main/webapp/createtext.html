@@ -3,16 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Create Text</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" type="text/css" href="resources/css/createtext.css">
 </head>
 <body>
-    <form method="post">
-        Title:<br>
-        <input type="text" class="title" value="title">
+    <div class="w3-container w3-red">
+        <h2>New post</h2>
+    </div>
+    <form method="post" class="w3-container">
+        <h3>Title</h3><br>
+        <input class="w3-input" type="text" class="title" value="title">
         <br>
-        Content:<br>
-        <textarea name="content" class="content" placeholder="content"></textarea>
+        <h3>Content</h3><br>
+        <textarea class="w3-input" name="content" class="content" placeholder="content"></textarea>
         <br><br>
-        <input type="submit" value="Submit">
+        <input class=button type="submit" value="Submit">
     </form>
 
 </body>
