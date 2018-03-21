@@ -1,10 +1,12 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="resources/css/home.css"/>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" type="text/css" href="resources/css/createtext.css">
+    <link rel="stylesheet" type="text/css" href="resources/css/create.css">
     <title>Create Assignment</title>
 </head>
 <body background="resources/css/img/red2.jpg">
@@ -63,7 +65,7 @@
                             <textarea class="textarea" name="content" class="content"></textarea>
                             <br>
                             <h3>Max Score</h3>
-                            <input name="maxScore" type="number" class="title"></input>
+                            <input name="maxScore" type="number" class="maxScore"></input>
                             <br>
                             <input class=button type="submit" value="Submit"></input>
                         </form>

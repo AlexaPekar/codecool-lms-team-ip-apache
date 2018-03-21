@@ -44,3 +44,11 @@
     height: 160px;
     width:100%
 }
+
+.maxScore {
+    padding:8px;
+    display:block;
+    border:none;
+    border: 2px solid  darkred;
+    width:100%
+}
