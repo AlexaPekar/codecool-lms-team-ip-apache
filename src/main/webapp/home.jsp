@@ -13,14 +13,23 @@
     </nav>
 </header>
 
-
-
-
     <div class="column left">
         <nav>
                 <ul>
-                    <li><a href=""><img src="resources/icons/titleIcon.png" width="50" height="50"></a></li>
-                    <li><a href="#"><img src="resources/icons/documentIcon.png" width="50" height="50"></a></li>
+                    <li>
+                        <a>
+                           <form action="#" method="GET">
+                               <input type="image" src="resources/icons/titleIcon.png" width="50" height="50" alt="Profile"/>
+                           </form>
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                           <form action="home" method="GET">
+                               <input type="image" src="resources/icons/documentIcon.png" width="50" height="50" alt="Home"/>
+                           </form>
+                        </a>
+                    </li>
                     <li>
                         <a>
                             <form action="users" method="GET">
@@ -36,6 +45,17 @@
     <div class="main">
     <div class="column middle">
         <div class="center">
+                <div class="buttons">
+                    <br>
+                    <form action="#" method="GET">
+                        <input type=submit value="Create Text Page" class="button"></input>
+                    </form>
+                    <br>
+                    <form action="#" method="GET">
+                        <input type=submit value="Create Assignment Page" class="button"></input>
+                    </form>
+                </div>
+
                         <table>
                             <c:forEach items="${pages}" var="page">
                                 <tr>
