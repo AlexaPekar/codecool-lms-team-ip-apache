@@ -21,8 +21,20 @@
     <div class="column left">
         <nav>
                 <ul>
-                    <li><a href=""><img src="resources/icons/titleIcon.png" width="50" height="50"></a></li>
-                    <li><a href="#"><img src="resources/icons/documentIcon.png" width="50" height="50"></a></li>
+                    <li>
+                        <a>
+                           <form action="#" method="GET">
+                               <input type="image" src="resources/icons/titleIcon.png" width="50" height="50" alt="Profile"/>
+                           </form>
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                           <form action="home" method="GET">
+                               <input type="image" src="resources/icons/documentIcon.png" width="50" height="50" alt="Home"/>
+                           </form>
+                        </a>
+                    </li>
                     <li>
                         <a>
                             <form action="users" method="GET">
@@ -35,6 +47,7 @@
     </div>
 
 
+
     <div class="main">
     <div class="column middle">
         <div class="center">
@@ -42,13 +55,14 @@
                                 <h2>New post</h2>
                         </div>
                         <form method="post" action="create" class="w3-container">
+                            <input type=hidden name="type" value="text"></input>
                             <h3>Title</h3><br>
-                            <input class="title" type="text" class="title">
+                            <input name="title" type="text" class="title"></input>
                             <br>
                             <h3>Content</h3><br>
                             <textarea class="textarea" name="content" class="content"></textarea>
                             <br><br>
-                            <input class=button type="submit" value="Submit">
+                            <input class=button type="submit" value="Submit"></input>
                         </form>
     </div>
 
