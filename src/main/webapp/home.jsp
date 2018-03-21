@@ -54,7 +54,7 @@
                         <input type=submit value="Create Text Page" class="button"></input>
                     </form>
                     <br>
-                    <form action="#" method="GET">
+                    <form action="createAssignmentInHome.jsp" method="GET">
                         <input name="type" type=hidden value="assignment"></input>
                         <input type=submit value="Create Assignment Page" class="button"></input>
                     </form>
