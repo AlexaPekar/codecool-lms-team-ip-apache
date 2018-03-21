@@ -41,7 +41,7 @@
                         <div class="container">
                                 <h2>New post</h2>
                         </div>
-                        <form method="post" class="w3-container">
+                        <form method="post" action="create" class="w3-container">
                             <h3>Title</h3><br>
                             <input class="title" type="text" class="title">
                             <br>
