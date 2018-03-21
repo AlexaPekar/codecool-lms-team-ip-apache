@@ -36,10 +36,30 @@
     <div class="main">
     <div class="column middle">
         <div class="center">
-            <h2>Text page section</h2>
-            <b>this is a test.</b>
-            <p>test text content.</p>
-            <h5>Ip-Apache</h5>
+                        <table>
+                            <c:forEach items="${pages}" var="page">
+                                <tr>
+                                    <c:if test="${current.getClass().name == 'com.codecool.lms.model.Mentor'}">
+                                        <td>
+                                            <c:out value="${page.title}" />
+                                        </td>
+                                        <c:if test="${page.published == true}">
+                                            <td><label name="label">Unpublish</label></td>
+                                        </c:if>
+                                        <c:if test="${page.published == false}">
+                                            <td><label name="label">Publish</label></td>
+                                        </c:if>
+                                    </c:if>
+                                    <c:if test="${current.getClass().name == 'com.codecool.lms.model.Student'}">
+                                        <c:if test="${page.published == true}">
+                                            <td>
+                                                <c:out value="${page.title}" />
+                                            </td>
+                                        </c:if>
+                                    </c:if>
+                                </tr>
+                            </c:forEach>
+                        </table>
         </div>
     </div>
 
