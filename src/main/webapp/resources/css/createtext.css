@@ -14,3 +14,33 @@
 }
 
 .button:hover {opacity: 1}
+
+.container {
+    margin: auto;
+    width: 80%;
+    border: 3px solid  darkred;
+    border-radius: 20px;
+    text-align: center;
+    word-wrap: break-word;
+    background: repeating-linear-gradient(45deg, red, darkred 7%, red 10%);
+    letter-spacing: 10px;
+    color: white
+
+}
+
+.title {
+    padding:8px;
+    display:block;
+    border:none;
+    border: 2px solid  darkred;
+    width:100%
+}
+
+.textarea {
+    padding:8px;
+    display:block;
+    border:none;
+    border: 2px solid  darkred;
+    height: 170px;
+    width:100%
+}
