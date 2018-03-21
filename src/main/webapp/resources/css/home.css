@@ -1,5 +1,5 @@
-
 /* The header line */
+
 .head {
     margin: 0;
     padding: 0;
@@ -14,62 +14,68 @@
 }
 
 /* The text in the header */
-a.ex1:hover, a.ex1:active {color: white;}
+
+a.ex1:hover,
+a.ex1:active {
+    color: white;
+}
 
 /* The headers texts effect */
+
 nav a {
-	outline: none;
-	color: #fff;
-	text-decoration: black;
-	letter-spacing: 1px;
-	text-shadow: 0 0 7px black;
+    outline: none;
+    color: #fff;
+    text-decoration: black;
+    letter-spacing: 1px;
+    text-shadow: 0 0 7px black;
 }
 
 nav a:hover,
 nav a:focus {
-	outline: none;
+    outline: none;
 }
 
 .ij-effect-1 a::before,
 .ij-effect-1 a::after {
-	display: inline-block;
-	opacity: 0;
-	-webkit-transition: -webkit-transform 0.3s, opacity 0.2s;
-	-moz-transition: -moz-transform 0.3s, opacity 0.2s;
-	transition: transform 0.3s, opacity 0.2s;
+    display: inline-block;
+    opacity: 0;
+    -webkit-transition: -webkit-transform 0.3s, opacity 0.2s;
+    -moz-transition: -moz-transform 0.3s, opacity 0.2s;
+    transition: transform 0.3s, opacity 0.2s;
 }
 
 .ij-effect-1 a::before {
-	margin-right: 10px;
-	content: '[';
-	-webkit-transform: translateX(20px);
-	-moz-transform: translateX(20px);
-	transform: translateX(20px);
+    margin-right: 10px;
+    content: '[';
+    -webkit-transform: translateX(20px);
+    -moz-transform: translateX(20px);
+    transform: translateX(20px);
 }
 
 .ij-effect-1 a::after {
-	margin-left: 10px;
-	content: ']';
-	-webkit-transform: translateX(-20px);
-	-moz-transform: translateX(-20px);
-	transform: translateX(-20px);
+    margin-left: 10px;
+    content: ']';
+    -webkit-transform: translateX(-20px);
+    -moz-transform: translateX(-20px);
+    transform: translateX(-20px);
 }
 
 .ij-effect-1 a:hover::before,
 .ij-effect-1 a:hover::after,
 .ij-effect-1 a:focus::before,
 .ij-effect-1 a:focus::after {
-	opacity: 1;
-	-webkit-transform: translateX(0px);
-	-moz-transform: translateX(0px);
-	transform: translateX(0px);
+    opacity: 1;
+    -webkit-transform: translateX(0px);
+    -moz-transform: translateX(0px);
+    transform: translateX(0px);
 }
 
 /* The center box */
+
 .center {
     margin: auto;
     width: 80%;
-    border: 3px solid  darkred;
+    border: 3px solid darkred;
     border-radius: 20px;
     background-color: white;
     height: 97vh;
@@ -79,11 +85,13 @@ nav a:focus {
 }
 
 /* The page sharing starts here */
+
 * {
     box-sizing: border-box;
 }
 
 /* This fixes the nav-bars' size */
+
 .column {
     float: left;
     margin: auto;
@@ -99,7 +107,7 @@ nav a:focus {
 }
 
 .right {
-    background-color:#d30000;
+    background-color: #d30000;
     width: 7 %;
     opacity: 0.9;
 
@@ -109,7 +117,7 @@ nav a:focus {
     background: url(img/white.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-    background-color:white;
+    background-color: white;
     margin-left: 135px;
     width: 86%;
 
@@ -120,7 +128,8 @@ nav a:focus {
 }
 
 
-header, footer {
+header,
+footer {
     color: white;
     clear: left;
     height: auto;
@@ -128,6 +137,7 @@ header, footer {
 }
 
 /* This is the left-side menu */
+
 ul {
     list-style-type: none;
     margin: auto;
@@ -159,10 +169,12 @@ article {
     margin-left: 170px;
     padding: 1em;
 }
+
 /* button */
+
 .button {
     background-color: darkred;
-    border: 2px solid black;;
+    border: 2px solid black;
     border-radius: 10px;
     color: white;
     height: 50px;
@@ -171,11 +183,67 @@ article {
     font-size: 16px;
     cursor: pointer;
 }
+
 .buttons {
-    text-align:right;
+    text-align: right;
     padding-right: 20px;
-    }
+}
 
 .button:hover {
     background: red;
+}
+
+/*-BENCE */
+
+.pages-table {
+    padding-top: 30px;
+}
+
+.publish {
+    background-color: #21ad00;
+    border: 2px solid black;
+    border-radius: 10px;
+    color: white;
+    height: 30px;
+    width: 100px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.publish:hover,
+.publish:active {
+    background-color: #2cd804;
+}
+
+.unpublish {
+    background-color: #ed0303;
+    border: 2px solid black;
+    border-radius: 10px;
+    color: white;
+    height: 30px;
+    width: 100px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.unpublish:hover,
+.unpublish:active {
+    background-color: red;
+}
+
+.pages-table {
+    width: 100%;
+}
+
+.title-col {
+    font-size: 1.3em;
+    text-align: center;
+    width: 80%;
+}
+
+.button-col {
+    width: 15%;
+    padding-right: 5px;
 }
