@@ -20,7 +20,7 @@
                 <ul>
                     <li>
                         <a>
-                           <form action="#" method="GET">
+                           <form action="profile" method="GET">
                                <input type="image" src="resources/icons/titleIcon.png" width="50" height="50" alt="Profile"/>
                            </form>
                         </a>
