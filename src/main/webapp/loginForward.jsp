@@ -11,6 +11,7 @@
 <body>
     <header>
         <h1 id="redirect">We are logging in, please wait!</h1>
+        <script>setInterval(function(){window.location.href="home?"; }, 1500);</script>
     </header>
 </body>
 </html>

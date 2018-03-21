@@ -27,6 +27,7 @@ public class LoginServlet extends HttpServlet {
         if (userServiceImpl.containsUser(email)) {
             try {
                 userServiceImpl.setCurrentUser(userServiceImpl.findUserByEmail(email, password));
+                req.getSession().setAttribute("isUserLoggedIn", true);
                 req.getRequestDispatcher("loginForward.jsp").forward(req, resp);
 
             } catch (UserNotFoundException e) {
