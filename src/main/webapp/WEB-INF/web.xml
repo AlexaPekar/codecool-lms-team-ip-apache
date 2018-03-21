@@ -11,4 +11,18 @@
         can be defined instead with annotations. For more search for information on
         "differences between java servlet api 2 and 3", etc.
     -->
+
+
+    <filter>
+        <filter-name>AccessFilter</filter-name>
+        <filter-class>com.codecool.lms.servlet.AccessFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>AccessFilter</filter-name>
+        <url-pattern>/users</url-pattern>
+        <url-pattern>/home.jsp</url-pattern>
+        <url-pattern>/home</url-pattern>
+
+    </filter-mapping>
 </web-app>
