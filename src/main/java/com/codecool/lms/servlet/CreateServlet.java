@@ -25,11 +25,14 @@ public class CreateServlet extends HttpServlet {
         if (type.equals("text")) {
             TextPage myTextPage = new TextPage(title, content);
             PageServiceImpl.getPageService().addNewPage(myTextPage);
+            req.setAttribute("message", "Text page successfully created.");
         } else {
-            int maxPoint = Integer.parseInt(req.getParameter("maxpoint"));
+            int maxPoint = Integer.parseInt(req.getParameter("maxScore"));
             AssignmentPage assignmentPage = new AssignmentPage(title, content, maxPoint);
             PageServiceImpl.getPageService().addNewPage(assignmentPage);
+            req.setAttribute("message", "Assignment page successfully created.");
         }
-        req.getRequestDispatcher("home.jsp").forward(req, resp);
+
+        req.getRequestDispatcher("redirectHome.jsp").forward(req, resp);
     }
 }
