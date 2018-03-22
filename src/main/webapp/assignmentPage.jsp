@@ -1,5 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -53,13 +52,14 @@
                     <h1>Assignment</h1>
                     <br>
                     <h2>${page.title}</h2>
+                    <p class="maxScore">Max score: ${page.maxScore}</p>
                     <p>${page.content}</p>
                 </div>
                 <c:if test="${current.getClass().name == 'com.codecool.lms.model.Student'}">
                     <c:if test="${userAlreadySubmitted == false}">
 
 
-                        <form action="submission" method="GET" id="submission-form">
+                        <form action="submission" method="GET" class="container2">
                             <textarea name="answer" form="submission-form" class="text-box"></textarea>
                             <input name="pageTitle" type="hidden" value="${page.title}"><br>
                             <input name="title" type="submit" value="Submit" class="submit-button">
