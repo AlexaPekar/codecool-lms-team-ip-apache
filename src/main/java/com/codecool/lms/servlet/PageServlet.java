@@ -30,4 +30,26 @@ public class PageServlet extends HttpServlet {
             req.getRequestDispatcher("assignmentPage.jsp").forward(req, resp);
         }
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String title = req.getParameter("title");
+        String published = req.getParameter("published");
+
+        try {
+            if (published.equals("true")) {
+                PageServiceImpl.getPageService().findPageByTitle(title).depublish();
+                req.setAttribute("message", "Page is unpublished");
+            } else {
+                PageServiceImpl.getPageService().findPageByTitle(title).publish();
+                req.setAttribute("message", "Page is published");
+            }
+            Page myPage = PageServiceImpl.getPageService().findPageByTitle(title);
+
+            req.setAttribute("page", myPage);
+        } catch (PageNotFoundException e) {
+            e.printStackTrace();
+        }
+        req.getRequestDispatcher("redirectHome.jsp").forward(req, resp);
+    }
 }

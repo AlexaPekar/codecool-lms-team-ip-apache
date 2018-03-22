@@ -5,12 +5,10 @@
     padding: 0;
     height: 45px;
     weight: 100px;
-
     text-align: center;
     font-size: 2.35em;
     color: white;
     opacity: 0.9;
-
 }
 
 /* The text in the header */
@@ -84,35 +82,29 @@ nav a:focus {
 }
 
 /* This fixes the nav-bars' size */
-.column {
-    float: left;
-    margin: auto;
-    padding: 10px;
-    height: 100vh;
-}
+
 
 .left {
     width: 7%;
     opacity: 0.9;
     position: fixed;
-
 }
 
 .right {
     background-color:#d30000;
     width: 7 %;
     opacity: 0.9;
-
 }
 
 .middle {
+    padding: 10px;
+    height: 100vh;
     background: url(img/white.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-color:white;
     margin-left: 135px;
     width: 86%;
-
 }
 
 .main {
@@ -136,7 +128,6 @@ ul {
     background-color: white;
     border: 2px solid darkred;
     border-radius: 10px;
-
 }
 
 li a {
@@ -155,10 +146,6 @@ li a:hover:not(.active) {
     color: white;
 }
 
-article {
-    margin-left: 170px;
-    padding: 1em;
-}
 /* button */
 .button {
     background-color: darkred;
@@ -171,11 +158,80 @@ article {
     font-size: 16px;
     cursor: pointer;
 }
+
+/* buttons */
 .buttons {
     text-align:right;
     padding-right: 20px;
-    }
+}
 
 .button:hover {
     background: red;
+}
+
+
+/*-BENCE */
+
+.title-col {
+    height: 50px;
+}
+
+.pages-table {
+    padding-top: 30px;
+}
+
+.publish {
+    background-color: #21ad00;
+    border: 2px solid black;
+    border-radius: 10px;
+    color: white;
+    height: 30px;
+    width: 100px;
+    text-align: center;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.publish:hover,
+.publish:active {
+    background-color: #2cd804;
+}
+
+.unpublish {
+    background-color: #ed0303;
+    border: 2px solid black;
+    border-radius: 10px;
+    color: white;
+    height: 30px;
+    width: 100px;
+    text-align: center;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.unpublish:hover,
+.unpublish:active {
+    background-color: red;
+}
+
+.pages-table {
+    width: 100%;
+}
+
+.title-col {
+    text-align: center;
+    width: 80%;
+}
+
+.button-col {
+    width: 15%;
+    padding-right: 5px;
+}
+
+.name {
+    font-size: 1.4em;
+    background-color: transparent;
+    width: 100%;
+    cursor: pointer;
+    border: none;
 }
