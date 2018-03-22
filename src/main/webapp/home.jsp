@@ -53,6 +53,8 @@
         <div class="middle">
             <div class="center">
                 <c:if test="${current.getClass().name == 'com.codecool.lms.model.Mentor'}">
+                    <table class="pages-table">
+                        <tr>
                     <div class="buttons">
                         <br>
                         <form action="createTextInHome.jsp" method="GET">
@@ -70,8 +72,6 @@
 
                 <c:forEach items="${pages}" var="page">
 
-                    <table class="pages-table">
-                        <tr>
                             <c:if test="${current.getClass().name == 'com.codecool.lms.model.Mentor'}">
                                 <td class="icon-col">
                                     <c:if test="${page.published == true}">
@@ -107,6 +107,8 @@
                             </c:if>
                             <c:if test="${current.getClass().name == 'com.codecool.lms.model.Student'}">
                                 <c:if test="${page.published == true}">
+                    <table class="pages-table">
+                        <tr>
                                     <td class="title-col">
                                         <form action="showpage" method="Get">
                                             <input name="title" type="submit" value="${page.title}" class="name">
