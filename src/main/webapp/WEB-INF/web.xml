@@ -23,6 +23,7 @@
         <url-pattern>/users</url-pattern>
         <url-pattern>/home.jsp</url-pattern>
         <url-pattern>/home</url-pattern>
+        <url-pattern>/profile</url-pattern>
 
     </filter-mapping>
 </web-app>
