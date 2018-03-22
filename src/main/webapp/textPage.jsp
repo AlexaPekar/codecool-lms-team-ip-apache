@@ -47,7 +47,7 @@
     <div class="main">
     <div class="column middle">
         <div class="center">
-                        <div class="text" action="showpage" method="GET" >
+                        <div class="text">
                             <h1>Curriculum</h1>
                             <br>
                             <h2>${page.title}</h2>
