@@ -18,29 +18,29 @@
             </header>
 
             <div class="left">
-                    <ul>
-                        <li>
-                            <a>
-                                <form action="profile" method="GET">
-                                    <input type="image" src="resources/icons/titleIcon.png" width="50" height="50" alt="Profile" />
-                                </form>
-                            </a>
-                        </li>
-                        <li>
-                            <a>
-                                <form action="home" method="GET">
-                                    <input type="image" src="resources/icons/documentIcon.png" width="50" height="50" alt="Home" />
-                                </form>
-                            </a>
-                        </li>
-                        <li>
-                            <a>
-                                <form action="users" method="GET">
-                                    <input type="image" src="resources/icons/peoplesIcon.png" width="50" height="50" alt="Users" />
-                                </form>
-                            </a>
-                        </li>
-                    </ul>
+                <ul>
+                    <li>
+                        <a>
+                            <form action="profile" method="GET">
+                                <input type="image" src="resources/icons/titleIcon.png" width="50" height="50" alt="Profile" />
+                            </form>
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            <form action="home" method="GET">
+                                <input type="image" src="resources/icons/documentIcon.png" width="50" height="50" alt="Home" />
+                            </form>
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            <form action="users" method="GET">
+                                <input type="image" src="resources/icons/peoplesIcon.png" width="50" height="50" alt="Users" />
+                            </form>
+                        </a>
+                    </li>
+                </ul>
             </div>
 
 
@@ -62,10 +62,19 @@
                             </div>
                         </c:if>
 
-                        <table class="pages-table">
-                            <c:forEach items="${pages}" var="page">
+
+                        <c:forEach items="${pages}" var="page">
+                            <table class="pages-table">
                                 <tr>
                                     <c:if test="${current.getClass().name == 'com.codecool.lms.model.Mentor'}">
+                                        <td class="icon-col">
+                                            <c:if test="${page.published == true}">
+                                                <img class="icon" width="20px" height="20px" src="resources/icons/Tick.png">
+                                            </c:if>
+                                            <c:if test="${page.published == false}">
+                                                <img class="icon" width="20px" height="20px" src="resources/icons/X.png">
+                                            </c:if>
+                                        </td>
                                         <td class="title-col">
                                             <form action="showpage" method="Get">
                                                 <input name="title" type="submit" value="${page.title}" class="name">
@@ -91,6 +100,14 @@
                                         </c:if>
                                     </c:if>
                                     <c:if test="${current.getClass().name == 'com.codecool.lms.model.Student'}">
+                                        <td class="icon-col">
+                                            <c:if test="${page.published == true}">
+                                                <img class="icon" width="20px" height="20px" src="resources/icons/Tick.png">
+                                            </c:if>
+                                            <c:if test="${page.published == false}">
+                                                <img class="icon" width="20px" height="20px" src="resources/icons/X.png">
+                                            </c:if>
+                                        </td>
                                         <c:if test="${page.published == true}">
                                             <td class="title-col">
                                                 <form action="showpage" method="Get">
@@ -100,8 +117,8 @@
                                         </c:if>
                                     </c:if>
                                 </tr>
-                            </c:forEach>
-                        </table>
+                            </table>
+                        </c:forEach>
                     </div>
                 </div>
             </div>
