@@ -53,8 +53,6 @@
         <div class="middle">
             <div class="center">
                 <c:if test="${current.getClass().name == 'com.codecool.lms.model.Mentor'}">
-                    <table class="pages-table">
-                        <tr>
                     <div class="buttons">
                         <br>
                         <form action="createTextInHome.jsp" method="GET">
@@ -72,7 +70,9 @@
 
                 <c:forEach items="${pages}" var="page">
 
-                            <c:if test="${current.getClass().name == 'com.codecool.lms.model.Mentor'}">
+                    <c:if test="${current.getClass().name == 'com.codecool.lms.model.Mentor'}">
+                        <table class="pages-table">
+                            <tr>
                                 <td class="icon-col">
                                     <c:if test="${page.published == true}">
                                         <img class="icon" width="20px" height="20px" src="resources/icons/Tick.png">
@@ -104,20 +104,22 @@
                                         </form>
                                     </td>
                                 </c:if>
-                            </c:if>
-                            <c:if test="${current.getClass().name == 'com.codecool.lms.model.Student'}">
-                                <c:if test="${page.published == true}">
-                    <table class="pages-table">
-                        <tr>
+                            </tr>
+                        </table>
+                    </c:if>
+                    <c:if test="${current.getClass().name == 'com.codecool.lms.model.Student'}">
+                        <c:if test="${page.published == true}">
+                            <table class="pages-table">
+                                <tr>
                                     <td class="title-col">
                                         <form action="showpage" method="Get">
                                             <input name="title" type="submit" value="${page.title}" class="name">
                                         </form>
                                     </td>
-                                </c:if>
-                            </c:if>
-                        </tr>
-                    </table>
+                                </tr>
+                            </table>
+                        </c:if>
+                    </c:if>
                 </c:forEach>
             </div>
         </div>
