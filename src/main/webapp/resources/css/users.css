@@ -1,0 +1,36 @@
+ table.users-table,
+ table.users-table tr,
+ table.users-table td {
+     text-align: left;
+     font-size: 25px;
+     color: #000000;
+ }
+
+
+ .head-cell {
+     text-align: center;
+     width: 20em;
+     font-weight: bold;
+     border-bottom: 0.1em;
+     border-bottom-style: solid;
+     border-bottom-color: darkred;
+ }
+
+ .text-row {
+     font-weight: normal;
+ }
+
+ .table-div {
+     text-align: center;
+     width: 80%;
+     margin: 0 auto;
+     padding-top: 1em;
+ }
+
+ .page-title {
+     padding-top: 1em;
+ }
+
+ .page-title {
+     text-align: center;
+ }
