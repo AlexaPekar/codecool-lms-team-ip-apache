@@ -20,7 +20,7 @@ class UserServiceImplTest {
         userServiceImpl = new UserServiceImpl();
         user1 = new User("Dagobert", "kacsamesek@gmail.com", "cash");
         user2 = new User("Gardener", "iamagardener@freemail.hu", "palm3");
-        user3 = new User("Conchita Wurst", "Ihavebeard@homo.com", "celeb88");
+        user3 = new User("Conchita Wurst", "ihavebeard@homo.com", "celeb88");
         userServiceImpl.register(user1);
         userServiceImpl.register(user2);
     }
