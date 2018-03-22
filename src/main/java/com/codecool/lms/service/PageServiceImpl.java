@@ -1,6 +1,5 @@
 package com.codecool.lms.service;
 
-import com.codecool.lms.exception.PageNotFoundException;
 import com.codecool.lms.model.Page;
 
 import java.util.ArrayList;
@@ -26,16 +25,16 @@ public class PageServiceImpl implements PageService {
         pages.add(page);
     }
 
-    public void removePage(String title) throws PageNotFoundException {
+    public void removePage(String title) {
         pages.remove(findPageByTitle(title));
     }
 
-    public Page findPageByTitle(String title) throws PageNotFoundException {
+    public Page findPageByTitle(String title) {
         for (Page page : pages) {
             if (page.getTitle().equals(title)) {
                 return page;
             }
         }
-        throw new PageNotFoundException();
+        return null;
     }
 }

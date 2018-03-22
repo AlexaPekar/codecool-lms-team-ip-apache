@@ -1,10 +1,8 @@
 package com.codecool.lms.service;
 
-import com.codecool.lms.exception.PageNotFoundException;
 import com.codecool.lms.exception.UserAlreadyRegisteredException;
 import com.codecool.lms.exception.UserNotFoundException;
 import com.codecool.lms.exception.WrongPasswordException;
-import com.codecool.lms.model.Page;
 import com.codecool.lms.model.User;
 
 import java.util.List;

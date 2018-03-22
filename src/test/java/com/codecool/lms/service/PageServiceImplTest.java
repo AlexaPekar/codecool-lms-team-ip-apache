@@ -1,6 +1,5 @@
 package com.codecool.lms.service;
 
-import com.codecool.lms.exception.PageNotFoundException;
 import com.codecool.lms.model.AssignmentPage;
 import com.codecool.lms.model.TextPage;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +26,7 @@ class PageServiceImplTest {
     }
 
     @Test
-    void removePage() throws PageNotFoundException {
+    void removePage() {
         pageServiceImpl.addNewPage(testAssignmentPage);
         assertTrue(pageServiceImpl.getPages().contains(testAssignmentPage));
         pageServiceImpl.removePage("Kitties Test");
@@ -35,7 +34,7 @@ class PageServiceImplTest {
     }
 
     @Test
-    void findPageByTitle() throws PageNotFoundException {
+    void findPageByTitle() {
         pageServiceImpl.addNewPage(testTextPage);
         pageServiceImpl.addNewPage(testAssignmentPage);
         assertEquals(testTextPage, pageServiceImpl.findPageByTitle("Kitties"));
