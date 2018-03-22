@@ -45,6 +45,8 @@
 <div class="main">
     <div class="middle">
         <div class="center">
+        <br><br><br><br>
+        <img src="resources/icons/profilepic.png">
             <h2>Name: <c:out value="${user.name}" /></h2>
             <h2>E-mail address: <c:out value="${user.email}" /></h2>
             <h2>Role:
