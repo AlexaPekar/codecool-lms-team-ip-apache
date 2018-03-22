@@ -6,26 +6,32 @@
   text-align: center;
   font-size: 16px;
   margin: 4px 2px;
-  opacity: 0.6;
+  opacity: 1;
   transition: 0.3s;
   display: inline-block;
   text-decoration: none;
   cursor: pointer;
 }
 
-.button:hover {opacity: 1}
+.button:hover {opacity: 0.6}
 
 .container {
     margin: auto;
     width: 80%;
     border: 3px solid  darkred;
     border-radius: 20px;
+    font-family: "Arial Black", Gadget, sans-serif;
     text-align: center;
     word-wrap: break-word;
     background: repeating-linear-gradient(45deg, red, darkred 7%, red 10%);
     letter-spacing: 10px;
     color: white
 
+}
+
+.container2 {
+    font-family: "Arial Black", Gadget, sans-serif;
+    padding:0.01em 16px;
 }
 
 .title {

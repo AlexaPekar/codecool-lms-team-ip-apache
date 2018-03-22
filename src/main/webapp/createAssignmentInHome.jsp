@@ -5,7 +5,6 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="resources/css/home.css"/>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" type="text/css" href="resources/css/create.css">
     <title>Create Assignment</title>
 </head>
@@ -56,7 +55,7 @@
                         <div class="container">
                                 <h2>New Assignment post</h2>
                         </div>
-                        <form method="post" action="create" class="w3-container">
+                        <form method="post" action="create" class="container2">
                             <input type=hidden name="type" value="assignment"></input>
                             <h3>Title</h3>
                             <input name="title" type="text" class="title"></input>
