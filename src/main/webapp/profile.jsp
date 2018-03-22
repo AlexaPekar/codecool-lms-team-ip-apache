@@ -57,7 +57,7 @@
             </h2>
                 <div>
                     <br>
-                        <a href="changeProfile.jsp" class="button">Change your profile</a>
+                        <button onclick="window.location.href='changeProfile.jsp'" class="button">Change your profile</button>
                     <br>
                 </div>
         </div>

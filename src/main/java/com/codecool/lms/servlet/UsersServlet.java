@@ -20,15 +20,24 @@ public class UsersServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<User> users = UserServiceImpl.getUserService().getUsers();
-
         req.setAttribute("users", users);
         req.getRequestDispatcher("users.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if (req.getParameter("newName").length() > 0) {
             UserServiceImpl.getUserService().getCurrentUser().setName(req.getParameter("newName"));
+        } else {
+            req.getParameter(UserServiceImpl.getUserService().getCurrentUser().getName());
+        }
+        if (req.getParameter("newPassword").length() >= 8) {
             UserServiceImpl.getUserService().getCurrentUser().setPassword(req.getParameter("newPassword"));
-            req.getRequestDispatcher("home.jsp").forward(req, resp);
+            req.setAttribute("message", "Your profile modified successfully.");
+            req.getRequestDispatcher("redirectHome.jsp").forward(req, resp);
+        } else {
+            req.setAttribute("message", "Invalid password. Min. 8 character.");
+            req.getRequestDispatcher("redirectHome.jsp").forward(req, resp);
+        }
     }
 }
