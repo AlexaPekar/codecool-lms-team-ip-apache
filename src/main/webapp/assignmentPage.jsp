@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="resources/css/home.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/page.css" />
+    <link rel="shortcut icon" href="resources/icons/titleIcon.png"/>
     <title>Home</title>
 </head>
 
@@ -14,9 +15,13 @@
 
     <header>
         <nav class="ij-effect-1">
-            <h1 class="head"><a class="ex1" href="home.jsp">Canvas 2.0</a></h1>
+            <h1 class="head"><a class="ex1" href="redirectHome.jsp">Canvas 2.0</a></h1>
         </nav>
     </header>
+
+    <form action="logout" method="GET" class="logoutform">
+        <input type="image" src="resources/icons/logout.png"class="logout" width="50" height="50" alt="Logout" >
+    </form>
 
     <div class="left">
         <ul>
