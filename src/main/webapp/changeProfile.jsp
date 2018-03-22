@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="resources/css/home.css"/>
-    <title>Profile</title>
+    <title>Change Your Profile</title>
 </head>
 <body background="resources/css/img/red2.jpg">
 
@@ -45,23 +45,18 @@
 <div class="main">
     <div class="middle">
         <div class="center">
-            <h2>Name: <c:out value="${user.name}" /></h2>
-            <h2>E-mail address: <c:out value="${user.email}" /></h2>
-            <h2>Role:
-                <c:if test = "${user.getClass().name == 'com.codecool.lms.model.Student'}">
-                    Student
-                </c:if>
-                <c:if test = "${user.getClass().name == 'com.codecool.lms.model.Mentor'}">
-                    Mentor
-                </c:if>
-            </h2>
-                <div>
-                    <br>
-                        <a href="changeProfile.jsp" class="button">Change your profile</a>
-                    <br>
-                </div>
+            <br><br>
+            <form name="profileChange" method="post" action="users">
+                <br>Name<br>
+                <input type="text" name="newName">
+                <br>Password<br>
+                <input type="text" name="newPassword">
+                <br><br>
+                <input type="submit" value="Submit" class="button">
+            </form>
         </div>
     </div>
+</div>
 
 
     <footer>
