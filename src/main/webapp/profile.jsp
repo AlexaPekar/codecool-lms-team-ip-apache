@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="resources/css/home.css"/>
-    <title>Home</title>
+    <title>Profile</title>
 </head>
 <body background="resources/css/img/red2.jpg">
 
@@ -15,8 +15,7 @@
     </nav>
 </header>
 
-<div class="column left">
-    <nav>
+<div class="left">
         <ul>
             <li>
                 <a>
@@ -40,12 +39,11 @@
                 </a>
             </li>
         </ul>
-    </nav>
 </div>
 
 
 <div class="main">
-    <div class="column middle">
+    <div class="middle">
         <div class="center">
             <h2>Name: <c:out value="${user.name}" /></h2>
             <h2>E-mail address: <c:out value="${user.email}" /></h2>
@@ -57,11 +55,13 @@
                     Mentor
                 </c:if>
             </h2>
+                <div>
+                    <br>
+                        <a href="changeProfile.jsp" class="button">Change your profile</a>
+                    <br>
+                </div>
         </div>
     </div>
-
-
-    <div class="bg"></div>
 
 
     <footer>
