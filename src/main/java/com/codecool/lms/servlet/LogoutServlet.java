@@ -15,6 +15,7 @@ public class LogoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserServiceImpl.getUserService().setCurrentUser(null);
+        req.getSession().invalidate();
         req.setAttribute("message", "Now you can login again!");
         req.getRequestDispatcher("index.jsp").forward(req, resp);
     }
