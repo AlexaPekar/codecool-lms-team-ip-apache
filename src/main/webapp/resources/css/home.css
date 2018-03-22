@@ -1,81 +1,73 @@
-/* The header line */
 
+/* The header line */
 .head {
     margin: 0;
     padding: 0;
     height: 45px;
     weight: 100px;
-
     text-align: center;
     font-size: 2.35em;
     color: white;
     opacity: 0.9;
-
 }
 
 /* The text in the header */
-
-a.ex1:hover,
-a.ex1:active {
-    color: white;
-}
+a.ex1:hover, a.ex1:active {color: white;}
 
 /* The headers texts effect */
-
 nav a {
-    outline: none;
-    color: #fff;
-    text-decoration: black;
-    letter-spacing: 1px;
-    text-shadow: 0 0 7px black;
+	outline: none;
+	color: #fff;
+	text-decoration: black;
+	letter-spacing: 1px;
+	text-shadow: 0 0 7px black;
 }
 
 nav a:hover,
 nav a:focus {
-    outline: none;
+	outline: none;
 }
 
 .ij-effect-1 a::before,
 .ij-effect-1 a::after {
-    display: inline-block;
-    opacity: 0;
-    -webkit-transition: -webkit-transform 0.3s, opacity 0.2s;
-    -moz-transition: -moz-transform 0.3s, opacity 0.2s;
-    transition: transform 0.3s, opacity 0.2s;
+	display: inline-block;
+	opacity: 0;
+	-webkit-transition: -webkit-transform 0.3s, opacity 0.2s;
+	-moz-transition: -moz-transform 0.3s, opacity 0.2s;
+	transition: transform 0.3s, opacity 0.2s;
 }
 
 .ij-effect-1 a::before {
-    margin-right: 10px;
-    content: '[';
-    -webkit-transform: translateX(20px);
-    -moz-transform: translateX(20px);
-    transform: translateX(20px);
+	margin-right: 10px;
+	content: '[';
+	-webkit-transform: translateX(20px);
+	-moz-transform: translateX(20px);
+	transform: translateX(20px);
 }
 
 .ij-effect-1 a::after {
-    margin-left: 10px;
-    content: ']';
-    -webkit-transform: translateX(-20px);
-    -moz-transform: translateX(-20px);
-    transform: translateX(-20px);
+	margin-left: 10px;
+	content: ']';
+	-webkit-transform: translateX(-20px);
+	-moz-transform: translateX(-20px);
+	transform: translateX(-20px);
 }
 
 .ij-effect-1 a:hover::before,
 .ij-effect-1 a:hover::after,
 .ij-effect-1 a:focus::before,
 .ij-effect-1 a:focus::after {
-    opacity: 1;
-    -webkit-transform: translateX(0px);
-    -moz-transform: translateX(0px);
-    transform: translateX(0px);
+	opacity: 1;
+	-webkit-transform: translateX(0px);
+	-moz-transform: translateX(0px);
+	transform: translateX(0px);
 }
 
 /* The center box */
-
 .center {
     margin: auto;
     width: 80%;
-    border: 3px solid darkred;
+    border: 3px solid  darkred;
     border-radius: 20px;
     background-color: white;
     height: 97vh;
@@ -85,42 +77,34 @@ nav a:focus {
 }
 
 /* The page sharing starts here */
-
 * {
     box-sizing: border-box;
 }
 
 /* This fixes the nav-bars' size */
 
-.column {
-    float: left;
-    margin: auto;
-    padding: 10px;
-    height: 100vh;
-}
 
 .left {
     width: 7%;
     opacity: 0.9;
     position: fixed;
-
 }
 
 .right {
-    background-color: #d30000;
+    background-color:#d30000;
     width: 7 %;
     opacity: 0.9;
-
 }
 
 .middle {
+    padding: 10px;
+    height: 100vh;
     background: url(img/white.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-    background-color: white;
+    background-color:white;
     margin-left: 135px;
     width: 86%;
-
 }
 
 .main {
@@ -128,8 +112,7 @@ nav a:focus {
 }
 
 
-header,
-footer {
+header, footer {
     color: white;
     clear: left;
     height: auto;
@@ -137,7 +120,6 @@ footer {
 }
 
 /* This is the left-side menu */
-
 ul {
     list-style-type: none;
     margin: auto;
@@ -146,7 +128,6 @@ ul {
     background-color: white;
     border: 2px solid darkred;
     border-radius: 10px;
-
 }
 
 li a {
@@ -165,16 +146,10 @@ li a:hover:not(.active) {
     color: white;
 }
 
-article {
-    margin-left: 170px;
-    padding: 1em;
-}
-
 /* button */
-
 .button {
     background-color: darkred;
-    border: 2px solid black;
+    border: 2px solid black;;
     border-radius: 10px;
     color: white;
     height: 50px;
@@ -184,14 +159,16 @@ article {
     cursor: pointer;
 }
 
+/* buttons */
 .buttons {
-    text-align: right;
+    text-align:right;
     padding-right: 20px;
 }
 
 .button:hover {
     background: red;
 }
+
 
 /*-BENCE */
 

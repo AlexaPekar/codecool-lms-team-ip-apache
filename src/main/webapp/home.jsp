@@ -17,12 +17,11 @@
                 </nav>
             </header>
 
-            <div class="column left">
-                <nav>
+            <div class="left">
                     <ul>
                         <li>
                             <a>
-                                <form action="#" method="GET">
+                                <form action="profile" method="GET">
                                     <input type="image" src="resources/icons/titleIcon.png" width="50" height="50" alt="Profile" />
                                 </form>
                             </a>
@@ -42,12 +41,11 @@
                             </a>
                         </li>
                     </ul>
-                </nav>
             </div>
 
 
             <div class="main">
-                <div class="column middle">
+                <div class="middle">
                     <div class="center">
                         <c:if test="${current.getClass().name == 'com.codecool.lms.model.Mentor'}">
                             <div class="buttons">
@@ -107,10 +105,6 @@
                     </div>
                 </div>
             </div>
-
-
-            <div class="bg"></div>
-
 
             <footer>
                 <h4>2018</h4>
