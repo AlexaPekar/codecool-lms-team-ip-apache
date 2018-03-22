@@ -69,7 +69,9 @@
                                 <tr>
                                     <c:if test="${current.getClass().name == 'com.codecool.lms.model.Mentor'}">
                                         <td class="title-col">
-                                            <c:out value="${page.title}" />
+                                            <form action="showpage" method="Get">
+                                                <input name="title" type="submit" value="${page.title}" class="name">
+                                            </form>
                                         </td>
                                         <c:if test="${page.published == true}">
                                             <td class="button-col">
@@ -92,8 +94,10 @@
                                     </c:if>
                                     <c:if test="${current.getClass().name == 'com.codecool.lms.model.Student'}">
                                         <c:if test="${page.published == true}">
-                                            <td>
-                                                <c:out value="${page.title}" />
+                                            <td class="title-col">
+                                                <form action="showpage" method="Get">
+                                                    <input name="title" type="submit" value="${page.title}" class="name">
+                                                </form>
                                             </td>
                                         </c:if>
                                     </c:if>

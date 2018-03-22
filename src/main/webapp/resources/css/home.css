@@ -195,6 +195,10 @@ article {
 
 /*-BENCE */
 
+.title-col {
+    height: 50px;
+}
+
 .pages-table {
     padding-top: 30px;
 }
@@ -207,7 +211,7 @@ article {
     height: 30px;
     width: 100px;
     text-align: center;
-    font-size: 16px;
+    font-size: 18px;
     cursor: pointer;
 }
 
@@ -224,7 +228,7 @@ article {
     height: 30px;
     width: 100px;
     text-align: center;
-    font-size: 16px;
+    font-size: 18px;
     cursor: pointer;
 }
 
@@ -238,7 +242,6 @@ article {
 }
 
 .title-col {
-    font-size: 1.3em;
     text-align: center;
     width: 80%;
 }
@@ -246,4 +249,12 @@ article {
 .button-col {
     width: 15%;
     padding-right: 5px;
+}
+
+.name {
+    font-size: 1.4em;
+    background-color: transparent;
+    width: 100%;
+    cursor: pointer;
+    border: none;
 }
