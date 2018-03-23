@@ -8,6 +8,7 @@
 <head>
     <link rel="stylesheet" type="text/css" href="resources/css/style.css">
     <script type="text/javascript" src="resources/js/login.js"></script>
+    <link rel="shortcut icon" href="resources/icons/titleIcon.png"/>
     <title>Login</title>
 </head>
 

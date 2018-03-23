@@ -5,6 +5,7 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="resources/css/style.css">
+    <link rel="shortcut icon" href="resources/icons/titleIcon.png"/>
     <title>Redirect</title>
 </head>
 
