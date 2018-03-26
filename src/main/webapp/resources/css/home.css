@@ -179,6 +179,14 @@ li a:hover:not(.active) {
     background: red;
 }
 
+/* The input boxes on the profile change page */
+.inputBox {
+    padding: 10px 18px;
+    margin: 5px 0;
+    box-sizing: border-box;
+    border: 2px solid darkred;
+    border-radius: 6px;
+}
 
 /*-BENCE */
 

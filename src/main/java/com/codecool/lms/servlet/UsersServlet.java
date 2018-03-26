@@ -31,13 +31,14 @@ public class UsersServlet extends HttpServlet {
         } else {
             req.getParameter(UserServiceImpl.getUserService().getCurrentUser().getName());
         }
-        if (req.getParameter("newPassword").length() >= 8) {
+        if (req.getParameter("newPassword").length() >= 8 &&
+                req.getParameter("newPassword").equals(req.getParameter("secondPasswordToCheck"))) {
             UserServiceImpl.getUserService().getCurrentUser().setPassword(req.getParameter("newPassword"));
             req.setAttribute("message", "Your profile modified successfully.");
             req.getRequestDispatcher("redirectHome.jsp").forward(req, resp);
         } else {
-            req.setAttribute("message", "Invalid password. Min. 8 character.");
-            req.getRequestDispatcher("redirectHome.jsp").forward(req, resp);
+            req.setAttribute("message", "Invalid password. Try again.");
+            req.getRequestDispatcher("redirectProfile.jsp").forward(req, resp);
         }
     }
 }

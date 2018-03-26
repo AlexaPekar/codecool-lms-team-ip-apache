@@ -52,10 +52,14 @@
         <div class="center">
             <br><br>
             <form name="profileChange" method="post" action="users">
-                <br>Name<br>
-                <input type="text" name="newName">
-                <br>Password<br>
-                <input type="text" name="newPassword">
+                <br><b>Name</b><br>
+                <input class="inputBox" type="text" name="newName">
+                <br>
+                <br><b>Password</b><br>
+                <input class="inputBox" type="password" name="newPassword">
+                <br>
+                <br><b>Verify password</b><br>
+                <input class="inputBox" type="password" name="secondPasswordToCheck">
                 <br><br>
                 <input type="submit" value="Submit" class="button">
             </form>
