@@ -94,12 +94,7 @@ nav a:focus {
     width: 7%;
     opacity: 0.9;
     position: fixed;
-}
-
-.right {
-    background-color: #d30000;
-    width: 7 %;
-    opacity: 0.9;
+    padding-left: 22px;
 }
 
 .middle {
@@ -179,14 +174,6 @@ li a:hover:not(.active) {
     background: red;
 }
 
-/* The input boxes on the profile change page */
-.inputBox {
-    padding: 10px 18px;
-    margin: 5px 0;
-    box-sizing: border-box;
-    border: 2px solid darkred;
-    border-radius: 6px;
-}
 
 /*-BENCE */
 
@@ -198,8 +185,8 @@ li a:hover:not(.active) {
 }
 
 .pages-table {
-    margin-right:auto;
-    margin-left:auto;
+    margin-right: auto;
+    margin-left: auto;
     margin-top: 20px;
     width: 90%;
     border: 2px solid black;
@@ -256,11 +243,33 @@ li a:hover:not(.active) {
     cursor: pointer;
     border: none;
 }
-.icon{
-    width:50px;
-    height:50px;
+
+.icon {
+    width: 50px;
+    height: 50px;
 }
-.logoutform{
+
+
+.user-table {
+    width: 100%;
+}
+
+.user-name {
+    font-size: 1.5em;
+    color: white;
+    width: 47%;
     text-align: right;
-    padding-right:50px;
+}
+
+.user-role {
+    font-size: 1.5em;
+    color: white;
+    width: 15%;
+    text-align: right;
+}
+
+.logout-row {
+    width: 38%;
+    text-align: right;
+    padding-right: 30px;
 }

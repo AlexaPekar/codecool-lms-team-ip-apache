@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet("/showpage")
 public class PageServlet extends HttpServlet {
@@ -54,6 +53,6 @@ public class PageServlet extends HttpServlet {
             Page myPage = PageServiceImpl.getPageService().findPageByTitle(title);
 
             req.setAttribute("page", myPage);
-        req.getRequestDispatcher("redirectHome.jsp").forward(req, resp);
+        resp.sendRedirect("home");
     }
 }

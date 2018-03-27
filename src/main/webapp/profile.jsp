@@ -18,9 +18,23 @@
         </nav>
     </header>
 
-    <form action="logout" method="GET" class="logoutform">
-        <input type="image" src="resources/icons/logout.png" class="logout" width="50" height="50" alt="Logout">
-    </form>
+    <table class="user-table">
+        <tr>
+            <td class="user-name">${user.name}</td>
+            <td class = "user-role">
+                <c:if test="${user.getClass().name == 'com.codecool.lms.model.Student'}">
+                   Role: Student
+                </c:if>
+                <c:if test="${user.getClass().name == 'com.codecool.lms.model.Mentor'}">
+                   Role: Mentor
+                </c:if>
+            </td>
+            <td class="logout-row">
+                <form action="logout" method="GET">
+                    <input type="image" src="resources/icons/logout.png" class="logout" width="50" height="50" alt="Logout">
+                </form>
+        </tr>
+    </table>
 
     <div class="left">
         <ul>

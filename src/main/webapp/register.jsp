@@ -5,8 +5,8 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="resources/css/style.css">
+    <link rel="shortcut icon" href="resources/icons/titleIcon.png" />
     <script type="text/javascript" src="resources/js/register.js"></script>
-    <link rel="shortcut icon" href="resources/icons/titleIcon.png"/>
     <title>Register</title>
 </head>
 
@@ -20,10 +20,11 @@
                 <h2 id="h2">Registration</h2>Name:<br>
                 <input type="text" name="name" class="form-el" id="name"><br>E-mail:<br>
                 <input type="email" name="email" class="form-el" id="email"><br>Password:<br>
-                <input type=password name="password" class="form-el" id="password"><br>Password Again:<br>
+                <input type=password name="password" class="form-el" id="password"><br>Confirm Password:<br>
                 <input type="password" name="password-again" class="form-el" id="password-again"><br>
                 <input type="radio" name="type" value="Mentor">Mentor<br>
                 <input type="radio" name="type" value="Student" class="student-el" checked>Student<br>
+                <p id="registration-para" class="register-paragraph">Already have an account? <a class="register-link" href="index.jsp" >Login here</a></p>
                 <input id="submit" type="submit" value="Register" class="btn">
             </div>
         </form>

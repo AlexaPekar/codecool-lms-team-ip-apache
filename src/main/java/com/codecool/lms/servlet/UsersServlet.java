@@ -1,7 +1,6 @@
 package com.codecool.lms.servlet;
 
 import com.codecool.lms.model.User;
-import com.codecool.lms.service.UserService;
 import com.codecool.lms.service.UserServiceImpl;
 
 import javax.servlet.ServletException;
@@ -21,6 +20,7 @@ public class UsersServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<User> users = UserServiceImpl.getUserService().getUsers();
         req.setAttribute("users", users);
+        req.setAttribute("current", UserServiceImpl.getUserService().getCurrentUser());
         req.getRequestDispatcher("users.jsp").forward(req, resp);
     }
 
