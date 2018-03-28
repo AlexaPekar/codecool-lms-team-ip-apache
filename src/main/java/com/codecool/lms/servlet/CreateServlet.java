@@ -3,6 +3,7 @@ package com.codecool.lms.servlet;
 import com.codecool.lms.model.AssignmentPage;
 import com.codecool.lms.model.TextPage;
 import com.codecool.lms.service.PageServiceImpl;
+import com.codecool.lms.service.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,5 +35,16 @@ public class CreateServlet extends HttpServlet {
         }
 
         req.getRequestDispatcher("redirectHome.jsp").forward(req, resp);
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String type = req.getParameter("type");
+        req.setAttribute("current", UserServiceImpl.getUserService().getCurrentUser());
+        if (type.equals("text")) {
+            req.getRequestDispatcher("createTextInHome.jsp").forward(req, resp);
+        } else {
+            req.getRequestDispatcher("createAssignmentInHome.jsp").forward(req, resp);
+        }
     }
 }

@@ -70,12 +70,12 @@
                 <c:if test="${current.getClass().name == 'com.codecool.lms.model.Mentor'}">
                     <div class="buttons">
                         <br>
-                        <form action="createTextInHome.jsp" method="GET">
+                        <form action="create" method="GET">
                             <input name="type" type=hidden value="text">
                             <input type=submit value="Create Text Page" class="button">
                         </form>
                         <br>
-                        <form action="createAssignmentInHome.jsp" method="GET">
+                        <form action="create" method="GET">
                             <input name="type" type=hidden value="assignment">
                             <input type="submit" value="Create Assignment Page" class="button">
                         </form>
