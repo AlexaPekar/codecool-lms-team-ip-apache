@@ -88,7 +88,7 @@
                     <h3>Max Score</h3>
                     <input name="maxScore" type="number" class="maxScore" value=${page.maxScore}>
                     <br>
-                    <input class=button type="submit" value="Submit">
+                    <input class=button type="submit" value="Edit">
                 </form>
             </div>
         </div>
