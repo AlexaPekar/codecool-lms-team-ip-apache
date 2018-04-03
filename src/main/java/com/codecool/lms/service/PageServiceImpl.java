@@ -50,6 +50,15 @@ public class PageServiceImpl implements PageService {
         return null;
     }
 
+    public String findGrade(AssignmentPage page, Student student) {
+        for (Assignment assignment : page.getAssignments()) {
+            if (assignment.getStudent().getEmail().equals(student.getEmail())) {
+                return Integer.toString(assignment.getGrade());
+            }
+        }
+        return null;
+    }
+
     public List<AssignmentPage> getAssignmentPages() {
         List<AssignmentPage> assignmentPages = new ArrayList<>();
         for (Page page : pages) {
