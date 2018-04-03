@@ -78,13 +78,17 @@
                 <c:if test="${current.getClass().name == 'com.codecool.lms.model.Student'}">
                     <c:if test="${userAlreadySubmitted == false}">
 
-
                         <form action="submission" method="GET" class="container2">
                             <textarea name="answer" form="submission-form" class="text-box"></textarea>
                             <input name="pageTitle" type="hidden" value="${page.title}"><br>
                             <input name="title" type="submit" value="Submit" class="submit-button">
                         </form>
 
+                    </c:if>
+
+                    <c:if test="${userAlreadySubmitted == true}">
+
+                        <p>${answer}</p>
 
                     </c:if>
                 </c:if>

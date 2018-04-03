@@ -147,6 +147,11 @@
                                             <input name="title" type="submit" value="${page.title}" class="name">
                                         </form>
                                     </td>
+                                    <td class="grade-col">
+                                    <c:if test="${page.getClass().name == 'com.codecool.lms.model.AssignmentPage'}">
+                                        "${page.maxScore}"
+                                    </c:if>
+                                    </td>
                                 </tr>
                             </table>
                         </c:if>

@@ -1,11 +1,7 @@
 package com.codecool.lms.servlet;
 
-import com.codecool.lms.model.Assignment;
-import com.codecool.lms.model.AssignmentPage;
-import com.codecool.lms.model.Page;
-import com.codecool.lms.model.TextPage;
+import com.codecool.lms.model.*;
 import com.codecool.lms.service.PageServiceImpl;
-import com.codecool.lms.service.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,6 +24,10 @@ public class PageServlet extends HttpServlet {
                 req.getRequestDispatcher("textPage.jsp").forward(req, resp);
             } else {
                 req.setAttribute("userAlreadySubmitted", false);
+                if (req.getSession().getAttribute("currentUser") instanceof Student) {
+                    String answer = PageServiceImpl.getPageService().findAnswer((AssignmentPage) myPage, (Student) req.getSession().getAttribute("currentUser"));
+                    req.setAttribute("answer", answer);
+                }
                 AssignmentPage assignmentPage = (AssignmentPage) myPage;
                 for (Assignment assignment : assignmentPage.getAssignments()) {
                     if (assignment.getStudent().equals(req.getSession().getAttribute("currentUser"))) {
