@@ -1,6 +1,8 @@
 package com.codecool.lms.servlet;
 
-import com.codecool.lms.model.*;
+import com.codecool.lms.model.Assignment;
+import com.codecool.lms.model.AssignmentPage;
+import com.codecool.lms.model.Student;
 import com.codecool.lms.service.PageServiceImpl;
 import com.codecool.lms.service.UserServiceImpl;
 
@@ -26,8 +28,6 @@ public class AssignmentServlet extends HttpServlet {
 
         AssignmentPage page = (AssignmentPage) PageServiceImpl.getPageService().findPageByTitle(title);
         page.addAssignment(assignment);
-
-        req.setAttribute("message", "Submission is successful!");
-        req.getRequestDispatcher("redirectHome.jsp").forward(req, resp);
+        resp.sendRedirect("home");
     }
 }

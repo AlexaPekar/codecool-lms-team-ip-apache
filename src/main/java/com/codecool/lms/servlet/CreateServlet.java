@@ -34,7 +34,7 @@ public class CreateServlet extends HttpServlet {
             req.setAttribute("message", "Assignment page successfully created.");
         }
 
-        req.getRequestDispatcher("redirectHome.jsp").forward(req, resp);
+        resp.sendRedirect("home");
     }
 
     @Override
