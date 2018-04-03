@@ -15,7 +15,7 @@
 
     <header>
         <nav class="ij-effect-1">
-            <h1 class="head"><a class="ex1" href="redirectHome.jsp">Canvas 2.0</a></h1>
+            <h1 class="head"><a class="ex1" href="home?">Canvas 2.0</a></h1>
         </nav>
     </header>
 

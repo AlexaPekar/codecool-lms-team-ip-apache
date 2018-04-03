@@ -14,7 +14,7 @@
 
     <header>
         <nav class="ij-effect-1">
-            <h1 class="head"><a class="ex1" href="redirectHome.jsp">Canvas 2.0</a></h1>
+            <h1 class="head"><a class="ex1" href="home?">Canvas 2.0</a></h1>
         </nav>
     </header>
 
@@ -96,6 +96,14 @@
                                         <img class="icon" width="20px" height="20px" src="resources/icons/X.png">
                                     </c:if>
                                 </td>
+                                <td class="type-col">
+                                <c:if test="${page.getClass().name == 'com.codecool.lms.model.TextPage'}">
+                                    <img class="icon" width="15px" height="20px" src="resources/icons/TextPage.png">
+                                </c:if>
+                                <c:if test="${page.getClass().name == 'com.codecool.lms.model.AssignmentPage'}">
+                                    <img class="icon" width="15px" height="20px" src="resources/icons/AssignmentPage.png">
+                                </c:if>
+                                </td>
                                 <td class="title-col">
                                     <form action="showpage" method="Get">
                                         <input name="title" type="submit" value="${page.title}" class="name">
@@ -126,6 +134,14 @@
                         <c:if test="${page.published == true}">
                             <table class="pages-table">
                                 <tr>
+                                    <td class="type-col">
+                                        <c:if test="${page.getClass().name == 'com.codecool.lms.model.TextPage'}">
+                                            <img class="icon" width="15px" height="20px" src="resources/icons/TextPage.png">
+                                        </c:if>
+                                        <c:if test="${page.getClass().name == 'com.codecool.lms.model.AssignmentPage'}">
+                                            <img class="icon" width="15px" height="20px" src="resources/icons/AssignmentPage.png">
+                                        </c:if>
+                                    </td>
                                     <td class="title-col">
                                         <form action="showpage" method="Get">
                                             <input name="title" type="submit" value="${page.title}" class="name">
