@@ -71,6 +71,19 @@
                 <div class="text">
                     <h1>Assignment</h1>
                     <br>
+                    <c:if test="${current.getClass().name == 'com.codecool.lms.model.Mentor'}">
+                        <div class="buttons">
+                            <form action="edit" method="GET">
+                                <input name="page" type=hidden value="${page.title}">
+                                <input type=submit value="Edit page" class="button">
+                            </form>
+                            <br>
+                            <form action="delete" method="GET">
+                                <input name="page" type=hidden value="${page.title}">
+                                <input type="submit" value="Delete Page" class="button">
+                            </form>
+                        </div>
+                    </c:if>
                     <h2>${page.title}</h2>
                     <p class="score">Max score: ${page.maxScore}</p>
                     <p>${page.content}</p><br><br>
