@@ -71,4 +71,18 @@ public class UserServiceImpl implements UserService {
             return new Student(name, email, password);
         }
     }
+
+    public User findUserByName(String name) {
+        User user = null;
+        for (User usr: users) {
+            if (usr.getName().equals(name)) {
+                user = usr;
+            }
+        }
+        return user;
+    }
+
+    public void deleteUser(String username){
+        users.remove(findUserByName(username));
+    }
 }
