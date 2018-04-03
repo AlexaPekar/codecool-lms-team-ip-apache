@@ -2,6 +2,7 @@ package com.codecool.lms.servlet;
 
 import com.codecool.lms.model.AssignmentPage;
 import com.codecool.lms.model.Page;
+import com.codecool.lms.model.TextPage;
 import com.codecool.lms.service.PageServiceImpl;
 
 import javax.servlet.ServletException;
@@ -19,7 +20,11 @@ public class EditPageServlet extends HttpServlet {
         String pageName = req.getParameter("page");
         Page page = PageServiceImpl.getPageService().findPageByTitle(pageName);
         req.setAttribute("page", page);
-        req.getRequestDispatcher("editTextPage.jsp").forward(req, resp);
+        if (page instanceof TextPage) {
+            req.getRequestDispatcher("editTextPage.jsp").forward(req, resp);
+        } else {
+            req.getRequestDispatcher("editAssignmentPage.jsp").forward(req, resp);
+        }
     }
 
     @Override
