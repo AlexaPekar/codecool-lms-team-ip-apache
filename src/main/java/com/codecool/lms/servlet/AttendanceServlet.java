@@ -22,8 +22,14 @@ public class AttendanceServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<User> users = UserServiceImpl.getUserService().getUsers();
+        List<Student> students = new ArrayList<>();
         req.setAttribute("current", req.getSession().getAttribute("currentUser"));
-        req.setAttribute("users", users);
+        for (User user: users) {
+            if (user instanceof Student) {
+                students.add((Student)user);
+            }
+        }
+        req.setAttribute("users", students);
         req.getRequestDispatcher("attendance.jsp").forward(req, resp);
     }
 
