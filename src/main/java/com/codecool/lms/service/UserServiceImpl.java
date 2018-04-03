@@ -15,8 +15,15 @@ public class UserServiceImpl implements UserService {
     private static UserServiceImpl userService = new UserServiceImpl();
     private List<User> users = new ArrayList<>();
 
+
+
     //Visible for testing
-    UserServiceImpl() {}
+    UserServiceImpl() {
+        Student student = new Student("Alexa", "alexa@citromail.hu", "00000000");
+        Mentor mentor = new Mentor("Mentor", "mentor@gmail.com", "00000000");
+        users.add(student);
+        users.add(mentor);
+    }
 
     public static UserServiceImpl getUserService() {
         return userService;
