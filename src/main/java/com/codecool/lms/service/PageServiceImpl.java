@@ -1,6 +1,9 @@
 package com.codecool.lms.service;
 
+import com.codecool.lms.model.Assignment;
+import com.codecool.lms.model.AssignmentPage;
 import com.codecool.lms.model.Page;
+import com.codecool.lms.model.Student;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,5 +39,24 @@ public class PageServiceImpl implements PageService {
             }
         }
         return null;
+    }
+
+    public String answer(AssignmentPage page, Student student) {
+        for (Assignment assignment : page.getAssignments()) {
+            if (assignment.getStudent().getEmail().equals(student.getEmail())) {
+                return assignment.getAnswer();
+            }
+        }
+        return null;
+    }
+
+    public List<AssignmentPage> getAssignmentPages() {
+        List<AssignmentPage> assignmentPages = new ArrayList<>();
+        for (Page page : pages) {
+            if (page instanceof AssignmentPage) {
+                assignmentPages.add((AssignmentPage) page);
+            }
+        }
+        return assignmentPages;
     }
 }
