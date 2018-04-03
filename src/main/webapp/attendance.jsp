@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="resources/css/home.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/users.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/attendance.css" />
     <link rel="shortcut icon" href="resources/icons/titleIcon.png" />
     <title>Attendance</title>
 </head>
@@ -101,13 +102,16 @@
                                 </td>
                                 <td> </td>
                                 <td>
-                                    <input type="checkbox" name="selected" value="${user.name}">
+                                <label class="container">
+                                    <input type="checkbox" name="selected" value="${user.name}" class=>
+                                    <span class="checkmark"></span>
+                                </label>
                                 </td>
                                 <td></td>
                             </tr>
                         </c:forEach>
                         <br>
-                        <input type=submit name=submit Value="Submit">
+                        <input type=submit name=submit Value="Submit" class="button">
                     </form>
                 </table>
 
