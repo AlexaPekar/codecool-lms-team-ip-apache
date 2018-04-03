@@ -1,4 +1,4 @@
-package com.codecool.lms.servlet;
+package com.codecool.lms.filter;
 
 
 import javax.servlet.*;

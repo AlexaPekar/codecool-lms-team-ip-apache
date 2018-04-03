@@ -15,7 +15,7 @@
 
     <filter>
         <filter-name>AccessFilter</filter-name>
-        <filter-class>com.codecool.lms.servlet.AccessFilter</filter-class>
+        <filter-class>com.codecool.lms.filter.AccessFilter</filter-class>
     </filter>
 
     <filter-mapping>
