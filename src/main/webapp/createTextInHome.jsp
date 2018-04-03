@@ -72,7 +72,7 @@
         <div class="column middle">
             <div class="center">
                 <div class="container">
-                    <h2>New Text post</h2>
+                    <h2>New Text page</h2>
                 </div>
                 <form method="post" action="create" class="container2">
                     <input type=hidden name="type" value="text">
