@@ -39,13 +39,6 @@ class UserServiceImplTest {
     }
 
     @Test
-    void setCurrentUser() {
-        userServiceImpl.setCurrentUser(user1);
-        assertEquals("Dagobert", userServiceImpl.getCurrentUser().getName());
-
-    }
-
-    @Test
     void findUserByEmail() throws UserNotFoundException, WrongPasswordException {
         assertEquals(user1, userServiceImpl.findUserByEmail("kacsamesek@gmail.com", "cash"));
         assertThrows(UserNotFoundException.class, () -> {
