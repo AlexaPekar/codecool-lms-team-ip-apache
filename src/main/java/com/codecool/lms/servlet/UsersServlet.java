@@ -4,7 +4,6 @@ import com.codecool.lms.exception.UserAlreadyRegisteredException;
 import com.codecool.lms.model.Mentor;
 import com.codecool.lms.model.Student;
 import com.codecool.lms.model.User;
-import com.codecool.lms.service.UserService;
 import com.codecool.lms.service.UserServiceImpl;
 
 import javax.servlet.ServletException;
@@ -33,17 +32,20 @@ public class UsersServlet extends HttpServlet {
         User currentUser = (User) req.getSession().getAttribute("currentUser");
         if (req.getParameter("type").equals("Mentor")) {
             UserServiceImpl.getUserService().deleteUser(currentUser.getName());
-            Mentor mentor = new Mentor(currentUser.getName(),currentUser.getEmail(),currentUser.getPassword());
+            Mentor mentor = new Mentor(currentUser.getName(), currentUser.getEmail(), currentUser.getPassword());
             try {
                 UserServiceImpl.getUserService().register(mentor);
+                req.getSession().setAttribute("currentUser", mentor);
             } catch (UserAlreadyRegisteredException e) {
                 e.printStackTrace();
             }
-        }else{
+        } else if (req.getParameter("type").equals("Student")) {
             UserServiceImpl.getUserService().deleteUser(currentUser.getName());
             Student student = new Student(currentUser.getName(), currentUser.getEmail(), currentUser.getPassword());
             try {
                 UserServiceImpl.getUserService().register(student);
+                req.getSession().setAttribute("currentUser", student);
+
             } catch (UserAlreadyRegisteredException e) {
                 e.printStackTrace();
             }
