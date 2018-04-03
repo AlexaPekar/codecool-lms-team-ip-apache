@@ -21,7 +21,7 @@ public class CurriculumServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Page> pages = PageServiceImpl.getPageService().getPages();
-        User currentUser = UserServiceImpl.getUserService().getCurrentUser();
+        User currentUser = (User) req.getSession().getAttribute("currentUser");
         req.setAttribute("current", currentUser);
         req.setAttribute("pages", pages);
         req.getRequestDispatcher("home.jsp").forward(req, resp);

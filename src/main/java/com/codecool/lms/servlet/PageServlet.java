@@ -23,14 +23,14 @@ public class PageServlet extends HttpServlet {
 
             Page myPage = PageServiceImpl.getPageService().findPageByTitle(title);
             req.setAttribute("page", myPage);
-            req.setAttribute("current", UserServiceImpl.getUserService().getCurrentUser());
+            req.setAttribute("current", req.getSession().getAttribute("currentUser"));
             if (myPage instanceof TextPage) {
                 req.getRequestDispatcher("textPage.jsp").forward(req, resp);
             } else {
                 req.setAttribute("userAlreadySubmitted", false);
                 AssignmentPage assignmentPage = (AssignmentPage) myPage;
                 for (Assignment assignment : assignmentPage.getAssignments()) {
-                    if (assignment.getStudent().equals(UserServiceImpl.getUserService().getCurrentUser())) {
+                    if (assignment.getStudent().equals(req.getSession().getAttribute("currentUser"))) {
                         req.setAttribute("userAlreadySubmitted", true);
                     }
                 }

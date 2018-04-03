@@ -14,7 +14,6 @@ public class UserServiceImpl implements UserService {
 
     private static UserServiceImpl userService = new UserServiceImpl();
     private List<User> users = new ArrayList<>();
-    private User currentUser;
 
     //Visible for testing
     UserServiceImpl() {}
@@ -25,10 +24,6 @@ public class UserServiceImpl implements UserService {
 
     public List<User> getUsers() {
         return users;
-    }
-
-    public User getCurrentUser() {
-        return currentUser;
     }
 
     public boolean containsUser(String email) {
@@ -46,10 +41,6 @@ public class UserServiceImpl implements UserService {
         } else {
             throw new UserAlreadyRegisteredException();
         }
-    }
-
-    public void setCurrentUser(User user) {
-        currentUser = user;
     }
 
     public User findUserByEmail(String email, String password) throws UserNotFoundException, WrongPasswordException {

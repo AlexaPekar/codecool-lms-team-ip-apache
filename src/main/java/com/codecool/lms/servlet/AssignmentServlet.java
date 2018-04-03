@@ -19,7 +19,7 @@ public class AssignmentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        Student currentStudent = (Student) UserServiceImpl.getUserService().getCurrentUser();
+        Student currentStudent = (Student) req.getSession().getAttribute("currentUser");
 
         String title = req.getParameter("pageTitle");
         String answer = req.getParameter("answer");

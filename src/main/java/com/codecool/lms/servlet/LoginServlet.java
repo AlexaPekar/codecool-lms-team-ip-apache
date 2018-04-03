@@ -2,6 +2,7 @@ package com.codecool.lms.servlet;
 
 import com.codecool.lms.exception.UserNotFoundException;
 import com.codecool.lms.exception.WrongPasswordException;
+import com.codecool.lms.model.User;
 import com.codecool.lms.service.UserServiceImpl;
 
 import javax.servlet.ServletException;
@@ -26,8 +27,8 @@ public class LoginServlet extends HttpServlet {
 
         if (userServiceImpl.containsUser(email)) {
             try {
-                userServiceImpl.setCurrentUser(userServiceImpl.findUserByEmail(email, password));
-                req.getSession().setAttribute("isUserLoggedIn", true);
+                User currentUser = userServiceImpl.findUserByEmail(email, password);
+                req.getSession().setAttribute("currentUser", currentUser);
                 req.getRequestDispatcher("loginForward.jsp").forward(req, resp);
 
             } catch (UserNotFoundException e) {

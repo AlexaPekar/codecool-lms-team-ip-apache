@@ -24,13 +24,13 @@ public class UsersServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<User> users = UserServiceImpl.getUserService().getUsers();
         req.setAttribute("users", users);
-        req.setAttribute("current", UserServiceImpl.getUserService().getCurrentUser());
+        req.setAttribute("current", req.getSession().getAttribute("currentUser"));
         req.getRequestDispatcher("users.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User currentUser = UserServiceImpl.getUserService().getCurrentUser();
+        User currentUser = (User) req.getSession().getAttribute("currentUser");
         if (req.getParameter("type").equals("Mentor")) {
             UserServiceImpl.getUserService().deleteUser(currentUser.getName());
             Mentor mentor = new Mentor(currentUser.getName(),currentUser.getEmail(),currentUser.getPassword());

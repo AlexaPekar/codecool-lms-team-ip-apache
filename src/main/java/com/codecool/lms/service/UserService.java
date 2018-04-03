@@ -10,10 +10,8 @@ import java.util.List;
 public interface UserService {
 
     List<User> getUsers();
-    User getCurrentUser();
     boolean containsUser(String email);
     void register(User user) throws UserAlreadyRegisteredException;
-    void setCurrentUser(User user);
     User findUserByEmail(String email, String password) throws UserNotFoundException, WrongPasswordException;
     User createUser(String email, String name, String password, String type);
 }
