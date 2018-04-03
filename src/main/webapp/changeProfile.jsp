@@ -75,6 +75,9 @@
                 <br><b>Verify password</b><br>
                 <input class="inputBox" type="password" name="secondPasswordToCheck">
                 <br><br>
+                <input type="radio" name="type" value="Mentor">Mentor<br>
+                <input type="radio" name="type" value="Student" class="student-el" checked>Student<br>
+                <br>
                 <input type="submit" value="Submit" class="button">
             </form>
         </div>
