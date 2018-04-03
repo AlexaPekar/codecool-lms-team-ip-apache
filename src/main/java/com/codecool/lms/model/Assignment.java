@@ -42,7 +42,7 @@ public class Assignment {
 
     public String setDate() {
         Date date = new Date();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         String str = df.format(date);
         return str;
     }
