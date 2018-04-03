@@ -39,6 +39,6 @@ public class GradingServlet extends HttpServlet {
         Student student = (Student) UserServiceImpl.getUserService().findUserByName(studentName);
         AssignmentPage assignmentPage = (AssignmentPage) PageServiceImpl.getPageService().findPageByTitle(title);
         PageServiceImpl.getPageService().getAssignmentByStudentName(assignmentPage, student).setGrade(grade);
-        req.getRequestDispatcher("grading.jsp").forward(req, resp);
+        resp.sendRedirect("grading");
     }
 }
