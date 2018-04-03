@@ -41,7 +41,7 @@ public class PageServiceImpl implements PageService {
         return null;
     }
 
-    public String answer(AssignmentPage page, Student student) {
+    public String findAnswer(AssignmentPage page, Student student) {
         for (Assignment assignment : page.getAssignments()) {
             if (assignment.getStudent().getEmail().equals(student.getEmail())) {
                 return assignment.getAnswer();
