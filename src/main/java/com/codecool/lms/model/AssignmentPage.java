@@ -19,6 +19,10 @@ public class AssignmentPage extends Page {
         return maxScore;
     }
 
+    public void setMaxScore(int maxScore) {
+        this.maxScore = maxScore;
+    }
+
     public List<Assignment> getAssignments() {
         return assignments;
     }
@@ -26,4 +30,6 @@ public class AssignmentPage extends Page {
     public void addAssignment(Assignment assignment) {
         assignments.add(assignment);
     }
+
+
 }

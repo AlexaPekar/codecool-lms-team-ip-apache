@@ -56,7 +56,7 @@ public class PageServiceImpl implements PageService {
                 return Integer.toString(assignment.getGrade());
             }
         }
-        return null;
+        return "-";
     }
 
     public List<AssignmentPage> getAssignmentPages() {

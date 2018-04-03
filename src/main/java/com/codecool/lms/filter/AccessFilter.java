@@ -24,10 +24,10 @@ public class AccessFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-        HttpSession session = req.getSession(false);
+        HttpSession session = req.getSession();
 
 
-        if (!session.getAttributeNames().hasMoreElements()) {
+        if (session.getAttribute("currentUser") == null) {
             req.setAttribute("message", "You have to log in first!");
             req.getRequestDispatcher("index.jsp").forward(request, response);
         } else {

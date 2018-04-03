@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="resources/css/home.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/create.css">
     <link rel="shortcut icon" href="resources/icons/titleIcon.png" />
-    <title>Create Assignment</title>
+    <title>Create Text</title>
 </head>
 
 <body background="resources/css/img/red2.jpg">
@@ -36,8 +36,6 @@
                 </form>
         </tr>
     </table>
-
-
 
 
     <div class="column left">
@@ -74,29 +72,25 @@
         <div class="column middle">
             <div class="center">
                 <div class="container">
-                    <h2>New Assignment page</h2>
+                    <h2>Edit Text page</h2>
                 </div>
-                <form method="post" action="create" class="container2">
-                    <input type=hidden name="type" value="assignment">
-                    <h3>Title</h3>
-                    <input name="title" type="text" class="title">
+                <form method="post" action="edit" class="container2">
+                    <input type=hidden name="type" value="text">
+                    <h3>Title</h3><br>
+                    <input name="title" type="text" class="title" value=${page.title}>
+                    <input type=hidden name="old-title" value=${page.title}>
                     <br>
-                    <h3>Content</h3>
-                    <textarea class="textarea" name="content" class="content"></textarea>
-                    <br>
-                    <h3>Max Score</h3>
-                    <input name="maxScore" type="number" class="maxScore">
-                    <br>
-                    <input class=button type="submit" value="Submit">
+                    <h3>Content</h3><br>
+                    <textarea class="textarea" name="content" class="content">${page.content}</textarea>
+                    <br><br>
+                    <input class=button type="submit" value="Edit">
                 </form>
             </div>
         </div>
     </div>
-
-
-            <footer>
-                <h4>2018</h4>
-            </footer>
+    <footer>
+        <h4>2018</h4>
+    </footer>
 
 </body>
 

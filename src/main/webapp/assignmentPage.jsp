@@ -68,18 +68,18 @@
         <div class="middle">
             <div class="center">
 
-                <div class="text" action="showpage" method="GET">
+                <div class="text">
                     <h1>Assignment</h1>
                     <br>
                     <h2>${page.title}</h2>
-                    <p class="maxScore">Max score: ${page.maxScore}</p>
-                    <p>${page.content}</p>
+                    <p class="score">Max score: ${page.maxScore}</p>
+                    <p>${page.content}</p><br><br>
                 </div>
                 <c:if test="${current.getClass().name == 'com.codecool.lms.model.Student'}">
                     <c:if test="${userAlreadySubmitted == false}">
 
                         <form action="submission" method="GET" class="container2">
-                            <textarea name="answer" form="submission-form" class="text-box"></textarea>
+                            <textarea name="answer" class="text-box"></textarea>
                             <input name="pageTitle" type="hidden" value="${page.title}"><br>
                             <input name="title" type="submit" value="Submit" class="submit-button">
                         </form>
@@ -88,7 +88,11 @@
 
                     <c:if test="${userAlreadySubmitted == true}">
 
-                        <p>${answer}</p>
+                        <div class="text">
+                            <h3>Submission details:</h3>
+                            <p class="score">Your score: ${point} &#47; ${page.maxScore}</p>
+                            <p>${answer}</p>
+                        </div>
 
                     </c:if>
                 </c:if>

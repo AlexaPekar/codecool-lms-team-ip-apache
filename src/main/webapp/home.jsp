@@ -149,7 +149,7 @@
                                     </td>
                                     <td class="grade-col">
                                     <c:if test="${page.getClass().name == 'com.codecool.lms.model.AssignmentPage'}">
-                                        "${page.maxScore}"
+                                        ${page.maxScore}
                                     </c:if>
                                     </td>
                                 </tr>

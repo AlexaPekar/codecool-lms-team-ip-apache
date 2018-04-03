@@ -29,8 +29,6 @@ public class PageServlet extends HttpServlet {
                 req.setAttribute("answer", answer);
                 if ((PageServiceImpl.getPageService().findGrade((AssignmentPage) myPage, (Student) req.getSession().getAttribute("currentUser"))) != null) {
                     req.setAttribute("point", PageServiceImpl.getPageService().findGrade((AssignmentPage) myPage, (Student) req.getSession().getAttribute("currentUser")));
-                } else {
-                    req.setAttribute("point", "-");
                 }
             }
             AssignmentPage assignmentPage = (AssignmentPage) myPage;
