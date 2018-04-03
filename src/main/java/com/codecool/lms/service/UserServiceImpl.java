@@ -3,6 +3,7 @@ package com.codecool.lms.service;
 import com.codecool.lms.exception.UserAlreadyRegisteredException;
 import com.codecool.lms.exception.UserNotFoundException;
 import com.codecool.lms.exception.WrongPasswordException;
+import com.codecool.lms.model.Day;
 import com.codecool.lms.model.Mentor;
 import com.codecool.lms.model.Student;
 import com.codecool.lms.model.User;
@@ -14,6 +15,7 @@ public class UserServiceImpl implements UserService {
 
     private static UserServiceImpl userService = new UserServiceImpl();
     private List<User> users = new ArrayList<>();
+    private List<Day> days = new ArrayList<>();
 
 
 
@@ -74,6 +76,14 @@ public class UserServiceImpl implements UserService {
             }
         }
         return user;
+    }
+
+    public List<Day> getDays() {
+        return days;
+    }
+
+    public void addDay(Day day) {
+        days.add(day);
     }
 
     public void deleteUser(String username){
