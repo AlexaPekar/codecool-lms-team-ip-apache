@@ -68,4 +68,13 @@ public class PageServiceImpl implements PageService {
         }
         return assignmentPages;
     }
+
+    public Assignment getAssignmentByStudentName(AssignmentPage page, Student student) {
+        for (Assignment assignment : page.getAssignments()) {
+            if (assignment.getStudent().getEmail().equals(student.getEmail())) {
+                return assignment;
+            }
+        }
+        return null;
+    }
 }
