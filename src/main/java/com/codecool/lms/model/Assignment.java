@@ -1,17 +1,22 @@
 package com.codecool.lms.model;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Assignment {
 
     private Student student;
     private String answer;
     private int grade;
     private String title;
+    private String data;
 
 
     public Assignment(Student student, String answer, String title) {
         this.student = student;
         this.answer = answer;
         this.title = title;
+        this.data = setDate();
     }
 
 
@@ -34,4 +39,12 @@ public class Assignment {
     public String getTitle() {
         return title;
     }
+
+    public String setDate() {
+        Date date = new Date();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+        String str = df.format(date);
+        return str;
+    }
+
 }
