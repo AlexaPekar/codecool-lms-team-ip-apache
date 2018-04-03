@@ -5,11 +5,13 @@ public class Assignment {
     private Student student;
     private String answer;
     private int grade;
+    private String title;
 
 
-    public Assignment(Student student, String answer) {
+    public Assignment(Student student, String answer, String title) {
         this.student = student;
         this.answer = answer;
+        this.title = title;
     }
 
 
@@ -27,5 +29,9 @@ public class Assignment {
 
     public void setGrade(int grade) {
         this.grade = grade;
+    }
+
+    public String getTitle() {
+        return title;
     }
 }

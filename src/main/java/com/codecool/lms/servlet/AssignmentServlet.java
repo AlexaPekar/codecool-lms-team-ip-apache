@@ -24,7 +24,7 @@ public class AssignmentServlet extends HttpServlet {
         String title = req.getParameter("pageTitle");
         String answer = req.getParameter("answer");
 
-        Assignment assignment = new Assignment(currentStudent, answer);
+        Assignment assignment = new Assignment(currentStudent, answer, title);
 
         AssignmentPage page = (AssignmentPage) PageServiceImpl.getPageService().findPageByTitle(title);
         page.addAssignment(assignment);
