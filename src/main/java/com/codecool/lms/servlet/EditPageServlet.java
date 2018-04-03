@@ -19,6 +19,7 @@ public class EditPageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String pageName = req.getParameter("page");
         Page page = PageServiceImpl.getPageService().findPageByTitle(pageName);
+        req.setAttribute("current", req.getSession().getAttribute("currentUser"));
         req.setAttribute("page", page);
         if (page instanceof TextPage) {
             req.getRequestDispatcher("editTextPage.jsp").forward(req, resp);

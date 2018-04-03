@@ -64,6 +64,22 @@
                         </form>
                     </a>
                 </li>
+                <c:if test="${current.getClass().name == 'com.codecool.lms.model.Mentor'}">
+                    <li>
+                        <a>
+                            <form action="grading" method="GET">
+                                <input type="image" src="resources/icons/grading.png" width="50" height="50" alt="Users" />
+                            </form>
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            <form action="attendance" method="GET">
+                                <input type="image" src="resources/icons/attendance.png" width="50" height="50" alt="Users" />
+                            </form>
+                        </a>
+                    </li>
+                </c:if>
             </ul>
         </nav>
     </div>

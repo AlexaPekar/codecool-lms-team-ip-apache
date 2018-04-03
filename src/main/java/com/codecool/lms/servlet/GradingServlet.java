@@ -27,6 +27,7 @@ public class GradingServlet extends HttpServlet {
         for (AssignmentPage page : assignmentPages) {
             assignments.addAll(page.getAssignments());
         }
+        req.setAttribute("current", req.getSession().getAttribute("currentUser"));
         req.setAttribute("assignments", assignments);
         req.getRequestDispatcher("grading.jsp").forward(req, resp);
     }
