@@ -20,6 +20,10 @@ public class ProfileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = (User) req.getSession().getAttribute("currentUser");
         req.setAttribute("user", user);
+        req.setAttribute("github", user.getGitHub());
+        if (user.isConnected()) {
+            req.setAttribute("repos", user.getGitHub().getRepositories());
+        }
         req.getRequestDispatcher("profile.jsp").forward(req, resp);
     }
 
