@@ -34,6 +34,6 @@ public class GradeStatisticsServlet extends HttpServlet {
         }
 
         req.setAttribute("userAssignments", userAssignments);
-        req.getRequestDispatcher("majdamilesz.jsp").forward(req, resp);
+        req.getRequestDispatcher("gradeStatistics.jsp").forward(req, resp);
     }
 }
