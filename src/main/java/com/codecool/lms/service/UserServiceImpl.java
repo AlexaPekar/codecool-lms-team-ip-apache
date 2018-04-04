@@ -19,7 +19,6 @@ public class UserServiceImpl implements UserService {
     private List<Day> days = new ArrayList<>();
 
 
-
     //Visible for testing
     UserServiceImpl() {
         users.add(new Student("Alexa Pekar", "alexa@citromail.hu", "00000000"));
@@ -73,7 +72,7 @@ public class UserServiceImpl implements UserService {
 
     public User findUserByName(String name) {
         User user = null;
-        for (User usr: users) {
+        for (User usr : users) {
             if (usr.getName().equals(name)) {
                 user = usr;
             }
@@ -90,7 +89,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public boolean dayExist(String date) {
-        for (Day d: days) {
+        for (Day d : days) {
             if (d.getDate().equals(date)) {
                 return true;
             }
@@ -99,7 +98,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public Day findDayByDate(String date) {
-        for (Day d: days) {
+        for (Day d : days) {
             if (d.getDate().equals(date)) {
                 return d;
             }
@@ -107,7 +106,7 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-    public void deleteUser(String username){
+    public void deleteUser(String username) {
         users.remove(findUserByName(username));
     }
 }
