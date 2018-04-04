@@ -75,6 +75,15 @@
                     </a>
                 </li>
             </c:if>
+            <c:if test="${user.getClass().name == 'com.codecool.lms.model.Student'}">
+                <li>
+                    <a>
+                        <form action="gradeStatistics" method="GET">
+                            <input type="image" src="resources/icons/statistics.png" width="50" height="50" alt="Users" />
+                        </form>
+                    </a>
+                </li>
+            </c:if>
         </ul>
     </div>
 
