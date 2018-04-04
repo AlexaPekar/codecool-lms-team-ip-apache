@@ -11,7 +11,7 @@ public class Assignment {
     private String answer;
     private int grade;
     private String title;
-    private String data;
+    private String date;
     private int maxScore;
 
 
@@ -19,7 +19,7 @@ public class Assignment {
         this.student = student;
         this.answer = answer;
         this.title = title;
-        this.data = setDate();
+        this.date = setDate();
         this.maxScore = getMaxScore();
     }
 
