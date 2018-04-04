@@ -90,11 +90,11 @@
     <div class="middle">
         <div class="center">
             <br><br>
-            <form name="profileChange" method="post" action="users">
-                <br><b>Name</b><br>
+            <form name="profileChange" method="post" action="profile">
+                <br><b>New name</b><br>
                 <input class="inputBox" type="text" name="newName">
                 <br>
-                <br><b>Password</b><br>
+                <br><b>New password</b><br>
                 <input class="inputBox" type="password" name="newPassword">
                 <br>
                 <br><b>Verify password</b><br>

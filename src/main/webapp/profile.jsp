@@ -109,7 +109,9 @@
                 </h2>
                 <div>
                     <br>
-                    <button onclick="window.location.href='changeProfile.jsp'" class="button">Change your profile</button>
+                    <form action="users" method="POST">
+                        <button class="button">Change your profile</button>
+                    </form>
                     <br>
                 </div>
             </div>
