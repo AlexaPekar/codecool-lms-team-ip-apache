@@ -56,4 +56,7 @@ public class Assignment {
         return page.getMaxScore();
     }
 
+    public String getDate() {
+        return date;
+    }
 }
