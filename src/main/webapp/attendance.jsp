@@ -97,7 +97,7 @@
 
             <div class="table-div">
              <form action="attend" method="POST">
-                <table class="users-table">
+                <table align="center" class="users-table">
                     <tr class="head-row">
                         <td class="head-cell">Name</td>
                         <td> </td>

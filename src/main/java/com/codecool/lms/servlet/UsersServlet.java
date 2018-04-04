@@ -29,40 +29,7 @@ public class UsersServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User currentUser = (User) req.getSession().getAttribute("currentUser");
-        if (req.getParameter("type").equals("Mentor")) {
-            UserServiceImpl.getUserService().deleteUser(currentUser.getName());
-            Mentor mentor = new Mentor(currentUser.getName(), currentUser.getEmail(), currentUser.getPassword());
-            try {
-                UserServiceImpl.getUserService().register(mentor);
-                req.getSession().setAttribute("currentUser", mentor);
-            } catch (UserAlreadyRegisteredException e) {
-                e.printStackTrace();
-            }
-        } else if (req.getParameter("type").equals("Student")) {
-            UserServiceImpl.getUserService().deleteUser(currentUser.getName());
-            Student student = new Student(currentUser.getName(), currentUser.getEmail(), currentUser.getPassword());
-            try {
-                UserServiceImpl.getUserService().register(student);
-                req.getSession().setAttribute("currentUser", student);
-
-            } catch (UserAlreadyRegisteredException e) {
-                e.printStackTrace();
-            }
-        }
-        if (req.getParameter("newName").length() > 0) {
-            currentUser.setName(req.getParameter("newName"));
-        } else {
-            req.getParameter(currentUser.getName());
-        }
-        if (req.getParameter("newPassword").length() >= 8 &&
-                req.getParameter("newPassword").equals(req.getParameter("secondPasswordToCheck"))) {
-            currentUser.setPassword(req.getParameter("newPassword"));
-            resp.sendRedirect("home");
-        } else {
-            req.setAttribute("message", "Invalid password. Try again.");
-            req.getRequestDispatcher("redirectProfile.jsp").forward(req, resp);
-        }
-
+        req.setAttribute("current", req.getSession().getAttribute("currentUser"));
+        req.getRequestDispatcher("changeProfile.jsp").forward(req, resp);
     }
 }
