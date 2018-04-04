@@ -94,7 +94,11 @@
                         <td class="head-cell">Name</td>
                         <td> </td>
                     </tr>
+
+
+
                     <form action="attendance" method="POST">
+                        <input type=date name="attendanceDate" max="${currentDate}">
                         <c:forEach var="user" items="${users}">
                             <tr class="text-row">
                                 <td>
@@ -111,7 +115,7 @@
                             </tr>
                         </c:forEach>
                         <br>
-                        <input type=submit name=submit Value="Submit" class="button">
+                        <input type=submit name=submit Value="Save" class="button">
                     </form>
                 </table>
 
