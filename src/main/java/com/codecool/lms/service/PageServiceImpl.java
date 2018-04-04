@@ -1,9 +1,6 @@
 package com.codecool.lms.service;
 
-import com.codecool.lms.model.Assignment;
-import com.codecool.lms.model.AssignmentPage;
-import com.codecool.lms.model.Page;
-import com.codecool.lms.model.Student;
+import com.codecool.lms.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +11,12 @@ public class PageServiceImpl implements PageService {
     private List<Page> pages = new ArrayList<>();
 
     //Visible for testing
-    PageServiceImpl() {}
+    PageServiceImpl() {
+        pages.add(new AssignmentPage("AssignmentTest1", "Kiscica is cute", 50));
+        pages.add(new AssignmentPage("AssignmentTest2", "Kiskutya is cute", 90));
+        pages.add(new TextPage("TextTest2", "Kiskutya is cute"));
+        pages.add(new TextPage("TextTest1", "Kiscica is cute"));
+    }
 
     public static PageServiceImpl getPageService() {
         return pageService;

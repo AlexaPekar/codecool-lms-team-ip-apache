@@ -22,6 +22,8 @@ public class UserServiceImpl implements UserService {
 
     //Visible for testing
     UserServiceImpl() {
+        users.add(new Student("Alexa Pekar", "alexa@citromail.hu", "00000000"));
+        users.add(new Mentor("Robert Kohanyi", "mentor@gmail.com", "00000000"));
     }
 
     public static UserServiceImpl getUserService() {

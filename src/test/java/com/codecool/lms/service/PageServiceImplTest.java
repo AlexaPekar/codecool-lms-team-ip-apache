@@ -1,4 +1,4 @@
-package com.codecool.lms.service;
+/*package com.codecool.lms.service;
 
 import com.codecool.lms.model.AssignmentPage;
 import com.codecool.lms.model.TextPage;
@@ -42,3 +42,4 @@ class PageServiceImplTest {
         //TODO EXCEPTION
     }
 }
+*/
