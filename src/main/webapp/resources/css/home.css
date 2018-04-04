@@ -76,10 +76,10 @@ nav a:focus {
     border: 3px solid darkred;
     border-radius: 20px;
     background-color: white;
-    height: 97vh;
     text-align: center;
     word-wrap: break-word;
     opacity: 0.8;
+    min-height: 97vh;
 }
 
 /* The page sharing starts here */
@@ -99,13 +99,13 @@ nav a:focus {
 
 .middle {
     padding: 10px;
-    height: 100vh;
     background: url(img/white.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-color: white;
     margin-left: 135px;
     width: 86%;
+    min-height: 100vh;
 }
 
 .main {
