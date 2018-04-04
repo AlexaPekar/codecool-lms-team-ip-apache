@@ -174,7 +174,18 @@
                                     </td>
                                     <td class="grade-col">
                                     <c:if test="${page.getClass().name == 'com.codecool.lms.model.AssignmentPage'}">
-                                        ${page.maxScore}
+                                        Max Score: ${page.maxScore}
+                                    </c:if>
+                                    </td>
+                                        <c:set var="contains" value="false" />
+                                        <c:forEach var = "sub" items="${submitted}">
+                                            <c:if test="${sub.title == page.title}">
+                                                <c:set var="contains" value="true" />
+                                            </c:if>
+                                    </c:forEach>
+                                    <td>
+                                    <c:if test="${contains == true}">
+                                        <img class="icon" width="20px" height="20px" src="resources/icons/Tick.png">
                                     </c:if>
                                     </td>
                                 </tr>
