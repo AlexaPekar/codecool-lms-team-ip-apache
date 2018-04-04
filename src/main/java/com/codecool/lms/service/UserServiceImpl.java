@@ -9,6 +9,7 @@ import com.codecool.lms.model.Student;
 import com.codecool.lms.model.User;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
@@ -84,6 +85,24 @@ public class UserServiceImpl implements UserService {
 
     public void addDay(Day day) {
         days.add(day);
+    }
+
+    public boolean dayExist(String date) {
+        for (Day d: days) {
+            if (d.getDate().equals(date)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Day findDayByDate(String date) {
+        for (Day d: days) {
+            if (d.getDate().equals(date)) {
+                return d;
+            }
+        }
+        return null;
     }
 
     public void deleteUser(String username){

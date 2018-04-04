@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,11 +25,15 @@ public class AttendanceServlet extends HttpServlet {
         List<User> users = UserServiceImpl.getUserService().getUsers();
         List<Student> students = new ArrayList<>();
         req.setAttribute("current", req.getSession().getAttribute("currentUser"));
-        for (User user: users) {
+        for (User user : users) {
             if (user instanceof Student) {
-                students.add((Student)user);
+                students.add((Student) user);
             }
         }
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-DD");
+        req.setAttribute("currentDate", simpleDateFormat.format(date));
+
         req.setAttribute("users", students);
         req.getRequestDispatcher("attendance.jsp").forward(req, resp);
     }
@@ -36,14 +41,17 @@ public class AttendanceServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Student> selectedStudents = new ArrayList<>();
-        //System.out.println(req.getParameter("selected"));
-
         String[] studentNames = req.getParameterValues("selected");
         for (String name : studentNames) {
             selectedStudents.add((Student) UserServiceImpl.getUserService().findUserByName(name));
         }
-        UserServiceImpl.getUserService().addDay(new Day(selectedStudents));
-        System.out.println(UserServiceImpl.getUserService().getDays().size());
+        String date = req.getParameter("attendanceDate");
+        if (UserServiceImpl.getUserService().dayExist(date)) {
+            UserServiceImpl.getUserService().findDayByDate(date).setStudents(selectedStudents);
+        } else {
+            UserServiceImpl.getUserService().addDay(new Day(selectedStudents, date));
+        }
+
         for (Student s : selectedStudents) {
             System.out.println(s.getName());
         }
