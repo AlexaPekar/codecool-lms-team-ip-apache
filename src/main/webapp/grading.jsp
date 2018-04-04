@@ -89,6 +89,27 @@
                 <h1>Assignments</h1>
             </div>
             <div class="table-div">
+                <table class="grading-table">
+
+                    <tr>
+                        <th class="grading-title-column">
+                            Name
+                        </th>
+                        <th class="grading-title-column">
+                            Assignment
+                        </th>
+                        <th class="grading-title-column">
+                            Submission
+                        </th>
+                        <th class="grading-title-column">
+                            Grade
+                        </th>
+                        <th class="grading-title-column"></th>
+                        <th class="grading-title-column"></th>
+                    </tr>
+
+                </table>
+
                 <c:forEach var="assignment" items="${assignments}">
                     <table class="grading-table">
                         <tr>
@@ -103,9 +124,12 @@
                             </td>
                             <form action="grading" method="POST">
                                 <td class="grading-column">
-                                    <input type="number" name="grade">
+                                    <input type="number" name="grade" value="${assignment.grade}">
                                     <input type="hidden" name="student" value="${assignment.student.name}">
                                     <input type="hidden" name="title" value="${assignment.title}">
+                                </td>
+                                <td class="grading-column">
+                                    &#47; ${assignment.maxScore}
                                 </td>
                                 <td class="grading-column">
                                     <input type="submit" value="Grade">
