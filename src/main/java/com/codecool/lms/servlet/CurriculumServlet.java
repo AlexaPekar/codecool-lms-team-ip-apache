@@ -3,7 +3,6 @@ package com.codecool.lms.servlet;
 import com.codecool.lms.model.Page;
 import com.codecool.lms.model.User;
 import com.codecool.lms.service.PageServiceImpl;
-import com.codecool.lms.service.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,6 +23,7 @@ public class CurriculumServlet extends HttpServlet {
         User currentUser = (User) req.getSession().getAttribute("currentUser");
         req.setAttribute("current", currentUser);
         req.setAttribute("pages", pages);
+        req.setAttribute("submitted", PageServiceImpl.getPageService().findSubmittedPages(currentUser));
         req.getRequestDispatcher("home.jsp").forward(req, resp);
     }
 }
