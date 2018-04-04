@@ -97,18 +97,34 @@
 
 
 
-                    <form action="attendance" method="POST">
-                        <input type=date name="attendanceDate" max="${currentDate}">
+                        <form action="attendance" method="POST">
+                        <input type=date name="attendanceDate" max="${currentDate}" value="${attendanceDate}" required>
+                        <input type=submit Value="Select" class="button">
+                        </form>
+                        <form action="attend" method="POST">
+                        <input type=hidden name="attendance" value="${attendanceDate}">
                         <c:forEach var="user" items="${users}">
-                            <tr class="text-row">
+                            <c:set var="contains" value="false" />
+                            <c:forEach var = "userhere" items="${here}">
+                                <c:if test="${user.name == userhere.name}">
+                                    <c:set var="contains" value="true" />
+                                </c:if>
+                            </c:forEach>
+                                <tr class="text-row">
                                 <td>
                                     <c:out value="${user.name}" />
                                 </td>
                                 <td> </td>
                                 <td>
                                 <label class="container">
+                                <c:if test="${contains == true}">
+                                    <input type="checkbox" name="selected" value="${user.name}" checked class=>
+                                    <span class="checkmark"></span>
+                                </c:if>
+                                <c:if test="${contains == false}">
                                     <input type="checkbox" name="selected" value="${user.name}" class=>
                                     <span class="checkmark"></span>
+                                </c:if>
                                 </label>
                                 </td>
                                 <td></td>

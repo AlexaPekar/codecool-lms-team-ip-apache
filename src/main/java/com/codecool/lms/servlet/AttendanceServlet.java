@@ -30,30 +30,41 @@ public class AttendanceServlet extends HttpServlet {
                 students.add((Student) user);
             }
         }
-        Date date = new Date();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-DD");
-        req.setAttribute("currentDate", simpleDateFormat.format(date));
-
         req.setAttribute("users", students);
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
+        req.setAttribute("currentDate", simpleDateFormat.format(date));
+        req.setAttribute("attendanceDate", simpleDateFormat.format(date));
         req.getRequestDispatcher("attendance.jsp").forward(req, resp);
+        Day today = new Day(students, simpleDateFormat.format(date));
+        UserServiceImpl.getUserService().addDay(today);
+        Day day = UserServiceImpl.getUserService().findDayByDate(simpleDateFormat.format(date));
+        req.setAttribute("here", day.getStudents());
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Student> selectedStudents = new ArrayList<>();
-        String[] studentNames = req.getParameterValues("selected");
-        for (String name : studentNames) {
-            selectedStudents.add((Student) UserServiceImpl.getUserService().findUserByName(name));
+        List<User> users = UserServiceImpl.getUserService().getUsers();
+        List<Student> students = new ArrayList<>();
+        req.setAttribute("current", req.getSession().getAttribute("currentUser"));
+        for (User user : users) {
+            if (user instanceof Student) {
+                students.add((Student) user);
+            }
         }
-        String date = req.getParameter("attendanceDate");
-        if (UserServiceImpl.getUserService().dayExist(date)) {
-            UserServiceImpl.getUserService().findDayByDate(date).setStudents(selectedStudents);
-        } else {
-            UserServiceImpl.getUserService().addDay(new Day(selectedStudents, date));
-        }
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
+        req.setAttribute("currentDate", simpleDateFormat.format(date));
 
-        for (Student s : selectedStudents) {
-            System.out.println(s.getName());
+        req.setAttribute("users", students);
+        String attendanceDate = req.getParameter("attendanceDate");
+        req.setAttribute("attendanceDate", attendanceDate);
+        if (!UserServiceImpl.getUserService().dayExist(attendanceDate)) {
+            List<Student> studentList = new ArrayList<>();
+            UserServiceImpl.getUserService().addDay(new Day(studentList, attendanceDate));
         }
+        Day day = UserServiceImpl.getUserService().findDayByDate(attendanceDate);
+        req.setAttribute("here", day.getStudents());
+        req.getRequestDispatcher("attendance.jsp").forward(req, resp);
     }
 }
