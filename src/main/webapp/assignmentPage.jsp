@@ -38,7 +38,7 @@
     </table>
 
     <div class="left">
-        <ul>
+        <ul class="left-ul">
             <li>
                 <a>
                     <form action="profile" method="GET">

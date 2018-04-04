@@ -42,7 +42,7 @@
 
     <div class="column left">
         <nav>
-            <ul>
+        <ul class="left-ul">
                 <li>
                     <a>
                         <form action="profile" method="GET">

@@ -37,7 +37,7 @@
             </table>
 
             <div class="left">
-                <ul>
+                <ul class="left-ul">
                     <li>
                         <a>
                             <form action="profile" method="GET">
@@ -147,7 +147,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <br>
                                 <h3 class="page-heading mb-3">Latest Repos</h3>
                                 <div id="repos"></div>
                                 <c:forEach var = "repo" items="${repos}">
@@ -164,9 +163,11 @@
                               </div>
                                 </div>
                                 </c:forEach>
+                                <br>
                                 <form action="github" method="GET">
                                     <input type="submit" value="Disconnect" class="button">
                                 </form>
+                                <br>
                             </c:if>
                         </div>
                     </div>
