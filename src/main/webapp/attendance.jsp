@@ -88,20 +88,21 @@
         <div class="center">
             <h1 class="page-title">Students:</h1>
 
+            <form action="attendance" method="POST">
+            <input type=date name="attendanceDate" max="${currentDate}" value="${attendanceDate}" required>
+            <br><br><br>
+            <input type=submit Value="Select" class="button">
+            <br>
+            </form>
+
             <div class="table-div">
+             <form action="attend" method="POST">
                 <table class="users-table">
                     <tr class="head-row">
                         <td class="head-cell">Name</td>
                         <td> </td>
                     </tr>
 
-
-
-                        <form action="attendance" method="POST">
-                        <input type=date name="attendanceDate" max="${currentDate}" value="${attendanceDate}" required>
-                        <input type=submit Value="Select" class="button">
-                        </form>
-                        <form action="attend" method="POST">
                         <input type=hidden name="attendance" value="${attendanceDate}">
                         <c:forEach var="user" items="${users}">
                             <c:set var="contains" value="false" />
@@ -130,11 +131,10 @@
                                 <td></td>
                             </tr>
                         </c:forEach>
-                        <br>
-                        <input type=submit name=submit Value="Save" class="button">
-                    </form>
-                </table>
-
+                    </table>
+                    <br><br><br>
+                    <input type=submit name=submit Value="Save" class="button" align: bottom>
+                </form>
             </div>
         </div>
     </div>
