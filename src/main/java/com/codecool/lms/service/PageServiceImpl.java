@@ -93,4 +93,19 @@ public class PageServiceImpl implements PageService {
         }
         return assignmentPages;
     }
+
+    public List<Assignment> currentUserAssingment(User currentUser) {
+        List<AssignmentPage> assignmentPages = PageServiceImpl.getPageService().getAssignmentPages();
+        List<Assignment> assignments = new ArrayList<>();
+        List<Assignment> userAssignments = new ArrayList<>();
+        for (AssignmentPage page : assignmentPages) {
+            assignments.addAll(page.getAssignments());
+        }
+        for (Assignment assignment : assignments) {
+            if (assignment.getStudent().getEmail().equals(currentUser.getEmail())) {
+                userAssignments.add(assignment);
+            }
+        }
+        return userAssignments;
+    }
 }
