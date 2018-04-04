@@ -1,19 +1,27 @@
 package com.codecool.lms.model;
 
+import com.codecool.lms.service.PageServiceImpl;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 import java.awt.*;
+import java.util.List;
 
 public class GradeStatisticsChart {
 
     public GradeStatisticsChart() {}
 
-    public DefaultCategoryDataset createDataset(int grade, int maxScore, String row, String column) {
+    public DefaultCategoryDataset createDataset(User currentUser) {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        dataset.setValue(calculateGradePercentage(grade, maxScore), row, column);
+        List<Assignment> currentUserAssignments = PageServiceImpl.getPageService().currentUserAssingment(currentUser);
+        for (Assignment assignment : currentUserAssignments) {
+            dataset.setValue(calculateGradePercentage(assignment.getGrade(),
+                                                    assignment.getMaxScore()),
+                                                    assignment.getTitle(),
+                                                    assignment.getDate());
+        }
         return dataset;
     }
 
