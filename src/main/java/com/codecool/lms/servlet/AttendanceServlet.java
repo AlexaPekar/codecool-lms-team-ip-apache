@@ -35,11 +35,13 @@ public class AttendanceServlet extends HttpServlet {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
         req.setAttribute("currentDate", simpleDateFormat.format(date));
         req.setAttribute("attendanceDate", simpleDateFormat.format(date));
-        req.getRequestDispatcher("attendance.jsp").forward(req, resp);
-        Day today = new Day(students, simpleDateFormat.format(date));
-        UserServiceImpl.getUserService().addDay(today);
+        if (!UserServiceImpl.getUserService().dayExist(simpleDateFormat.format(date))) {
+            Day today = new Day(students, simpleDateFormat.format(date));
+            UserServiceImpl.getUserService().addDay(today);
+        }
         Day day = UserServiceImpl.getUserService().findDayByDate(simpleDateFormat.format(date));
         req.setAttribute("here", day.getStudents());
+        req.getRequestDispatcher("attendance.jsp").forward(req, resp);
     }
 
     @Override
