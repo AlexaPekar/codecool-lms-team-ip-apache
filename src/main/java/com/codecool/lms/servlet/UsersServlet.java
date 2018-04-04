@@ -26,4 +26,10 @@ public class UsersServlet extends HttpServlet {
         req.setAttribute("current", req.getSession().getAttribute("currentUser"));
         req.getRequestDispatcher("users.jsp").forward(req, resp);
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("current", req.getSession().getAttribute("currentUser"));
+        req.getRequestDispatcher("changeProfile.jsp").forward(req, resp);
+    }
 }
