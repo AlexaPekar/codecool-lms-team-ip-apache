@@ -3,7 +3,6 @@ package com.codecool.lms.servlet;
 
 import com.codecool.lms.model.Assignment;
 import com.codecool.lms.model.AssignmentPage;
-import com.codecool.lms.model.Page;
 import com.codecool.lms.model.Student;
 import com.codecool.lms.service.PageServiceImpl;
 import com.codecool.lms.service.UserServiceImpl;
@@ -14,7 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/grading")
@@ -22,11 +20,7 @@ public class GradingServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<AssignmentPage> assignmentPages = PageServiceImpl.getPageService().getAssignmentPages();
-        List<Assignment> assignments = new ArrayList<>();
-        for (AssignmentPage page : assignmentPages) {
-            assignments.addAll(page.getAssignments());
-        }
+        List<Assignment> assignments = PageServiceImpl.getPageService().getAssignments();
         req.setAttribute("current", req.getSession().getAttribute("currentUser"));
         req.setAttribute("assignments", assignments);
         req.getRequestDispatcher("grading.jsp").forward(req, resp);

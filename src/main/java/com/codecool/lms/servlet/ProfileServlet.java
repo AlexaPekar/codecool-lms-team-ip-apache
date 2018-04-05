@@ -52,6 +52,7 @@ public class ProfileServlet extends HttpServlet {
                 e.printStackTrace();
             }
         }
+
         currentUser = (User) req.getSession().getAttribute("currentUser");
         if (req.getParameter("newName").length() > 0) {
             currentUser.setName(req.getParameter("newName"));

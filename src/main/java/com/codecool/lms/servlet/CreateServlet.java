@@ -3,7 +3,6 @@ package com.codecool.lms.servlet;
 import com.codecool.lms.model.AssignmentPage;
 import com.codecool.lms.model.TextPage;
 import com.codecool.lms.service.PageServiceImpl;
-import com.codecool.lms.service.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,12 +25,10 @@ public class CreateServlet extends HttpServlet {
         if (type.equals("text")) {
             TextPage myTextPage = new TextPage(title, content);
             PageServiceImpl.getPageService().addNewPage(myTextPage);
-            req.setAttribute("message", "Text page successfully created.");
         } else {
             int maxPoint = Integer.parseInt(req.getParameter("maxScore"));
             AssignmentPage assignmentPage = new AssignmentPage(title, content, maxPoint);
             PageServiceImpl.getPageService().addNewPage(assignmentPage);
-            req.setAttribute("message", "Assignment page successfully created.");
         }
 
         resp.sendRedirect("home");

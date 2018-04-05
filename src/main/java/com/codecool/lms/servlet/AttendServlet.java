@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/attend")
@@ -18,13 +17,8 @@ public class AttendServlet extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Student> selectedStudents = new ArrayList<>();
         String[] studentNames = req.getParameterValues("selected");
-        if (studentNames != null) {
-            for (String name : studentNames) {
-                selectedStudents.add((Student) UserServiceImpl.getUserService().findUserByName(name));
-            }
-        }
+        List<Student> selectedStudents = UserServiceImpl.getUserService().createAttendStudentList(studentNames);
         String date = req.getParameter("attendance");
         if (UserServiceImpl.getUserService().dayExist(date)) {
             UserServiceImpl.getUserService().findDayByDate(date).setStudents(selectedStudents);

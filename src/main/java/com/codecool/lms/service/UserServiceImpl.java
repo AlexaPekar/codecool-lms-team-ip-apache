@@ -9,7 +9,6 @@ import com.codecool.lms.model.Student;
 import com.codecool.lms.model.User;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
@@ -80,10 +79,6 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    public List<Day> getDays() {
-        return days;
-    }
-
     public void addDay(Day day) {
         days.add(day);
     }
@@ -108,5 +103,25 @@ public class UserServiceImpl implements UserService {
 
     public void deleteUser(String username) {
         users.remove(findUserByName(username));
+    }
+
+    public List<Student> getStudents() {
+        List<Student> students = new ArrayList<>();
+        for (User user : users) {
+            if (user instanceof Student) {
+                students.add((Student) user);
+            }
+        }
+        return students;
+    }
+
+    public List<Student> createAttendStudentList(String[] studentNames) {
+        List<Student> selectedStudents = new ArrayList<>();
+        if (studentNames != null) {
+            for (String name : studentNames) {
+                selectedStudents.add((Student) UserServiceImpl.getUserService().findUserByName(name));
+            }
+        }
+        return selectedStudents;
     }
 }

@@ -23,20 +23,14 @@ public class PageServlet extends HttpServlet {
         if (myPage instanceof TextPage) {
             req.getRequestDispatcher("textPage.jsp").forward(req, resp);
         } else {
-            req.setAttribute("userAlreadySubmitted", false);
             if (req.getSession().getAttribute("currentUser") instanceof Student) {
                 String answer = PageServiceImpl.getPageService().findAnswer((AssignmentPage) myPage, (Student) req.getSession().getAttribute("currentUser"));
                 req.setAttribute("answer", answer);
-                if ((PageServiceImpl.getPageService().findGrade((AssignmentPage) myPage, (Student) req.getSession().getAttribute("currentUser"))) != null) {
-                    req.setAttribute("point", PageServiceImpl.getPageService().findGrade((AssignmentPage) myPage, (Student) req.getSession().getAttribute("currentUser")));
-                }
+                req.setAttribute("point", PageServiceImpl.getPageService().findGrade((AssignmentPage) myPage, (Student) req.getSession().getAttribute("currentUser")));
             }
             AssignmentPage assignmentPage = (AssignmentPage) myPage;
-            for (Assignment assignment : assignmentPage.getAssignments()) {
-                if (assignment.getStudent().equals(req.getSession().getAttribute("currentUser"))) {
-                    req.setAttribute("userAlreadySubmitted", true);
-                }
-            }
+            boolean submitted = PageServiceImpl.getPageService().userAlreadySubmitted((User) req.getSession().getAttribute("currentUser"), assignmentPage);
+            req.setAttribute("userAlreadySubmitted", submitted);
             req.getRequestDispatcher("assignmentPage.jsp").forward(req, resp);
         }
 

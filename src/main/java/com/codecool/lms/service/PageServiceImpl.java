@@ -55,7 +55,9 @@ public class PageServiceImpl implements PageService {
     public String findGrade(AssignmentPage page, Student student) {
         for (Assignment assignment : page.getAssignments()) {
             if (assignment.getStudent().getEmail().equals(student.getEmail())) {
-                return Integer.toString(assignment.getGrade());
+                if (assignment.getGrade() != 0) {
+                    return Integer.toString(assignment.getGrade());
+                }
             }
         }
         return "-";
@@ -107,5 +109,23 @@ public class PageServiceImpl implements PageService {
             }
         }
         return userAssignments;
+    }
+
+    public boolean userAlreadySubmitted(User user, AssignmentPage assignmentPage) {
+        for (Assignment assignment : assignmentPage.getAssignments()) {
+            if (assignment.getStudent().getEmail().equals(user.getEmail())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public List<Assignment> getAssignments() {
+        List<AssignmentPage> assignmentPages = getAssignmentPages();
+        List<Assignment> assignments = new ArrayList<>();
+        for (AssignmentPage page : assignmentPages) {
+            assignments.addAll(page.getAssignments());
+        }
+        return assignments;
     }
 }
