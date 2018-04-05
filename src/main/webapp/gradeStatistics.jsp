@@ -135,7 +135,7 @@
                         </tr>
                     </table>
                 </c:forEach>
-                <img src="data:image/png;base64,<c:out value="${b64}"/>">
+                <p><img src="data:image/png;base64,<c:out value="${b64}"/>"></p>
             </div>
         </div>
     </div>
