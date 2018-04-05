@@ -21,9 +21,18 @@
     <filter-mapping>
         <filter-name>AccessFilter</filter-name>
         <url-pattern>/users</url-pattern>
-        <url-pattern>/home.jsp</url-pattern>
         <url-pattern>/home</url-pattern>
         <url-pattern>/profile</url-pattern>
-
+        <url-pattern>/submission</url-pattern>
+        <url-pattern>/attendance</url-pattern>
+        <url-pattern>/attend</url-pattern>
+        <url-pattern>/create</url-pattern>
+        <url-pattern>/delete</url-pattern>
+        <url-pattern>/edit</url-pattern>
+        <url-pattern>/github</url-pattern>
+        <url-pattern>/gradeStatistics</url-pattern>
+        <url-pattern>/grading</url-pattern>
+        <url-pattern>/logout</url-pattern>
+        <url-pattern>/showpage</url-pattern>
     </filter-mapping>
 </web-app>
