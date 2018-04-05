@@ -19,7 +19,8 @@ public class UserServiceImpl implements UserService {
 
 
     //Visible for testing
-    UserServiceImpl() {}
+    UserServiceImpl() {
+    }
 
     public static UserServiceImpl getUserService() {
         return userService;

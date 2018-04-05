@@ -11,7 +11,8 @@ public class PageServiceImpl implements PageService {
     private List<Page> pages = new ArrayList<>();
 
     //Visible for testing
-    PageServiceImpl() {}
+    PageServiceImpl() {
+    }
 
     public static PageServiceImpl getPageService() {
         return pageService;

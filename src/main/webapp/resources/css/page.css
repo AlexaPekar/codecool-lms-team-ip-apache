@@ -85,18 +85,19 @@
     border-radius: 10px;
     background-color: #f2f2f2;
     table-layout: fixed;
+}
 
 .grading-column {
     font-size: 1.5em;
     color: white;
-    width: width: 100px;
+    width: 100px;
     text-align: center;
 }
 
 .grading-title-column {
     font-size: 1.5em;
     color: white;
-    width: width: 100px;
+    width: 100px;
     text-align: center;
     font-weight: bold;
 }

@@ -1,4 +1,3 @@
-
 function validateLoginForm() {
     var email = document.getElementById("email").value;
     if (email == null || email == "") {
@@ -13,3 +12,5 @@ function validateLoginForm() {
     }
     return true;
 }
+
+

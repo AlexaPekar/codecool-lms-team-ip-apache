@@ -20,7 +20,8 @@ body {
 .login {
     height: 500px;
 }
-.register{
+
+.register {
     height: 800px;
 }
 
@@ -58,23 +59,27 @@ body {
     cursor: pointer;
 }
 
-.register-paragraph{
+.register-paragraph {
     font-size: 13px;
 }
-.register-link{
-    cursor:pointer;
+
+.register-link {
+    cursor: pointer;
     color: #8b0000;
     text-decoration: underline;
 }
-.form-el{
+
+.form-el {
     margin-top: 5px;
     margin-bottom: 8px;
 }
-.student-el{
+
+.student-el {
     margin-left: 8px;
 }
-.redirect{
+
+.redirect {
     vertical-align: middle;
     text-align: center;
-    }
+}
 

@@ -4,6 +4,7 @@ import com.codecool.lms.model.AssignmentPage;
 import com.codecool.lms.model.TextPage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class PageServiceImplTest {

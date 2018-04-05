@@ -112,7 +112,6 @@ nav a:focus {
     text-align: center;
 }
 
-
 header,
 footer {
     color: white;
@@ -174,7 +173,6 @@ li a:hover:not(.active) {
     background: red;
 }
 
-
 /*-BENCE */
 
 .title-col {
@@ -234,11 +232,12 @@ li a:hover:not(.active) {
     width: 15%;
     padding-right: 5px;
 }
+
 .type-col {
     vertical-align: middle;
     width: 15%;
     padding-left: 5px;
-    
+
 }
 
 .name {
@@ -254,7 +253,6 @@ li a:hover:not(.active) {
     width: 50px;
     height: 50px;
 }
-
 
 .user-table {
     width: 100%;
