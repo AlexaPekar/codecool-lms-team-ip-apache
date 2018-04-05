@@ -153,10 +153,10 @@
                                 <div class="card card-body mb-2">
                                 <div class="row">
                                 <div class="col-md-6">
-                                  <a href="${repo.html}" target="_blank">${repo.name}</a>
+                                  <a class="repo-name" href="${repo.html}" target="_blank">${repo.name}</a>
                                 </div>
                                 <div class="col-md-6">
-                                <span class="badge badge-primary">Stars: ${repo.stars}</span>
+                                <span class="badge badge-primary ">Stars: ${repo.stars}</span>
                                 <span class="badge badge-secondary">Watchers: ${repo.watchers}</span>
                                  <span class="badge badge-success">Forks: ${repo.forks}</span>
                             </div>

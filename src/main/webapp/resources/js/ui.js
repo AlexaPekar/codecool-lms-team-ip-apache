@@ -3,7 +3,7 @@ class UI {
     this.profile = document.getElementById('profile');
   }
 
-  // Display profile in UI
+
   showProfile(user) {
     this.profile.innerHTML = `
       <div class="card card-body mb-3">
@@ -44,7 +44,7 @@ class UI {
     `;
   }
 
-  // Show user repos
+
   showRepos(repos) {
     let output = '';
 
@@ -53,7 +53,7 @@ class UI {
         <div class="card card-body mb-2">
           <div class="row">
             <div class="col-md-6">
-              <a href="${repo.html_url}" target="_blank">${repo.name}</a>
+              <a class="repo-name" href="${repo.html_url}" target="_blank">${repo.name}</a>
             </div>
             <div class="col-md-6">
             <span class="badge badge-primary">Stars: ${repo.stargazers_count}</span>
@@ -75,35 +75,35 @@ class UI {
     <input type="submit" value="Connect" class="button">
     </form>
     `;
-    // Output repos
+
     document.getElementById('repos').innerHTML = output;
 
   }
 
-  // Show alert message
+
   showAlert(message, className) {
-    // Clear any remaining alerts
+
     this.clearAlert();
-    // Create div
+
     const div  =  document.createElement('div');
-    // Add classes
+
     div.className = className;
-    // Add text
+
     div.appendChild(document.createTextNode(message));
-    // Get parent
+
     const container =  document.querySelector('.searchContainer');
-    // Get search box
+
     const search = document.querySelector('.search');
-    // Insert alert
+
     container.insertBefore(div, search);
 
-    // Timeout after 3 sec
+
     setTimeout(() => {
       this.clearAlert();
     }, 3000);
   }
 
-  // Clear alert message
+
   clearAlert() {
     const currentAlert = document.querySelector('.alert');
 
@@ -112,7 +112,7 @@ class UI {
     }
   }
 
-  // Clear profile
+
   clearProfile() {
     this.profile.innerHTML = '';
   }
