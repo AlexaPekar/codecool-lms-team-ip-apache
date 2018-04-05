@@ -22,6 +22,13 @@ public class Assignment {
         this.date = setDate();
         this.maxScore = getMaxScore();
     }
+    public Assignment(Student student, String answer, String title,int maxScore) {
+        this.student = student;
+        this.answer = answer;
+        this.title = title;
+        this.date = setDate();
+        this.maxScore = maxScore;
+    }
 
 
     public Student getStudent() {
