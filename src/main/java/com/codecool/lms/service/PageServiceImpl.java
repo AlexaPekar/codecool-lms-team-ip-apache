@@ -11,12 +11,7 @@ public class PageServiceImpl implements PageService {
     private List<Page> pages = new ArrayList<>();
 
     //Visible for testing
-    PageServiceImpl() {
-        pages.add(new AssignmentPage("AssignmentTest1", "Kiscica is cute", 50));
-        pages.add(new AssignmentPage("AssignmentTest2", "Kiskutya is cute", 90));
-        pages.add(new TextPage("TextTest2", "Kiskutya is cute"));
-        pages.add(new TextPage("TextTest1", "Kiscica is cute"));
-    }
+    PageServiceImpl() {}
 
     public static PageServiceImpl getPageService() {
         return pageService;

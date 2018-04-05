@@ -1,4 +1,4 @@
-/*package com.codecool.lms.service;
+package com.codecool.lms.service;
 
 import com.codecool.lms.exception.UserAlreadyRegisteredException;
 import com.codecool.lms.exception.UserNotFoundException;
@@ -48,4 +48,4 @@ class UserServiceImplTest {
             userServiceImpl.findUserByEmail("kacsamesek@gmail.com", "123");
         });
     }
-}*/
+}
