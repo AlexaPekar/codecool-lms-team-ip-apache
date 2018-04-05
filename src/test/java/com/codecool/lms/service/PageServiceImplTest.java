@@ -11,11 +11,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PageServiceImplTest {
 
-    PageServiceImpl pageServiceImpl;
-    TextPage testTextPage;
-    AssignmentPage testAssignmentPage;
-    Assignment testAssignment;
-    Student testStudent;
+    private PageServiceImpl pageServiceImpl;
+    private TextPage testTextPage;
+    private AssignmentPage testAssignmentPage;
+    private Assignment testAssignment;
+    private Student testStudent;
 
     @BeforeEach
     void setUp() {
@@ -76,4 +76,20 @@ class PageServiceImplTest {
         assertEquals(assignmentPages, pageServiceImpl.getAssignmentPages());
     }
 
+    @Test
+    void getAssignmentByStudentName() {
+        assertEquals(testAssignment, pageServiceImpl.getAssignmentByStudentName(testAssignmentPage, testStudent));
+    }
+
+    @Test
+    void findSubmittedPages() {
+        List<AssignmentPage> assignmentPages = new ArrayList<>();
+        assignmentPages.add(testAssignmentPage);
+        assertEquals(assignmentPages, pageServiceImpl.findSubmittedPages(testStudent));
+    }
+
+    @Test
+    void userAlreadySubmitted() {
+        assertTrue(pageServiceImpl.userAlreadySubmitted(testStudent, testAssignmentPage));
+    }
 }
