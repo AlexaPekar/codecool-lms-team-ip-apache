@@ -96,7 +96,7 @@ public class PageServiceImpl implements PageService {
         return assignmentPages;
     }
 
-    public List<Assignment> currentUserAssingment(User currentUser) {
+    public List<Assignment> currentUserAssingments(User currentUser) {
         List<AssignmentPage> assignmentPages = PageServiceImpl.getPageService().getAssignmentPages();
         List<Assignment> assignments = new ArrayList<>();
         List<Assignment> userAssignments = new ArrayList<>();

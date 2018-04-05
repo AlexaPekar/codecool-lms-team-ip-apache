@@ -24,7 +24,7 @@ public interface PageService {
 
     List<AssignmentPage> findSubmittedPages(User user);
 
-    List<Assignment> currentUserAssingment(User currentUser);
+    List<Assignment> currentUserAssingments(User currentUser);
 
     boolean userAlreadySubmitted(User user, AssignmentPage assignmentPage);
 

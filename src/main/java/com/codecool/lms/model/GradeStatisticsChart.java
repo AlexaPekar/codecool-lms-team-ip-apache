@@ -15,7 +15,7 @@ public class GradeStatisticsChart {
 
     public DefaultCategoryDataset createDataset(User currentUser) {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        List<Assignment> currentUserAssignments = PageServiceImpl.getPageService().currentUserAssingment(currentUser);
+        List<Assignment> currentUserAssignments = PageServiceImpl.getPageService().currentUserAssingments(currentUser);
         for (Assignment assignment : currentUserAssignments) {
             dataset.setValue(calculateGradePercentage(assignment.getGrade(),
                                                     assignment.getMaxScore()),
