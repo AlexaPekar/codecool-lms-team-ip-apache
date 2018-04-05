@@ -4,7 +4,6 @@ import com.codecool.lms.model.Assignment;
 import com.codecool.lms.model.AssignmentPage;
 import com.codecool.lms.model.Student;
 import com.codecool.lms.service.PageServiceImpl;
-import com.codecool.lms.service.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,6 +22,13 @@ public class AssignmentServlet extends HttpServlet {
 
         String title = req.getParameter("pageTitle");
         String answer = req.getParameter("answer");
+        if (currentStudent.isConnected()) {
+            String repo = req.getParameter("repolist");
+            if (!repo.equals("null")) {
+                repo = "<a href=" + repo + ">" + repo + "</a>";
+                answer = repo;
+            }
+        }
 
         Assignment assignment = new Assignment(currentStudent, answer, title);
 
