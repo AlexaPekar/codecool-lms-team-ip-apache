@@ -86,10 +86,10 @@
 <div class="main">
     <div class="middle">
         <div class="center">
-            <h1 class="page-title">Students:</h1>
+            <h1 class="page-title">Attendance</h1>
 
             <form action="attendance" method="POST">
-            <input type=date name="attendanceDate" max="${currentDate}" value="${attendanceDate}" required>
+            <input type=date style="font-size: 20px" name="attendanceDate" max="${currentDate}" value="${attendanceDate}" required>
             <br><br><br>
             <input type=submit Value="Select" class="button">
             <br>
@@ -104,6 +104,7 @@
                     </tr>
 
                         <input type=hidden name="attendance" value="${attendanceDate}">
+                        <h2 class="page-title">Students:</h2>
                         <c:forEach var="user" items="${users}">
                             <c:set var="contains" value="false" />
                             <c:forEach var = "userhere" items="${here}">
