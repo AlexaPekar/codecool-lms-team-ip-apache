@@ -66,8 +66,13 @@ public class ProfileServlet extends HttpServlet {
             resp.sendRedirect("home");
         } else {
             req.setAttribute("message", "Invalid password. Try again.");
-            req.getSession().setAttribute("currentUser", currentUser);
-            req.getRequestDispatcher("redirectProfile.jsp").forward(req, resp);
+            User user = (User) req.getSession().getAttribute("currentUser");
+            req.setAttribute("user", user);
+            req.setAttribute("github", user.getGitHub());
+            if (user.isConnected()) {
+                req.setAttribute("repos", user.getGitHub().getRepositories());
+            }
+            req.getRequestDispatcher("profile.jsp").forward(req, resp);
         }
     }
 }

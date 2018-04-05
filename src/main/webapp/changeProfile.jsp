@@ -97,7 +97,7 @@
                 <br><b>New password</b><br>
                 <input class="inputBox" type="password" name="newPassword">
                 <br>
-                <br><b>Verify password</b><br>
+                <br><b>Verify new password</b><br>
                 <input class="inputBox" type="password" name="secondPasswordToCheck">
                 <br><br>
                 <input type="radio" name="type" value="Mentor">Mentor<br>

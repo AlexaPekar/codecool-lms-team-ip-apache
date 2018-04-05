@@ -91,6 +91,7 @@
             <div class="main">
                 <div class="middle">
                     <div class="center">
+                    <h2>${message}</h2>
                         <br><br><br><br>
                         <img src="resources/icons/profilepic.png">
                         <h2>Name:
