@@ -28,11 +28,11 @@ public class UserServiceImpl implements UserService {
         return userService;
     }
 
-    public List<User> getUsers() {
+    public synchronized List<User> getUsers() {
         return users;
     }
 
-    public boolean containsUser(String email) {
+    public synchronized boolean containsUser(String email) {
         for (User user : users) {
             if (user.getEmail().equals(email)) {
                 return true;
@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
-    public void register(User user) throws UserAlreadyRegisteredException {
+    public synchronized void register(User user) throws UserAlreadyRegisteredException {
         if (!containsUser(user.getEmail())) {
             users.add(user);
         } else {
@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public User findUserByEmail(String email, String password) throws UserNotFoundException, WrongPasswordException {
+    public synchronized User findUserByEmail(String email, String password) throws UserNotFoundException, WrongPasswordException {
         for (User user : users) {
             if (user.getEmail().equals(email)) {
                 if (user.getPassword().equals(password)) {
@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
         throw new UserNotFoundException();
     }
 
-    public User createUser(String email, String name, String password, String type) {
+    public synchronized User createUser(String email, String name, String password, String type) {
         if (type.equals("Mentor")) {
             return new Mentor(name, email, password);
         } else {
@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public User findUserByName(String name) {
+    public synchronized User findUserByName(String name) {
         User user = null;
         for (User usr : users) {
             if (usr.getName().equals(name)) {
@@ -79,11 +79,11 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    public void addDay(Day day) {
+    public synchronized void addDay(Day day) {
         days.add(day);
     }
 
-    public boolean dayExist(String date) {
+    public synchronized boolean dayExist(String date) {
         for (Day d : days) {
             if (d.getDate().equals(date)) {
                 return true;
@@ -92,7 +92,7 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
-    public Day findDayByDate(String date) {
+    public synchronized Day findDayByDate(String date) {
         for (Day d : days) {
             if (d.getDate().equals(date)) {
                 return d;
@@ -101,7 +101,7 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-    public void deleteUser(String username) {
+    public synchronized void deleteUser(String username) {
         users.remove(findUserByName(username));
     }
 
@@ -115,7 +115,7 @@ public class UserServiceImpl implements UserService {
         return students;
     }
 
-    public List<Student> createAttendStudentList(String[] studentNames) {
+    public synchronized List<Student> createAttendStudentList(String[] studentNames) {
         List<Student> selectedStudents = new ArrayList<>();
         if (studentNames != null) {
             for (String name : studentNames) {

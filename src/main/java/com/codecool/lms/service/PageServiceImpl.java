@@ -22,19 +22,19 @@ public class PageServiceImpl implements PageService {
         return pageService;
     }
 
-    public List<Page> getPages() {
+    public synchronized List<Page> getPages() {
         return pages;
     }
 
-    public void addNewPage(Page page) {
+    public synchronized void addNewPage(Page page) {
         pages.add(page);
     }
 
-    public void removePage(String title) {
+    public synchronized void removePage(String title) {
         pages.remove(findPageByTitle(title));
     }
 
-    public Page findPageByTitle(String title) {
+    public synchronized Page findPageByTitle(String title) {
         for (Page page : pages) {
             if (page.getTitle().equals(title)) {
                 return page;
@@ -43,7 +43,7 @@ public class PageServiceImpl implements PageService {
         return null;
     }
 
-    public String findAnswer(AssignmentPage page, Student student) {
+    public synchronized String findAnswer(AssignmentPage page, Student student) {
         for (Assignment assignment : page.getAssignments()) {
             if (assignment.getStudent().getEmail().equals(student.getEmail())) {
                 return assignment.getAnswer();
@@ -52,7 +52,7 @@ public class PageServiceImpl implements PageService {
         return null;
     }
 
-    public String findGrade(AssignmentPage page, Student student) {
+    public synchronized String findGrade(AssignmentPage page, Student student) {
         for (Assignment assignment : page.getAssignments()) {
             if (assignment.getStudent().getEmail().equals(student.getEmail())) {
                 if (assignment.getGrade() != 0) {
@@ -63,7 +63,7 @@ public class PageServiceImpl implements PageService {
         return "-";
     }
 
-    public List<AssignmentPage> getAssignmentPages() {
+    public synchronized List<AssignmentPage> getAssignmentPages() {
         List<AssignmentPage> assignmentPages = new ArrayList<>();
         for (Page page : pages) {
             if (page instanceof AssignmentPage) {
@@ -73,7 +73,7 @@ public class PageServiceImpl implements PageService {
         return assignmentPages;
     }
 
-    public Assignment getAssignmentByStudentName(AssignmentPage page, Student student) {
+    public synchronized Assignment getAssignmentByStudentName(AssignmentPage page, Student student) {
         for (Assignment assignment : page.getAssignments()) {
             if (assignment.getStudent().getEmail().equals(student.getEmail())) {
                 return assignment;
@@ -82,7 +82,7 @@ public class PageServiceImpl implements PageService {
         return null;
     }
 
-    public List<AssignmentPage> findSubmittedPages(User user) {
+    public synchronized List<AssignmentPage> findSubmittedPages(User user) {
         List<AssignmentPage> assignmentPages = new ArrayList<>();
         for (Page page : pages) {
             if (page instanceof AssignmentPage) {
@@ -96,7 +96,7 @@ public class PageServiceImpl implements PageService {
         return assignmentPages;
     }
 
-    public List<Assignment> currentUserAssingments(User currentUser) {
+    public synchronized List<Assignment> currentUserAssingments(User currentUser) {
         List<AssignmentPage> assignmentPages = PageServiceImpl.getPageService().getAssignmentPages();
         List<Assignment> assignments = new ArrayList<>();
         List<Assignment> userAssignments = new ArrayList<>();
@@ -111,7 +111,7 @@ public class PageServiceImpl implements PageService {
         return userAssignments;
     }
 
-    public boolean userAlreadySubmitted(User user, AssignmentPage assignmentPage) {
+    public synchronized boolean userAlreadySubmitted(User user, AssignmentPage assignmentPage) {
         for (Assignment assignment : assignmentPage.getAssignments()) {
             if (assignment.getStudent().getEmail().equals(user.getEmail())) {
                 return true;
@@ -120,7 +120,7 @@ public class PageServiceImpl implements PageService {
         return false;
     }
 
-    public List<Assignment> getAssignments() {
+    public synchronized List<Assignment> getAssignments() {
         List<AssignmentPage> assignmentPages = getAssignmentPages();
         List<Assignment> assignments = new ArrayList<>();
         for (AssignmentPage page : assignmentPages) {
