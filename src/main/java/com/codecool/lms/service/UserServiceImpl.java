@@ -80,6 +80,10 @@ public class UserServiceImpl implements UserService {
         days.add(day);
     }
 
+    public synchronized List<Day> getDays() {
+        return days;
+    }
+
     public synchronized boolean dayExist(String date) {
         for (Day d : days) {
             if (d.getDate().equals(date)) {

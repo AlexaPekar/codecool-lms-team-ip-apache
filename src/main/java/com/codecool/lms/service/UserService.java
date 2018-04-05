@@ -25,6 +25,8 @@ public interface UserService {
 
     void addDay(Day day);
 
+    List<Day> getDays();
+
     boolean dayExist(String date);
 
     Day findDayByDate(String date);
