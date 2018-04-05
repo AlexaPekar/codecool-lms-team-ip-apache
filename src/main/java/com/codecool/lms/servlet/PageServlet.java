@@ -31,6 +31,9 @@ public class PageServlet extends HttpServlet {
             AssignmentPage assignmentPage = (AssignmentPage) myPage;
             boolean submitted = PageServiceImpl.getPageService().userAlreadySubmitted((User) req.getSession().getAttribute("currentUser"), assignmentPage);
             req.setAttribute("userAlreadySubmitted", submitted);
+            if (((User) req.getSession().getAttribute("currentUser")).isConnected()) {
+                req.setAttribute("repos", ((User) req.getSession().getAttribute("currentUser")).getGitHub().getRepositories());
+            }
             req.getRequestDispatcher("assignmentPage.jsp").forward(req, resp);
         }
 

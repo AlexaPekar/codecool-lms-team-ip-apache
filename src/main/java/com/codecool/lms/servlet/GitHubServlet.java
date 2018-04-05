@@ -35,10 +35,11 @@ public class GitHubServlet extends HttpServlet {
         String[] watchers = req.getParameterValues("repo-watcher");
         String[] forks = req.getParameterValues("repo-forms");
         List<Repository> repositories = new ArrayList<>();
-        for (int i = 0; i < htmls.length; i++) {
-            repositories.add(new Repository(htmls[i], names[i], Integer.parseInt(stars[i]), Integer.parseInt(watchers[i]), forks[i]));
+        if (htmls != null) {
+            for (int i = 0; i < htmls.length; i++) {
+                repositories.add(new Repository(htmls[i], names[i], Integer.parseInt(stars[i]), Integer.parseInt(watchers[i]), forks[i]));
+            }
         }
-
         GitHub github = new GitHub(avatar, html, repos, gists, followers, following, company, blog, location, created, repositories);
 
         ((User) req.getSession().getAttribute("currentUser")).setConnected(true);

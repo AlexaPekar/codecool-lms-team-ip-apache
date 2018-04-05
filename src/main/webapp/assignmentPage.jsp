@@ -119,6 +119,14 @@
                         <form action="submission" method="GET" class="container2">
                             <textarea name="answer" class="text-box"></textarea>
                             <input name="pageTitle" type="hidden" value="${page.title}"><br>
+                            <c:if test="${current.connected == true}">
+                             <select name="repolist">
+                             <option value="null">No repo to be added</option>
+                             <c:forEach var = "repo" items="${repos}">
+                              <option value="${repo.html}">${repo.name}</option>
+                              </c:forEach>
+                            </select>
+                            </c:if>
                             <input name="title" type="submit" value="Submit" class="submit-button">
                         </form>
 

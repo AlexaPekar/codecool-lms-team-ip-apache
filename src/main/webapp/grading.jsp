@@ -120,7 +120,7 @@
                                 <c:out value="${assignment.title}" />
                             </td>
                             <td class="grading-column">
-                                <c:out value="${assignment.answer}"/>
+                                ${assignment.answer}
                             </td>
                             <form action="grading" method="POST">
                                 <td class="grading-column">
