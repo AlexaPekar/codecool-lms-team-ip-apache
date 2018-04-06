@@ -57,12 +57,14 @@ public class ProfileServlet extends HttpServlet {
         if (req.getParameter("newName").length() > 0) {
             currentUser.setName(req.getParameter("newName"));
         }
-        if ((req.getParameter("newPassword").length() >= 8 &&
-                req.getParameter("newPassword").equals(req.getParameter("secondPasswordToCheck"))) ||
-                (req.getParameter("newPassword").equals("") &&
-                        req.getParameter("secondPasswordToCheck").equals(""))) {
+        if (req.getParameter("newPassword").length() >= 8 &&
+                req.getParameter("newPassword").equals(req.getParameter("secondPasswordToCheck"))) {
+
             currentUser.setPassword(req.getParameter("newPassword"));
             req.getSession().setAttribute("currentUser", currentUser);
+            resp.sendRedirect("home");
+        } else if ((req.getParameter("newPassword").equals("") &&
+                req.getParameter("secondPasswordToCheck").equals(""))) {
             resp.sendRedirect("home");
         } else {
             req.setAttribute("message", "Invalid password. Try again.");
