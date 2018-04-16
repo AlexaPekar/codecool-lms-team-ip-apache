@@ -21,22 +21,24 @@ public class AttendanceServlet extends HttpServlet {
 
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         List<User> users = UserServiceImpl.getUserService().getUsers();
         List<Student> students = UserServiceImpl.getUserService().getStudents();
-
-        req.setAttribute("current", req.getSession().getAttribute("currentUser"));
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
-        if (!UserServiceImpl.getUserService().dayExist(simpleDateFormat.format(date))) {
-            List<Student> studentList = new ArrayList<>();
-            Day today = new Day(studentList, simpleDateFormat.format(date));
-            UserServiceImpl.getUserService().addDay(today);
+        String attendanceDate = req.getParameter("attendanceDate");
+        if (attendanceDate == null) {
+            attendanceDate = simpleDateFormat.format(date);
         }
-        Day day = UserServiceImpl.getUserService().findDayByDate(simpleDateFormat.format(date));
+        if (!UserServiceImpl.getUserService().dayExist(attendanceDate)) {
+            List<Student> studentList = new ArrayList<>();
+            UserServiceImpl.getUserService().addDay(new Day(studentList, attendanceDate));
+        }
+        Day day = UserServiceImpl.getUserService().findDayByDate(attendanceDate);
 
-        req.setAttribute("attendanceDate", simpleDateFormat.format(date));
+        req.setAttribute("current", req.getSession().getAttribute("currentUser"));
+        req.setAttribute("attendanceDate", attendanceDate);
         req.setAttribute("currentDate", simpleDateFormat.format(date));
         req.setAttribute("users", students);
         req.setAttribute("here", day.getStudents());
@@ -44,19 +46,19 @@ public class AttendanceServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String[] studentNames = req.getParameterValues("selected");
+        List<Student> selectedStudents = UserServiceImpl.getUserService().createAttendStudentList(studentNames);
+        String attendanceDate = req.getParameter("attendance");
+        UserServiceImpl.getUserService().SetStudentListbyDate(attendanceDate, selectedStudents);
+
         List<User> users = UserServiceImpl.getUserService().getUsers();
         List<Student> students = UserServiceImpl.getUserService().getStudents();
-        req.setAttribute("current", req.getSession().getAttribute("currentUser"));
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
-        String attendanceDate = req.getParameter("attendanceDate");
-        if (!UserServiceImpl.getUserService().dayExist(attendanceDate)) {
-            List<Student> studentList = new ArrayList<>();
-            UserServiceImpl.getUserService().addDay(new Day(studentList, attendanceDate));
-        }
         Day day = UserServiceImpl.getUserService().findDayByDate(attendanceDate);
 
+        req.setAttribute("current", req.getSession().getAttribute("currentUser"));
         req.setAttribute("attendanceDate", attendanceDate);
         req.setAttribute("currentDate", simpleDateFormat.format(date));
         req.setAttribute("users", students);

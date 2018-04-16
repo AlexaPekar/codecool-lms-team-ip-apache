@@ -89,7 +89,7 @@
         <div class="center">
             <h1 class="page-title">Attendance</h1>
 
-            <form action="attendance" method="POST">
+            <form action="attendance" method="GET">
                 <input type=date style="font-size: 20px" name="attendanceDate" max="${currentDate}"
                        value="${attendanceDate}" required>
                 <br><br><br>
@@ -98,7 +98,7 @@
             </form>
 
             <div class="table-div">
-                <form action="attend" method="POST">
+                <form action="attendance" method="POST">
                     <table align="center" class="users-table">
                         <tr class="head-row">
                             <td class="head-cell">Name</td>
