@@ -10,7 +10,7 @@ import java.io.IOException;
 
 
 @WebServlet("/delete")
-public class DeletePageServlet extends HttpServlet {
+public class DeletePageServlet extends AbstractServlet {
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String pageName = req.getParameter("page");

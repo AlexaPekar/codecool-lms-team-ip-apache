@@ -22,7 +22,7 @@ import java.util.Base64;
 import java.util.List;
 
 @WebServlet("/gradeStatistics")
-public class GradeStatisticsServlet extends HttpServlet {
+public class GradeStatisticsServlet extends AbstractServlet {
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

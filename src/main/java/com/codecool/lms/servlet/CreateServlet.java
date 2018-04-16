@@ -12,7 +12,7 @@ import java.io.IOException;
 
 
 @WebServlet("/create")
-public class CreateServlet extends HttpServlet {
+public class CreateServlet extends AbstractServlet {
 
 
     @Override

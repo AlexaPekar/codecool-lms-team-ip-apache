@@ -14,7 +14,7 @@ import java.io.IOException;
 
 
 @WebServlet("/login")
-public class LoginServlet extends HttpServlet {
+public class LoginServlet extends AbstractServlet {
 
     final UserServiceImpl userServiceImpl = UserServiceImpl.getUserService();
 
