@@ -37,6 +37,7 @@ CREATE TABLE assignments (
 	title TEXT NOT NULL,
 	"date" TEXT NOT NULL,
 	max_score INTEGER NOT NULL,
+	grade INTEGER,
 	FOREIGN KEY (assignment_page_id) REFERENCES assignment_pages("id"),
 	FOREIGN KEY (student_id) REFERENCES users("id")
 );
