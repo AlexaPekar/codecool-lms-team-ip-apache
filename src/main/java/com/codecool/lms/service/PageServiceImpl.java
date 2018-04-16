@@ -9,6 +9,8 @@ public class PageServiceImpl implements PageService {
 
     public static final PageServiceImpl pageService = new PageServiceImpl();
     public final List<Page> pages = new ArrayList<>();
+    public static int pageID = 1;
+    public static int AssignmentID = 1;
 
     //Visible for testing
     PageServiceImpl() {
@@ -157,9 +159,9 @@ public class PageServiceImpl implements PageService {
 
     public synchronized Page createNewPage(String title, String content, String type, int maxscore) {
         if (type.equals("text")) {
-            return new TextPage(title, content);
+            return new TextPage(pageID++, title, content);
         } else {
-            return new AssignmentPage(title, content, maxscore);
+            return new AssignmentPage(pageID++, title, content, maxscore);
         }
     }
 
