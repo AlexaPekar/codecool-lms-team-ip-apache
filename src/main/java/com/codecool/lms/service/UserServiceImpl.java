@@ -58,9 +58,9 @@ public class UserServiceImpl implements UserService {
 
     public synchronized User createUser(String email, String name, String password, String type) {
         if (type.equals("Mentor")) {
-            return new Mentor(name, email, password);
+            return new Mentor(1, name, email, password);
         } else {
-            return new Student(name, email, password);
+            return new Student(2, name, email, password);
         }
     }
 
@@ -169,9 +169,9 @@ public class UserServiceImpl implements UserService {
             PageServiceImpl.getPageService().removeStudentAssignments((Student) user);
         }
         if (type.equals("Mentor")) {
-            user = new Mentor(user.getName(), user.getEmail(), user.getPassword());
+            user = new Mentor(1, user.getName(), user.getEmail(), user.getPassword());
         } else {
-            user = new Student(user.getName(), user.getEmail(), user.getPassword());
+            user = new Student(2, user.getName(), user.getEmail(), user.getPassword());
         }
         try {
             UserServiceImpl.getUserService().register(user);

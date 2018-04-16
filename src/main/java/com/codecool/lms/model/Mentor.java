@@ -2,7 +2,7 @@ package com.codecool.lms.model;
 
 public class Mentor extends User {
 
-    public Mentor(String name, String email, String password) {
-        super(name, email, password);
+    public Mentor(int id, String name, String email, String password) {
+        super(id, name, email, password);
     }
 }

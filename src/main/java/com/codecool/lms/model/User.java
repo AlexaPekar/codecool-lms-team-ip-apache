@@ -1,14 +1,15 @@
 package com.codecool.lms.model;
 
 public class User {
-
+    private final int id;
     private String name;
     private final String email;
     private String password;
     private boolean connected;
     private GitHub github;
 
-    User(String name, String email, String password) {
+    User(int id, String name, String email, String password) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;

@@ -1,6 +1,9 @@
 package com.codecool.lms.service;
 
-import com.codecool.lms.model.*;
+import com.codecool.lms.model.Assignment;
+import com.codecool.lms.model.AssignmentPage;
+import com.codecool.lms.model.Student;
+import com.codecool.lms.model.TextPage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +26,7 @@ class PageServiceImplTest {
         testTextPage = new TextPage("Kitties", "Kitties must be loved!");
         testAssignmentPage = new AssignmentPage("Kitties Test", "Do you love kitties?", 10);
         pageServiceImpl.addNewPage(testAssignmentPage);
-        testStudent = new Student("Steve","steveo@gmail.com", "asdasdasd");
+        testStudent = new Student(2, "Steve", "steveo@gmail.com", "asdasdasd");
         testAssignment = new Assignment(testStudent, "good answer", "Kitties Test",10);
         testAssignmentPage.addAssignment(testAssignment);
         testAssignment.setGrade(10);
