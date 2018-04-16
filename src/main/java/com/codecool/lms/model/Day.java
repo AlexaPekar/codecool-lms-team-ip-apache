@@ -3,11 +3,12 @@ package com.codecool.lms.model;
 import java.util.List;
 
 public class Day {
-
+    private final int id;
     private final String date;
     private List<Student> students;
 
-    public Day( List<Student> students,String date) {
+    public Day(int id, List<Student> students, String date) {
+        this.id = id;
         this.date = date;
         this.students = students;
     }

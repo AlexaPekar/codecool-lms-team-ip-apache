@@ -5,6 +5,7 @@ import java.util.Date;
 
 public class Assignment {
 
+    private final int id;
     private final Student student;
     private final String answer;
     private int grade;
@@ -12,7 +13,8 @@ public class Assignment {
     private final String date;
     private final int maxScore;
 
-    public Assignment(Student student, String answer, String title,int maxScore) {
+    public Assignment(int id, Student student, String answer, String title, int maxScore) {
+        this.id = id;
         this.student = student;
         this.answer = answer;
         this.title = title;
