@@ -2,14 +2,21 @@ package com.codecool.lms.dao;
 
 import com.codecool.lms.model.*;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public interface PagesDao {
-    List<Page> findAllPage();
 
-    void insertPage(Page page);
+    TextPage fetchTextPage(ResultSet resultSet) throws SQLException;
 
-    void deletePage(String title);
+    AssignmentPage fetchAssignmentPage(ResultSet resultSet) throws SQLException;
+
+    List<Page> findAllPage() throws SQLException;
+
+    void insertPage(Page page) throws SQLException;
+
+    void deletePage(String title) throws SQLException;
 
     Page findByTitle(String title);
 
