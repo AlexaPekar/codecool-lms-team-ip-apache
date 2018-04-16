@@ -16,11 +16,11 @@ import java.io.IOException;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
-    UserServiceImpl userServiceImpl = UserServiceImpl.getUserService();
+    final UserServiceImpl userServiceImpl = UserServiceImpl.getUserService();
 
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String email = req.getParameter("email");
 
         String password = req.getParameter("password");

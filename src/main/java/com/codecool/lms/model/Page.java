@@ -7,7 +7,7 @@ public abstract class Page {
     private boolean published;
 
 
-    public Page(String title, String content) {
+    Page(String title, String content) {
         this.title = title;
         this.content = content;
         this.published = false;

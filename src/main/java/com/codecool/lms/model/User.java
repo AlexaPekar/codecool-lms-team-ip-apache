@@ -3,12 +3,12 @@ package com.codecool.lms.model;
 public class User {
 
     private String name;
-    private String email;
+    private final String email;
     private String password;
     private boolean connected;
     private GitHub github;
 
-    public User(String name, String email, String password) {
+    User(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;

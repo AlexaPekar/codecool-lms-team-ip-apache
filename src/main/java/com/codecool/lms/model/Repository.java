@@ -1,11 +1,11 @@
 package com.codecool.lms.model;
 
 public class Repository {
-    private String html;
-    private String name;
-    private int stars;
-    private int watchers;
-    private String forks;
+    private final String html;
+    private final String name;
+    private final int stars;
+    private final int watchers;
+    private final String forks;
 
     public Repository(String html, String name, int stars, int watchers, String forks) {
         this.html = html;

@@ -1,8 +1,5 @@
 package com.codecool.lms.servlet;
 
-import com.codecool.lms.exception.UserAlreadyRegisteredException;
-import com.codecool.lms.model.Mentor;
-import com.codecool.lms.model.Student;
 import com.codecool.lms.model.User;
 import com.codecool.lms.service.UserServiceImpl;
 
@@ -17,7 +14,7 @@ import java.io.IOException;
 public class ProfileServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = (User) req.getSession().getAttribute("currentUser");
         req.setAttribute("user", user);
         req.setAttribute("github", user.getGitHub());
@@ -29,52 +26,55 @@ public class ProfileServlet extends HttpServlet {
 
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User currentUser = (User) req.getSession().getAttribute("currentUser");
 
+        //Type
+        String type;
         if (req.getParameter("type").equals("Mentor")) {
-            UserServiceImpl.getUserService().deleteUser(currentUser.getName());
-            Mentor mentor = new Mentor(currentUser.getName(), currentUser.getEmail(), currentUser.getPassword());
-            try {
-                UserServiceImpl.getUserService().register(mentor);
-                req.getSession().setAttribute("currentUser", mentor);
-            } catch (UserAlreadyRegisteredException e) {
-                e.printStackTrace();
-            }
-        } else if (req.getParameter("type").equals("Student")) {
-            UserServiceImpl.getUserService().deleteUser(currentUser.getName());
-            Student student = new Student(currentUser.getName(), currentUser.getEmail(), currentUser.getPassword());
-            try {
-                UserServiceImpl.getUserService().register(student);
-                req.getSession().setAttribute("currentUser", student);
-
-            } catch (UserAlreadyRegisteredException e) {
-                e.printStackTrace();
-            }
-        }
-
-        currentUser = (User) req.getSession().getAttribute("currentUser");
-        if (req.getParameter("newName").length() > 0) {
-            currentUser.setName(req.getParameter("newName"));
-        }
-        if (req.getParameter("newPassword").length() >= 8 &&
-                req.getParameter("newPassword").equals(req.getParameter("secondPasswordToCheck"))) {
-
-            currentUser.setPassword(req.getParameter("newPassword"));
-            req.getSession().setAttribute("currentUser", currentUser);
-            resp.sendRedirect("home");
-        } else if ((req.getParameter("newPassword").equals("") &&
-                req.getParameter("secondPasswordToCheck").equals(""))) {
-            resp.sendRedirect("home");
+            type = "Mentor";
         } else {
+            type = "Student";
+        }
+        currentUser = UserServiceImpl.getUserService().changeUserRole(currentUser, type);
+
+        //Name
+        if (req.getParameter("newName").length() > 0) {
+            String newName = req.getParameter("newName");
+            currentUser = UserServiceImpl.getUserService().changeUserName(currentUser, newName);
+        }
+
+        //Password
+        String passwordIsValid = validatePassword(req, resp);
+
+        if (passwordIsValid.equals("Valid")) {
+            String password = req.getParameter("newPassword");
+            currentUser = UserServiceImpl.getUserService().changeUserPassword(currentUser, password);
+
+        } else if (passwordIsValid.equals("Invalid")) {
+
             req.setAttribute("message", "Invalid password. Try again.");
-            User user = (User) req.getSession().getAttribute("currentUser");
-            req.setAttribute("user", user);
-            req.setAttribute("github", user.getGitHub());
-            if (user.isConnected()) {
-                req.setAttribute("repos", user.getGitHub().getRepositories());
+            req.setAttribute("user", currentUser);
+            req.setAttribute("github", currentUser.getGitHub());
+            if (currentUser.isConnected()) {
+                req.setAttribute("repos", currentUser.getGitHub().getRepositories());
             }
+            req.getSession().setAttribute("currentUser", currentUser);
             req.getRequestDispatcher("profile.jsp").forward(req, resp);
+        }
+        req.getSession().setAttribute("currentUser", currentUser);
+        resp.sendRedirect("profile");
+    }
+
+    private String validatePassword(HttpServletRequest req, HttpServletResponse resp) {
+
+        if (req.getParameter("newPassword").equals("") && req.getParameter("secondPasswordToCheck").equals("")) {
+            return "No Change";
+        } else if (req.getParameter("newPassword").length() >= 8 &&
+                req.getParameter("newPassword").equals(req.getParameter("secondPasswordToCheck"))) {
+            return "Valid";
+        } else {
+            return "Invalid";
         }
     }
 }

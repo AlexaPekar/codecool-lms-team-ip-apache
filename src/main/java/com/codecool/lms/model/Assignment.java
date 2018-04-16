@@ -1,27 +1,17 @@
 package com.codecool.lms.model;
 
-import com.codecool.lms.service.PageServiceImpl;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Assignment {
 
-    private Student student;
-    private String answer;
+    private final Student student;
+    private final String answer;
     private int grade;
-    private String title;
-    private String date;
-    private int maxScore;
+    private final String title;
+    private final String date;
+    private final int maxScore;
 
-
-    public Assignment(Student student, String answer, String title) {
-        this.student = student;
-        this.answer = answer;
-        this.title = title;
-        this.date = setDate();
-        this.maxScore = getMaxScore();
-    }
     public Assignment(Student student, String answer, String title,int maxScore) {
         this.student = student;
         this.answer = answer;
@@ -51,16 +41,15 @@ public class Assignment {
         return title;
     }
 
-    public String setDate() {
+    private String setDate() {
         Date date = new Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        String str = df.format(date);
-        return str;
+        return df.format(date);
     }
 
+
     public int getMaxScore() {
-        AssignmentPage page = (AssignmentPage) PageServiceImpl.getPageService().findPageByTitle(title);
-        return page.getMaxScore();
+        return maxScore;
     }
 
     public String getDate() {

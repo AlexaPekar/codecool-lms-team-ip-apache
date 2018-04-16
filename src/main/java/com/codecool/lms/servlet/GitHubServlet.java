@@ -3,21 +3,20 @@ package com.codecool.lms.servlet;
 import com.codecool.lms.model.GitHub;
 import com.codecool.lms.model.Repository;
 import com.codecool.lms.model.User;
+import com.codecool.lms.service.UserServiceImpl;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 
 @WebServlet("/github")
 public class GitHubServlet extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String avatar = req.getParameter("avatar");
         String html = req.getParameter("html");
         int repos = Integer.parseInt(req.getParameter("repos"));
@@ -34,23 +33,19 @@ public class GitHubServlet extends HttpServlet {
         String[] stars = req.getParameterValues("repo-star");
         String[] watchers = req.getParameterValues("repo-watcher");
         String[] forks = req.getParameterValues("repo-forms");
-        List<Repository> repositories = new ArrayList<>();
-        if (htmls != null) {
-            for (int i = 0; i < htmls.length; i++) {
-                repositories.add(new Repository(htmls[i], names[i], Integer.parseInt(stars[i]), Integer.parseInt(watchers[i]), forks[i]));
-            }
-        }
-        GitHub github = new GitHub(avatar, html, repos, gists, followers, following, company, blog, location, created, repositories);
 
-        ((User) req.getSession().getAttribute("currentUser")).setConnected(true);
-        ((User) req.getSession().getAttribute("currentUser")).setGitHub(github);
+        List<Repository> repositories = UserServiceImpl.getUserService().createRepositoryList(htmls, names, stars, watchers, forks);
+        GitHub github = UserServiceImpl.getUserService().createGithub(avatar, html, repos, gists, followers, following, company, blog, location, created, repositories);
+
+        User user = (User) req.getSession().getAttribute("currentUser");
+        UserServiceImpl.getUserService().connectUserWithGithub(user, github);
         resp.sendRedirect("profile");
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ((User) req.getSession().getAttribute("currentUser")).setConnected(false);
-        ((User) req.getSession().getAttribute("currentUser")).setGitHub(null);
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        User user = (User) req.getSession().getAttribute("currentUser");
+        UserServiceImpl.getUserService().disconnectUserFromGithub(user);
         resp.sendRedirect("profile");
     }
 }

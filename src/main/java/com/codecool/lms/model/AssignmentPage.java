@@ -6,7 +6,7 @@ import java.util.List;
 public class AssignmentPage extends Page {
 
     private int maxScore;
-    private List<Assignment> assignments;
+    private final List<Assignment> assignments;
 
     public AssignmentPage(String title, String content, int maxScore) {
         super(title, content);

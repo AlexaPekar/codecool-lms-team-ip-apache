@@ -12,10 +12,10 @@ import java.io.IOException;
 @WebFilter("/AccessFilter")
 public class AccessFilter implements Filter {
 
-    private ServletContext context;
+    ServletContext context;
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
         this.context = filterConfig.getServletContext();
     }
 

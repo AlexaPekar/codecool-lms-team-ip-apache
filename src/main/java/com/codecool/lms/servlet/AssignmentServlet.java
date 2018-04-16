@@ -5,7 +5,6 @@ import com.codecool.lms.model.AssignmentPage;
 import com.codecool.lms.model.Student;
 import com.codecool.lms.service.PageServiceImpl;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +15,7 @@ import java.io.IOException;
 public class AssignmentServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         Student currentStudent = (Student) req.getSession().getAttribute("currentUser");
 
@@ -29,11 +28,11 @@ public class AssignmentServlet extends HttpServlet {
                 answer = repo;
             }
         }
+        int maxScore = ((AssignmentPage) PageServiceImpl.getPageService().findPageByTitle(title)).getMaxScore();
 
-        Assignment assignment = new Assignment(currentStudent, answer, title);
+        Assignment assignment = new Assignment(currentStudent, answer, title, maxScore);
 
-        AssignmentPage page = (AssignmentPage) PageServiceImpl.getPageService().findPageByTitle(title);
-        page.addAssignment(assignment);
+        PageServiceImpl.getPageService().addAssignmentToAssignmentPage(assignment);
         resp.sendRedirect("home");
     }
 }

@@ -95,6 +95,7 @@
                 <h3>Title</h3><br>
                 <input name="title" type="text" class="title">
                 <br>
+                <input name="maxScore" type="hidden" value="0">
                 <h3>Content</h3><br>
                 <textarea class="textarea" name="content" class="content"></textarea>
                 <br><br>

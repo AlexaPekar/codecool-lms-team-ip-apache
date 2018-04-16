@@ -3,8 +3,6 @@ package com.codecool.lms.model;
 import com.codecool.lms.service.PageServiceImpl;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.NumberTickUnit;
-import org.jfree.chart.axis.TickUnits;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
@@ -28,7 +26,7 @@ public class GradeStatisticsChart {
         return dataset;
     }
 
-    public double calculateGradePercentage(double grade, double maxScore) {
+    public static double calculateGradePercentage(double grade, double maxScore) {
         return (grade / maxScore) * 100;
     }
 

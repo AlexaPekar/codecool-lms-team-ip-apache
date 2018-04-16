@@ -96,6 +96,7 @@
                 <input name="title" type="text" class="title" value=${page.title}>
                 <input type=hidden name="old-title" value=${page.title}>
                 <br>
+                <input name="maxScore" type="hidden" value="0">
                 <h3>Content</h3><br>
                 <textarea class="textarea" name="content" class="content">${page.content}</textarea>
                 <br><br>

@@ -14,7 +14,7 @@ import java.io.IOException;
 public class PageServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String title = req.getParameter("title");
 
         Page myPage = PageServiceImpl.getPageService().findPageByTitle(title);
@@ -40,15 +40,13 @@ public class PageServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String title = req.getParameter("title");
         String published = req.getParameter("published");
         if (published.equals("true")) {
             PageServiceImpl.getPageService().findPageByTitle(title).depublish();
-            req.setAttribute("message", "Page is unpublished");
         } else {
             PageServiceImpl.getPageService().findPageByTitle(title).publish();
-            req.setAttribute("message", "Page is published");
         }
         Page myPage = PageServiceImpl.getPageService().findPageByTitle(title);
 

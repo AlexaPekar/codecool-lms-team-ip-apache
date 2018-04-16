@@ -1,8 +1,5 @@
 package com.codecool.lms.servlet;
 
-import com.codecool.lms.exception.UserAlreadyRegisteredException;
-import com.codecool.lms.model.Mentor;
-import com.codecool.lms.model.Student;
 import com.codecool.lms.model.User;
 import com.codecool.lms.service.UserServiceImpl;
 
@@ -20,7 +17,7 @@ public class UsersServlet extends HttpServlet {
 
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<User> users = UserServiceImpl.getUserService().getUsers();
         req.setAttribute("users", users);
         req.setAttribute("current", req.getSession().getAttribute("currentUser"));
@@ -28,7 +25,7 @@ public class UsersServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("current", req.getSession().getAttribute("currentUser"));
         req.getRequestDispatcher("changeProfile.jsp").forward(req, resp);
     }

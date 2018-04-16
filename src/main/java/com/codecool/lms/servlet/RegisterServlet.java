@@ -13,11 +13,11 @@ import java.io.IOException;
 
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
-    UserServiceImpl userServiceImpl = UserServiceImpl.getUserService();
+    public final UserServiceImpl userServiceImpl = UserServiceImpl.getUserService();
 
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String name = req.getParameter("name");
         String email = req.getParameter("email");
