@@ -8,8 +8,8 @@ public class AssignmentPage extends Page {
     private int maxScore;
     private final List<Assignment> assignments;
 
-    public AssignmentPage(int id, String title, String content, int maxScore) {
-        super(id, title, content);
+    public AssignmentPage(String title, String content, int maxScore) {
+        super(title, content);
         this.maxScore = maxScore;
         assignments = new ArrayList<>();
     }

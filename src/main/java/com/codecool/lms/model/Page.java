@@ -1,14 +1,12 @@
 package com.codecool.lms.model;
 
 public abstract class Page {
-    private final int id;
     private String title;
     private String content;
     private boolean published;
 
 
-    Page(int id, String title, String content) {
-        this.id = id;
+    Page(String title, String content) {
         this.title = title;
         this.content = content;
         this.published = false;
