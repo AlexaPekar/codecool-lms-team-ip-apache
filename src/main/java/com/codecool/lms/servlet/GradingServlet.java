@@ -2,8 +2,6 @@ package com.codecool.lms.servlet;
 
 
 import com.codecool.lms.model.Assignment;
-import com.codecool.lms.model.AssignmentPage;
-import com.codecool.lms.model.Student;
 import com.codecool.lms.service.PageServiceImpl;
 import com.codecool.lms.service.UserServiceImpl;
 
@@ -19,7 +17,7 @@ import java.util.List;
 public class GradingServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Assignment> assignments = PageServiceImpl.getPageService().getAssignments();
         req.setAttribute("current", req.getSession().getAttribute("currentUser"));
         req.setAttribute("assignments", assignments);
@@ -27,13 +25,11 @@ public class GradingServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         int grade = Integer.parseInt(req.getParameter("grade"));
         String studentName = req.getParameter("student");
         String title = req.getParameter("title");
-        Student student = (Student) UserServiceImpl.getUserService().findUserByName(studentName);
-        AssignmentPage assignmentPage = (AssignmentPage) PageServiceImpl.getPageService().findPageByTitle(title);
-        PageServiceImpl.getPageService().getAssignmentByStudentName(assignmentPage, student).setGrade(grade);
+        UserServiceImpl.getUserService().gradeAssignment(grade, studentName, title);
         resp.sendRedirect("grading");
     }
 }

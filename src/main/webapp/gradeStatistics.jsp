@@ -138,6 +138,7 @@
                     </table>
                 </c:forEach>
                 <p><img src="data:image/png;base64,<c:out value="${b64}"/>"></p>
+                <h1>Grade: ${max}%</h1>
             </div>
         </div>
     </div>
