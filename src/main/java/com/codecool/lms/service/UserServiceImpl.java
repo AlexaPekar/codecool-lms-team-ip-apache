@@ -3,19 +3,16 @@ package com.codecool.lms.service;
 import com.codecool.lms.exception.UserAlreadyRegisteredException;
 import com.codecool.lms.exception.UserNotFoundException;
 import com.codecool.lms.exception.WrongPasswordException;
-import com.codecool.lms.model.Day;
-import com.codecool.lms.model.Mentor;
-import com.codecool.lms.model.Student;
-import com.codecool.lms.model.User;
+import com.codecool.lms.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
-    private static UserServiceImpl userService = new UserServiceImpl();
-    private List<User> users = new ArrayList<>();
-    private List<Day> days = new ArrayList<>();
+    public static final UserServiceImpl userService = new UserServiceImpl();
+    public final List<User> users = new ArrayList<>();
+    public final List<Day> days = new ArrayList<>();
 
 
     //Visible for testing
@@ -103,6 +100,10 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+    public synchronized void SetStudentListbyDate(String date, List<Student> students) {
+        UserServiceImpl.getUserService().findDayByDate(date).setStudents(students);
+    }
+
     public synchronized void deleteUser(String username) {
         users.remove(findUserByName(username));
     }
@@ -125,5 +126,68 @@ public class UserServiceImpl implements UserService {
             }
         }
         return selectedStudents;
+    }
+
+    public synchronized List<Repository> createRepositoryList(String[] htmls, String[] names, String[] stars, String[] watchers, String[] forks) {
+        List<Repository> repositories = new ArrayList<>();
+        if (htmls != null) {
+            for (int i = 0; i < htmls.length; i++) {
+                repositories.add(new Repository(htmls[i], names[i], Integer.parseInt(stars[i]), Integer.parseInt(watchers[i]), forks[i]));
+            }
+        }
+        return repositories;
+    }
+
+    public synchronized GitHub createGithub(String avatar, String html, int repos, int gists, int followers, int following, String company, String blog, String location, String created, List<Repository> repositories) {
+        return new GitHub(avatar, html, repos, gists, followers, following, company, blog, location, created, repositories);
+    }
+
+    public synchronized void connectUserWithGithub(User user, GitHub gitHub) {
+        user.setConnected(true);
+        user.setGitHub(gitHub);
+    }
+
+    public synchronized void disconnectUserFromGithub(User user) {
+        user.setConnected(false);
+        user.setGitHub(null);
+    }
+
+    public synchronized void gradeAssignment(int grade, String studentName, String title) {
+        Student student = (Student) UserServiceImpl.getUserService().findUserByName(studentName);
+        AssignmentPage assignmentPage = (AssignmentPage) PageServiceImpl.getPageService().findPageByTitle(title);
+        PageServiceImpl.getPageService().getAssignmentByStudentName(assignmentPage, student).setGrade(grade);
+    }
+
+    public synchronized User changeUserRole(User user, String type) {
+        if (user instanceof Mentor && type.equals("Mentor")) {
+            return user;
+        } else if (user instanceof Student && type.equals("Student")) {
+            return user;
+        }
+        UserServiceImpl.getUserService().deleteUser(user.getName());
+        if (user instanceof Student) {
+            PageServiceImpl.getPageService().removeStudentAssignments((Student) user);
+        }
+        if (type.equals("Mentor")) {
+            user = new Mentor(user.getName(), user.getEmail(), user.getPassword());
+        } else {
+            user = new Student(user.getName(), user.getEmail(), user.getPassword());
+        }
+        try {
+            UserServiceImpl.getUserService().register(user);
+        } catch (UserAlreadyRegisteredException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+    public synchronized User changeUserName(User user, String newName) {
+        user.setName(newName);
+        return user;
+    }
+
+    public synchronized User changeUserPassword(User user, String password) {
+        user.setPassword(password);
+        return user;
     }
 }

@@ -7,8 +7,8 @@ import java.util.List;
 
 public class PageServiceImpl implements PageService {
 
-    private static PageServiceImpl pageService = new PageServiceImpl();
-    private List<Page> pages = new ArrayList<>();
+    public static final PageServiceImpl pageService = new PageServiceImpl();
+    public final List<Page> pages = new ArrayList<>();
 
     //Visible for testing
     PageServiceImpl() {
@@ -123,5 +123,55 @@ public class PageServiceImpl implements PageService {
             assignments.addAll(page.getAssignments());
         }
         return assignments;
+    }
+
+    public synchronized double findEvaluatedPercent(Student student) {
+        int score = 0;
+        int maxScore = 0;
+        List<AssignmentPage> assignmentPages = getAssignmentPages();
+        for (AssignmentPage page : assignmentPages) {
+            if (userAlreadySubmitted(student, page)) {
+                Assignment assignment = getAssignmentByStudentName(page, student);
+                score += assignment.getGrade();
+                maxScore += assignment.getMaxScore();
+            }
+        }
+        return GradeStatisticsChart.calculateGradePercentage((double) score, (double) maxScore);
+
+    }
+
+    public synchronized void removeStudentAssignments(Student student) {
+        List<AssignmentPage> assignmentPages = getAssignmentPages();
+        for (AssignmentPage assignmentPage : assignmentPages) {
+            if (userAlreadySubmitted(student, assignmentPage)) {
+                Assignment assignment = getAssignmentByStudentName(assignmentPage, student);
+                assignmentPage.getAssignments().remove(assignment);
+            }
+        }
+    }
+
+    public synchronized void addAssignmentToAssignmentPage(Assignment assignment) {
+        AssignmentPage assignmentPage = (AssignmentPage) findPageByTitle(assignment.getTitle());
+        assignmentPage.addAssignment(assignment);
+    }
+
+    public synchronized Page createNewPage(String title, String content, String type, int maxscore) {
+        if (type.equals("text")) {
+            return new TextPage(title, content);
+        } else {
+            return new AssignmentPage(title, content, maxscore);
+        }
+    }
+
+    public synchronized void editPage(String title, String content, String type, int maxScore, String oldTitle) {
+        Page page = PageServiceImpl.getPageService().findPageByTitle(oldTitle);
+        if (type.equals("text")) {
+            page.setContent(content);
+            page.setTitle(title);
+        } else {
+            page.setContent(content);
+            page.setTitle(title);
+            ((AssignmentPage) page).setMaxScore(maxScore);
+        }
     }
 }

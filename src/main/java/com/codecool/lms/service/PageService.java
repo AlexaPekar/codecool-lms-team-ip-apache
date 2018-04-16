@@ -4,7 +4,7 @@ import com.codecool.lms.model.*;
 
 import java.util.List;
 
-public interface PageService {
+interface PageService {
 
     List<Page> getPages();
 
@@ -29,5 +29,15 @@ public interface PageService {
     boolean userAlreadySubmitted(User user, AssignmentPage assignmentPage);
 
     List<Assignment> getAssignments();
+
+    double findEvaluatedPercent(Student student);
+
+    void removeStudentAssignments(Student student);
+
+    void addAssignmentToAssignmentPage(Assignment assignment);
+
+    Page createNewPage(String title, String content, String type, int maxscore);
+
+    void editPage(String title, String content, String type, int maxScore, String oldTitle);
 
 }

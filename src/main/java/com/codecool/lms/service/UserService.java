@@ -3,13 +3,11 @@ package com.codecool.lms.service;
 import com.codecool.lms.exception.UserAlreadyRegisteredException;
 import com.codecool.lms.exception.UserNotFoundException;
 import com.codecool.lms.exception.WrongPasswordException;
-import com.codecool.lms.model.Day;
-import com.codecool.lms.model.Student;
-import com.codecool.lms.model.User;
+import com.codecool.lms.model.*;
 
 import java.util.List;
 
-public interface UserService {
+interface UserService {
 
     List<User> getUsers();
 
@@ -31,9 +29,27 @@ public interface UserService {
 
     Day findDayByDate(String date);
 
+    void SetStudentListbyDate(String date, List<Student> students);
+
     void deleteUser(String username);
 
     List<Student> getStudents();
 
     List<Student> createAttendStudentList(String[] studentNames);
+
+    List<Repository> createRepositoryList(String[] htmls, String[] names, String[] stars, String[] watchers, String[] forks);
+
+    GitHub createGithub(String avatar, String html, int repos, int gists, int followers, int following, String company, String blog, String location, String created, List<Repository> repositories);
+
+    void connectUserWithGithub(User user, GitHub gitHub);
+
+    void disconnectUserFromGithub(User user);
+
+    void gradeAssignment(int grade, String studentName, String title);
+
+    User changeUserRole(User user, String type);
+
+    User changeUserName(User user, String newName);
+
+    User changeUserPassword(User user, String password);
 }
