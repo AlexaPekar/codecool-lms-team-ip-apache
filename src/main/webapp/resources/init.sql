@@ -1,4 +1,11 @@
-CREATE TABLE IF NOT EXISTS users (
+DROP TABLE IF EXISTS assignments;
+DROP TABLE IF EXISTS attendance;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS text_pages;
+DROP TABLE IF EXISTS assignment_pages;
+DROP TABLE IF EXISTS days;
+
+CREATE TABLE users (
     "id"  SERIAL PRIMARY KEY,
     "name" TEXT NOT NULL,
     email TEXT UNIQUE NOT NULL,
@@ -7,14 +14,14 @@ CREATE TABLE IF NOT EXISTS users (
     "type" TEXT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS text_pages (
+CREATE TABLE text_pages (
 	"id" SERIAL PRIMARY KEY,
 	title TEXT NOT NULL,
 	"content" TEXT NOT NULL,
 	published BOOLEAN NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS assignment_pages (
+CREATE TABLE assignment_pages (
 	"id" SERIAL PRIMARY KEY,
 	title TEXT NOT NULL,
 	"content" TEXT NOT NULL,
@@ -22,7 +29,7 @@ CREATE TABLE IF NOT EXISTS assignment_pages (
 	max_score INTEGER NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS assignments (
+CREATE TABLE assignments (
 	"id" SERIAL PRIMARY KEY,
 	assignment_page_id INTEGER NOT NULL,
 	student_id INTEGER NOT NULL,
@@ -34,12 +41,12 @@ CREATE TABLE IF NOT EXISTS assignments (
 	FOREIGN KEY (student_id) REFERENCES users("id")
 );
 
-CREATE TABLE IF NOT EXISTS days (
+CREATE TABLE days (
 	"id" SERIAL PRIMARY KEY,
 	"date" TEXT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS attendance (
+CREATE TABLE attendance (
 	day_id INTEGER NOT NULL,
 	student_id INTEGER NOT NULL,
 	FOREIGN KEY (day_id) REFERENCES days("id"),
