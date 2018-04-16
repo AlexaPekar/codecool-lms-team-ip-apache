@@ -5,51 +5,45 @@ import com.codecool.lms.exception.UserNotFoundException;
 import com.codecool.lms.exception.WrongPasswordException;
 import com.codecool.lms.model.*;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public interface UserDao {
 
-    List<User> findUsers();
+    List<User> findUsers() throws SQLException;
 
     boolean containsUser(String email);
 
-    void register(User user) throws UserAlreadyRegisteredException;
+    void register(User user) throws UserAlreadyRegisteredException, SQLException;
 
-    User findUserByEmail(String email, String password) throws UserNotFoundException, WrongPasswordException;
-
-    User createUser(String email, String name, String password, String type);
+    User findUserByEmail(String email);
 
     User findUserByName(String name);
 
-    void addDay(Day day);
+    void insertDay(Day day);
 
     List<Day> getDays();
 
-    boolean dayExist(String date);
-
     Day findDayByDate(String date);
 
-    void SetStudentListbyDate(String date, List<Student> students);
-
-    void deleteUser(String username);
+    void updateAttendance(Day day, List<Student> students);
 
     List<Student> getStudents();
-
-    List<Student> createAttendStudentList(String[] studentNames);
-
-    List<Repository> createRepositoryList(String[] htmls, String[] names, String[] stars, String[] watchers, String[] forks);
-
-    GitHub createGithub(String avatar, String html, int repos, int gists, int followers, int following, String company, String blog, String location, String created, List<Repository> repositories);
 
     void connectUserWithGithub(User user, GitHub gitHub);
 
     void disconnectUserFromGithub(User user);
 
-    void gradeAssignment(int grade, String studentName, String title);
+    void gradeAssignment(int grade, int studentID, int assignmentPageID);
 
     User changeUserRole(User user, String type);
 
     User changeUserName(User user, String newName);
 
     User changeUserPassword(User user, String password);
+
+    Day fetchDay(ResultSet resultSet);
+
+    User fetchUser(ResultSet resultSet) throws SQLException;
 }

@@ -5,7 +5,8 @@ import com.codecool.lms.exception.UserNotFoundException;
 import com.codecool.lms.exception.WrongPasswordException;
 import com.codecool.lms.model.*;
 
-import java.sql.Connection;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseUserDao extends AbstractDao implements UserDao {
@@ -14,27 +15,47 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
     }
 
     @Override
-    public List<User> findUsers() {
+    public List<User> findUsers() throws SQLException {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT id, name, email, password, connected, type FROM users";
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
+            while (resultSet.next()) {
+                users.add(fetchUser(resultSet));
+            }
+        }
         return null;
     }
 
+    //Service
     @Override
     public boolean containsUser(String email) {
         return false;
     }
 
     @Override
-    public void register(User user) throws UserAlreadyRegisteredException {
+    public void register(User user) throws SQLException {
+        boolean autoCommit = connection.getAutoCommit();
+        connection.setAutoCommit(false);
+        String sql = "INSERT INTO users (name, email, password, connected) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(sql);) {
+            statement.setString(1, user.getName());
+            statement.setString(2, user.getEmail());
+            statement.setString(3, user.getPassword());
+            statement.setBoolean(4, user.isConnected());
+            executeInsert(statement);
+            connection.commit();
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.setAutoCommit(autoCommit);
+        }
 
     }
 
     @Override
-    public User findUserByEmail(String email, String password) throws UserNotFoundException, WrongPasswordException {
-        return null;
-    }
-
-    @Override
-    public User createUser(String email, String name, String password, String type) {
+    public User findUserByEmail(String email) {
         return null;
     }
 
@@ -43,8 +64,15 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
         return null;
     }
 
+    //inserts new day(date) to days table
     @Override
-    public void addDay(Day day) {
+    public void insertDay(Day day) {
+
+    }
+
+    //TODO: write to interface
+    //inserts dayid, studentids to attendance table
+    public void insertAttendance(Day day) {
 
     }
 
@@ -54,22 +82,19 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
     }
 
     @Override
-    public boolean dayExist(String date) {
-        return false;
-    }
-
-    @Override
     public Day findDayByDate(String date) {
         return null;
     }
 
     @Override
-    public void SetStudentListbyDate(String date, List<Student> students) {
+    public void updateAttendance(Day day, List<Student> students) {
+        //
+        //Day -> deleteDayFromAttendance(Day) -> insertAttendance(new Day(Day.getID, Day.getDate, students))
 
     }
 
-    @Override
-    public void deleteUser(String username) {
+    //Delete rows from attendance table by dayID
+    public void deleteDayFromAttendance(Day day) {
 
     }
 
@@ -78,34 +103,9 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
         return null;
     }
 
+    //set grade in assignment table
     @Override
-    public List<Student> createAttendStudentList(String[] studentNames) {
-        return null;
-    }
-
-    @Override
-    public List<Repository> createRepositoryList(String[] htmls, String[] names, String[] stars, String[] watchers, String[] forks) {
-        return null;
-    }
-
-    @Override
-    public GitHub createGithub(String avatar, String html, int repos, int gists, int followers, int following, String company, String blog, String location, String created, List<Repository> repositories) {
-        return null;
-    }
-
-    @Override
-    public void connectUserWithGithub(User user, GitHub gitHub) {
-
-    }
-
-    @Override
-    public void disconnectUserFromGithub(User user) {
-
-    }
-
-    @Override
-    public void gradeAssignment(int grade, String studentName, String title) {
-
+    public void gradeAssignment(int grade, int studentID, int assignmentPageID) {
     }
 
     @Override
@@ -121,5 +121,35 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
     @Override
     public User changeUserPassword(User user, String password) {
         return null;
+    }
+
+    public User fetchUser(ResultSet resultSet) throws SQLException {
+        int id = resultSet.getInt("id");
+        String name = resultSet.getString("name");
+        String email = resultSet.getString("email");
+        String password = resultSet.getString("password");
+        boolean connected = resultSet.getBoolean("connected");
+        String type = resultSet.getString("type");
+        if (type.equals("Mentor")) {
+            return new Mentor(id, name, email, password);
+        } else if (type.equals("Student")) {
+            return new Student(id, name, email, password);
+        }
+        return null;
+    }
+
+    //TODO: implement fetchDay
+    public Day fetchDay(ResultSet resultSet) {
+        return null;
+    }
+
+    @Override
+    public void connectUserWithGithub(User user, GitHub gitHub) {
+
+    }
+
+    @Override
+    public void disconnectUserFromGithub(User user) {
+
     }
 }
