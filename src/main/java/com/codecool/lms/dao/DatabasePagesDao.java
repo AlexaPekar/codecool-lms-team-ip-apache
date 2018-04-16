@@ -2,7 +2,8 @@ package com.codecool.lms.dao;
 
 import com.codecool.lms.model.*;
 
-import java.sql.Connection;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DatabasePagesDao extends AbstractDao implements PagesDao {
@@ -10,19 +11,81 @@ public class DatabasePagesDao extends AbstractDao implements PagesDao {
         super(connection);
     }
 
+
     @Override
-    public List<Page> findAllPage() {
-        return null;
+    public TextPage fetchTextPage(ResultSet resultSet) throws SQLException {
+        int id = resultSet.getInt("id");
+        String title = resultSet.getString("title");
+        String content = resultSet.getString("content");
+        return new TextPage(id, title, content);
     }
 
     @Override
-    public void insertPage(Page page) {
-
+    public AssignmentPage fetchAssignmentPage(ResultSet resultSet) throws SQLException {
+        int id = resultSet.getInt("id");
+        String title = resultSet.getString("title");
+        String content = resultSet.getString("content");
+        boolean published = resultSet.getBoolean("published");
+        int maxScore = resultSet.getInt("max_score");
+        AssignmentPage assignmentPage = new AssignmentPage(id, title, content, maxScore);
+        if (published) {
+            assignmentPage.publish();
+        }
+        return assignmentPage;
     }
 
     @Override
-    public void deletePage(String title) {
+    public List<Page> findAllPage() throws SQLException {
+        List<Page> pages = new ArrayList<>();
+        String assignmentSql = "SELECT * FROM assignment_pages";
+        String textPageSql = "SELECT * FROM text_pages";
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(assignmentSql)) {
+            while (resultSet.next()) {
+                pages.add(fetchAssignmentPage(resultSet));
+            }
+        }
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(textPageSql)) {
+            while (resultSet.next()) {
+                pages.add(fetchTextPage(resultSet));
+            }
+        }
+        return pages;
+    }
 
+    @Override
+    public void insertPage(Page page) throws SQLException {
+        String sql;
+        if (page instanceof AssignmentPage) {
+            sql = "INSERT INTO assignment_pages (title, content, published, max_score) VALUES (?, ?, ?, " + ((AssignmentPage) page).getMaxScore() + ")";
+        } else {
+            sql = "INSERT INTO text_pages (title, content, published) VALUES (?, ?, ?)";
+        }
+        boolean autoCommit = connection.getAutoCommit();
+        connection.setAutoCommit(false);
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, page.getTitle());
+            statement.setString(2, page.getContent());
+            statement.setBoolean(3, page.isPublished());
+            executeInsert(statement);
+        } catch (SQLException ex) {
+            connection.rollback();
+            throw ex;
+        } finally {
+            connection.setAutoCommit(autoCommit);
+        }
+    }
+
+
+    @Override
+    public void deletePage(String title) throws SQLException {
+        String sql = "DELETE FROM assignment_pages WHERE title = ?; " +
+                "DELETE FROM assignment_pages WHERE title = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, title);
+            statement.setString(2, title); // not sure
+        }
     }
 
     @Override
