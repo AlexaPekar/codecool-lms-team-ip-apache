@@ -14,7 +14,7 @@ import java.util.List;
 
 
 @WebServlet("/github")
-public class GitHubServlet extends HttpServlet {
+public class GitHubServlet extends AbstractServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String avatar = req.getParameter("avatar");

@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 @WebServlet("/attendance")
-public class AttendanceServlet extends HttpServlet {
+public class AttendanceServlet extends AbstractServlet {
 
 
     @Override

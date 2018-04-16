@@ -13,7 +13,7 @@ import java.io.IOException;
 
 
 @WebServlet("/edit")
-public class EditPageServlet extends HttpServlet {
+public class EditPageServlet extends AbstractServlet {
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String pageName = req.getParameter("page");

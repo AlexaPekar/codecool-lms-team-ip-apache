@@ -14,7 +14,7 @@ import java.util.List;
 
 
 @WebServlet("/home")
-public class CurriculumServlet extends HttpServlet {
+public class CurriculumServlet extends AbstractServlet {
 
 
     @Override

@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @WebServlet("/users")
-public class UsersServlet extends HttpServlet {
+public class UsersServlet extends AbstractServlet {
 
 
     @Override
