@@ -1,5 +1,6 @@
 package com.codecool.lms.dao;
 
+import com.codecool.lms.exception.UserNotFoundException;
 import com.codecool.lms.model.*;
 
 import java.sql.*;
@@ -34,8 +35,8 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
     public void register(String name, String email, String password, String type) throws SQLException {
         boolean autoCommit = connection.getAutoCommit();
         connection.setAutoCommit(false);
-        String sql = "INSERT INTO users ('name', email, password, connected, 'type') VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement statement = connection.prepareStatement(sql);) {
+        String sql = "INSERT INTO users (name, email, password, connected, type) VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, name);
             statement.setString(2, email);
             statement.setString(3, password);
@@ -53,15 +54,32 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
     }
 
     @Override
-    public User findUserByEmail(String email) {
-        return null;
+    public User findUserByEmail(String email) throws SQLException, UserNotFoundException {
+        String sql = "SELECT * FROM users WHERE email = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery()) {
+            statement.setString(1, email);
+            while (resultSet.next()) {
+                return fetchUser(resultSet);
+            }
+        }
+        throw new UserNotFoundException();
     }
+
 
     @Override
-    public User findUserByName(String name) {
-        return null;
+    public User findUserByName(String name) throws SQLException, UserNotFoundException {
+        String sql = "SELECT * FROM users WHERE name = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery()) {
+            statement.setString(1, name);
+            while (resultSet.next()) {
+                return fetchUser(resultSet);
+            }
+        }
+        throw new UserNotFoundException();
     }
-
+    
     //inserts new day(date) to days table
     @Override
     public void insertDay(String date) {
