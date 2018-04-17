@@ -1,30 +1,36 @@
 package com.codecool.lms.service;
 
+import com.codecool.lms.dao.DatabasePagesDao;
 import com.codecool.lms.model.*;
 
+import java.sql.SQLException;
 import java.util.List;
-/*
 public class PageServiceDaoImpl implements PageService {
 
-    PageDao dao;
+    DatabasePagesDao dao;
 
-    PageServiceDaoImpl(PageDao dao){
+    public PageServiceDaoImpl(DatabasePagesDao dao) {
         this.dao = dao;
     }
 
     @Override
-    public List<Page> getPages() {
-        return dao.getPages();
+    public List<Page> getPages() throws SQLException {
+        return dao.findAllPage();
     }
 
     @Override
-    public void addNewPage(Page page) {
-
+    public void addNewPage(String title, String content, String type, int maxscore) throws SQLException {
+        if (type.equals("text")) {
+            dao.insertPage(title, content);
+        } else {
+            dao.insertPage(title, content, maxscore);
+        }
     }
 
-    @Override
-    public void removePage(String title) {
 
+    @Override
+    public void removePage(String title) throws SQLException {
+        dao.deletePage(title);
     }
 
     @Override
@@ -88,14 +94,8 @@ public class PageServiceDaoImpl implements PageService {
     }
 
     @Override
-    public Page createNewPage(String title, String content, String type, int maxscore) {
-        return null;
-    }
-
-    @Override
     public void editPage(String title, String content, String type, int maxScore, String oldTitle) {
 
     }
 
 }
-    */

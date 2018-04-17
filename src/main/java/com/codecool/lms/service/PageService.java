@@ -2,15 +2,16 @@ package com.codecool.lms.service;
 
 import com.codecool.lms.model.*;
 
+import java.sql.SQLException;
 import java.util.List;
 
 interface PageService {
 
-    List<Page> getPages();
+    List<Page> getPages() throws SQLException;
 
-    void addNewPage(Page page);
+    void addNewPage(String title, String content, String type, int maxscore) throws SQLException;
 
-    void removePage(String title);
+    void removePage(String title) throws SQLException;
 
     Page findPageByTitle(String title);
 
@@ -35,8 +36,6 @@ interface PageService {
     void removeStudentAssignments(Student student);
 
     void addAssignmentToAssignmentPage(Assignment assignment);
-
-    Page createNewPage(String title, String content, String type, int maxscore);
 
     void editPage(String title, String content, String type, int maxScore, String oldTitle);
 

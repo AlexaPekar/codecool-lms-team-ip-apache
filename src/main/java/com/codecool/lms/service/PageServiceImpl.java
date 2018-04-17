@@ -2,6 +2,7 @@ package com.codecool.lms.service;
 
 import com.codecool.lms.model.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,11 @@ public class PageServiceImpl implements PageService {
 
     public synchronized List<Page> getPages() {
         return pages;
+    }
+
+    @Override
+    public void addNewPage(String title, String content, String type, int maxscore) throws SQLException {
+        pages.add(createNewPage(title, content, type, maxscore));
     }
 
     public synchronized void addNewPage(Page page) {
