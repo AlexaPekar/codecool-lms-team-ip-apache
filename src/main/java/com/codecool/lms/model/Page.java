@@ -23,6 +23,10 @@ public abstract class Page {
         return content;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public boolean isPublished() {
         return published;
     }

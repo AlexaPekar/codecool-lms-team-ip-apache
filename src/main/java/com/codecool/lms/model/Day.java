@@ -5,8 +5,10 @@ import java.util.List;
 public class Day {
     private final String date;
     private List<Student> students;
+    private int id;
 
-    public Day(List<Student> students, String date) {
+    public Day(int id, List<Student> students, String date) {
+        this.id = id;
         this.date = date;
         this.students = students;
     }
@@ -21,5 +23,9 @@ public class Day {
 
     public void setStudents(List<Student> students) {
         this.students = students;
+    }
+
+    public int getId() {
+        return id;
     }
 }

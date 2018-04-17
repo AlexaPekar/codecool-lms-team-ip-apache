@@ -108,16 +108,41 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
         throw new UserNotFoundException();
     }
 
-    //inserts new day(date) to days table
     @Override
-    public void insertDay(String date) {
-
+    public void insertDay(String date) throws SQLException {
+        boolean autoCommit = connection.getAutoCommit();
+        connection.setAutoCommit(false);
+        String sql = "INSERT INTO days (date) VALUES (?)";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, date);
+            executeInsert(statement);
+            connection.commit();
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.setAutoCommit(autoCommit);
+        }
     }
 
-    //TODO: write to interface
     //inserts dayid, studentids to attendance table
-    public void insertAttendance(Day day, List<Student> students) {
-
+    public void insertAttendance(Day day, List<Student> students) throws SQLException {
+        boolean autoCommit = connection.getAutoCommit();
+        connection.setAutoCommit(false);
+        String sql = "INSERT INTO attendance (day_id, student_id) VALUES (?, ?)";
+        for (Student student : students) {
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setInt(1, day.getId());
+                statement.setInt(2, student.getId());
+                executeInsert(statement);
+                connection.commit();
+            } catch (SQLException e) {
+                connection.rollback();
+                throw e;
+            } finally {
+                connection.setAutoCommit(autoCommit);
+            }
+        }
     }
 
     @Override
