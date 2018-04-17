@@ -9,14 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseUserDao extends AbstractDao implements UserDao {
-    DatabaseUserDao(Connection connection) {
+    public DatabaseUserDao(Connection connection) {
         super(connection);
     }
 
     @Override
     public List<User> findUsers() throws SQLException {
         List<User> users = new ArrayList<>();
-        String sql = "SELECT id, name, email, password, connected, type FROM users";
+        String sql = "SELECT id, name, email, password, connected, type FROM users;";
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
             while (resultSet.next()) {
@@ -36,7 +36,7 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
     public void register(String name, String email, String password, String type) throws SQLException {
         boolean autoCommit = connection.getAutoCommit();
         connection.setAutoCommit(false);
-        String sql = "INSERT INTO users (name, email, password, connected, type) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users (name, email, password, connected, type) VALUES (?, ?, ?, ?, ?);";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, name);
             statement.setString(2, email);
@@ -55,25 +55,25 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
     }
 
     @Override
-    public User findUserByEmail(String email) throws SQLException, UserNotFoundException {
-        String sql = "SELECT * FROM users WHERE email = ?";
-        try (PreparedStatement statement = connection.prepareStatement(sql);
-             ResultSet resultSet = statement.executeQuery()) {
+    public User findUserByEmail(String email) throws SQLException {
+        String sql = "SELECT * FROM users WHERE email = ?;";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, email);
-            while (resultSet.next()) {
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
                 return fetchUser(resultSet);
             }
         }
-        throw new UserNotFoundException();
+        return null;
     }
 
     @Override
     public User findUserByEmailAndPassword(String email, String password) throws SQLException, WrongPasswordException {
-        String sql = "SELECT * FROM users WHERE email = ? AND password = ?";
-        try (PreparedStatement statement = connection.prepareStatement(sql);
-             ResultSet resultSet = statement.executeQuery()) {
+        String sql = "SELECT * FROM users WHERE email = ? AND password = ?;";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, email);
             statement.setString(2, password);
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 return fetchUser(resultSet);
             }
@@ -84,10 +84,10 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
 
     @Override
     public User findUserByName(String name) throws SQLException, UserNotFoundException {
-        String sql = "SELECT * FROM users WHERE name = ?";
-        try (PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet resultSet = statement.executeQuery()) {
+        String sql = "SELECT * FROM users WHERE name = ?;";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, name);
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 return fetchUser(resultSet);
             }
@@ -97,10 +97,10 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
 
     @Override
     public User findUserById(int id) throws SQLException, UserNotFoundException {
-        String sql = "SELECT * FROM users WHERE id = ?";
-        try (PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet resultSet = statement.executeQuery()) {
+        String sql = "SELECT * FROM users WHERE id = ?;";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 return fetchUser(resultSet);
             }
@@ -112,7 +112,7 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
     public void insertDay(String date) throws SQLException {
         boolean autoCommit = connection.getAutoCommit();
         connection.setAutoCommit(false);
-        String sql = "INSERT INTO days (date) VALUES (?)";
+        String sql = "INSERT INTO days (date) VALUES (?);";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, date);
             executeInsert(statement);
@@ -129,7 +129,7 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
     public void insertAttendance(Day day, List<Student> students) throws SQLException {
         boolean autoCommit = connection.getAutoCommit();
         connection.setAutoCommit(false);
-        String sql = "INSERT INTO attendance (day_id, student_id) VALUES (?, ?)";
+        String sql = "INSERT INTO attendance (day_id, student_id) VALUES (?, ?);";
         for (Student student : students) {
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setInt(1, day.getId());
@@ -197,6 +197,9 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
         int id = resultSet.getInt("id");
         String name = resultSet.getString("name");
         String email = resultSet.getString("email");
+        if (email.equals("") || email == null) {
+            return null;
+        }
         String password = resultSet.getString("password");
         boolean connected = resultSet.getBoolean("connected");
         String type = resultSet.getString("type");

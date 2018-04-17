@@ -16,7 +16,7 @@ public interface UserDao {
 
     void register(String name, String email, String password, String type) throws SQLException;
 
-    User findUserByEmail(String email) throws SQLException, UserNotFoundException;
+    User findUserByEmail(String email) throws SQLException;
 
     User findUserByEmailAndPassword(String email, String password) throws SQLException, WrongPasswordException;
 

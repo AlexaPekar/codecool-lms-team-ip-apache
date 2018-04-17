@@ -1,6 +1,7 @@
 package com.codecool.lms.service;
 
 import com.codecool.lms.dao.DatabaseUserDao;
+import com.codecool.lms.exception.UserAlreadyRegisteredException;
 import com.codecool.lms.exception.UserNotFoundException;
 import com.codecool.lms.exception.WrongPasswordException;
 import com.codecool.lms.model.*;
@@ -32,8 +33,13 @@ public class UserServiceDaoImpl implements UserService {
     }
 
     @Override
-    public void register(String name, String email, String password, String type) throws SQLException {
-        dao.register(name, email, password, type);
+    public void register(String name, String email, String password, String type) throws SQLException, UserAlreadyRegisteredException {
+        User alreadyRegisteredUser = dao.findUserByEmail(email);
+        if (alreadyRegisteredUser == null) {
+            dao.register(name, email, password, type);
+        } else {
+            throw new UserAlreadyRegisteredException();
+        }
     }
 
     @Override

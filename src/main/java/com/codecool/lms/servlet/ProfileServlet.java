@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet("/profile")
 public class ProfileServlet extends AbstractServlet {
@@ -36,7 +37,11 @@ public class ProfileServlet extends AbstractServlet {
         } else {
             type = "Student";
         }
-        currentUser = UserServiceImpl.getUserService().changeUserRole(currentUser, type);
+        try {
+            currentUser = UserServiceImpl.getUserService().changeUserRole(currentUser, type);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         //Name
         if (req.getParameter("newName").length() > 0) {
