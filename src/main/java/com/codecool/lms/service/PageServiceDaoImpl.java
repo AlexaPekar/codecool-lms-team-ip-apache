@@ -6,6 +6,7 @@ import com.codecool.lms.model.*;
 
 import java.sql.SQLException;
 import java.util.List;
+
 public class PageServiceDaoImpl implements PageService {
 
     DatabasePagesDao dao;
@@ -72,7 +73,7 @@ public class PageServiceDaoImpl implements PageService {
     @Override
     public boolean userAlreadySubmitted(User user, AssignmentPage assignmentPage) throws SQLException, UserNotFoundException {
         List<Assignment> assignments = currentUserAssingments(user);
-        for (Assignment assignment: assignments) {
+        for (Assignment assignment : assignments) {
             if (assignment.getTitle().equals(assignmentPage.getTitle())) {
                 return true;
             }
@@ -88,8 +89,8 @@ public class PageServiceDaoImpl implements PageService {
     @Override
     public double findEvaluatedPercent(Student student) throws SQLException {
         double sum = dao.findSumOfGrades(student);
-        int number = dao.findNumberOfGradedAssignments(student);
-        return sum / number;
+        double maxScore = dao.findSumOfMaxScore(student);
+        return GradeStatisticsChart.calculateGradePercentage(sum, maxScore);
     }
 
     @Override
