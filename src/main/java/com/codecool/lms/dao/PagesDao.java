@@ -14,7 +14,9 @@ public interface PagesDao {
 
     List<Page> findAllPage() throws SQLException;
 
-    void insertPage(Page page) throws SQLException;
+    void insertPage(String title, String content) throws SQLException;
+
+    void insertPage(String title, String content, int maxScore) throws SQLException;
 
     void deletePage(String title) throws SQLException;
 

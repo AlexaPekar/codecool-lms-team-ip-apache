@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DatabasePagesDao extends AbstractDao implements PagesDao {
-    DatabasePagesDao(Connection connection) {
+    public DatabasePagesDao(Connection connection) {
         super(connection);
     }
 
@@ -17,7 +17,13 @@ public class DatabasePagesDao extends AbstractDao implements PagesDao {
         int id = resultSet.getInt("id");
         String title = resultSet.getString("title");
         String content = resultSet.getString("content");
-        return new TextPage(id, title, content);
+        boolean published = resultSet.getBoolean("published");
+        TextPage textPage = new TextPage(id, title, content);
+        if (published) {
+            textPage.publish();
+        }
+        return textPage;
+
     }
 
     @Override
@@ -39,35 +45,31 @@ public class DatabasePagesDao extends AbstractDao implements PagesDao {
         List<Page> pages = new ArrayList<>();
         String assignmentSql = "SELECT * FROM assignment_pages";
         String textPageSql = "SELECT * FROM text_pages";
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(assignmentSql)) {
-            while (resultSet.next()) {
-                pages.add(fetchAssignmentPage(resultSet));
+        try (Statement AssignmentPagestatement = connection.createStatement();
+             ResultSet AssignmentPageresultSet = AssignmentPagestatement.executeQuery(assignmentSql)) {
+            while (AssignmentPageresultSet.next()) {
+                pages.add(fetchAssignmentPage(AssignmentPageresultSet));
+            }
+            try (Statement textPageStatement = connection.createStatement();
+                 ResultSet textPageResultSet = textPageStatement.executeQuery(textPageSql)) {
+                while (textPageResultSet.next()) {
+                    pages.add(fetchTextPage(textPageResultSet));
+                }
+                return pages;
             }
         }
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(textPageSql)) {
-            while (resultSet.next()) {
-                pages.add(fetchTextPage(resultSet));
-            }
-        }
-        return pages;
     }
 
     @Override
-    public void insertPage(Page page) throws SQLException {
-        String sql;
-        if (page instanceof AssignmentPage) {
-            sql = "INSERT INTO assignment_pages (title, content, published, max_score) VALUES (?, ?, ?, " + ((AssignmentPage) page).getMaxScore() + ")";
-        } else {
-            sql = "INSERT INTO text_pages (title, content, published) VALUES (?, ?, ?)";
-        }
+    public void insertPage(String title, String content, int maxScore) throws SQLException {
+        String sql = "INSERT INTO assignment_pages (title, content, published, max_score) VALUES (?, ?, ?, ?)";
         boolean autoCommit = connection.getAutoCommit();
         connection.setAutoCommit(false);
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, page.getTitle());
-            statement.setString(2, page.getContent());
-            statement.setBoolean(3, page.isPublished());
+            statement.setString(1, title);
+            statement.setString(2, content);
+            statement.setBoolean(3, false);
+            statement.setInt(4, maxScore);
             executeInsert(statement);
         } catch (SQLException ex) {
             connection.rollback();
@@ -77,6 +79,22 @@ public class DatabasePagesDao extends AbstractDao implements PagesDao {
         }
     }
 
+    public void insertPage(String title, String content) throws SQLException {
+        String sql = "INSERT INTO text_pages (title, content, published) VALUES (?, ?, ?)";
+        boolean autoCommit = connection.getAutoCommit();
+        connection.setAutoCommit(false);
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, title);
+            statement.setString(2, content);
+            statement.setBoolean(3, false);
+            executeInsert(statement);
+        } catch (SQLException ex) {
+            connection.rollback();
+            throw ex;
+        } finally {
+            connection.setAutoCommit(autoCommit);
+        }
+    }
 
     @Override
     public void deletePage(String title) throws SQLException {
