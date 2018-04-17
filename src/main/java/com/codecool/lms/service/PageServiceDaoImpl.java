@@ -1,6 +1,7 @@
 package com.codecool.lms.service;
 
 import com.codecool.lms.dao.DatabasePagesDao;
+import com.codecool.lms.exception.UserNotFoundException;
 import com.codecool.lms.model.*;
 
 import java.sql.SQLException;
@@ -34,42 +35,42 @@ public class PageServiceDaoImpl implements PageService {
     }
 
     @Override
-    public Page findPageByTitle(String title) {
-        return null;
+    public Page findPageByTitle(String title) throws SQLException {
+        return dao.findByTitle(title);
     }
 
     @Override
-    public String findAnswer(AssignmentPage page, Student student) {
-        return null;
+    public String findAnswer(AssignmentPage page, Student student) throws SQLException {
+        return dao.findAnswerByPage(page, student);
     }
 
     @Override
-    public String findGrade(AssignmentPage page, Student student) {
-        return null;
+    public String findGrade(AssignmentPage page, Student student) throws SQLException {
+        return dao.findGrade(page, student);
     }
 
     @Override
-    public List<AssignmentPage> getAssignmentPages() {
-        return null;
+    public List<AssignmentPage> getAssignmentPages() throws SQLException {
+        return dao.findAssignmentPages();
     }
 
     @Override
-    public Assignment getAssignmentByStudentName(AssignmentPage page, Student student) {
-        return null;
+    public Assignment getAssignmentByStudent(AssignmentPage page, Student student) throws SQLException, UserNotFoundException {
+        return dao.findAssignmentByStudent(page, student);
     }
 
     @Override
-    public List<AssignmentPage> findSubmittedPages(User user) {
-        return null;
+    public List<AssignmentPage> findSubmittedPages(User user) throws SQLException {
+        return dao.findSubmittedPages(user);
     }
 
     @Override
-    public List<Assignment> currentUserAssingments(User currentUser) {
-        return null;
+    public List<Assignment> currentUserAssingments(User currentUser) throws SQLException, UserNotFoundException {
+        return dao.currentUserAssignments(currentUser);
     }
 
     @Override
-    public boolean userAlreadySubmitted(User user, AssignmentPage assignmentPage) {
+    public boolean userAlreadySubmitted(User user, AssignmentPage assignmentPage) throws SQLException, UserNotFoundException {
         List<Assignment> assignments = currentUserAssingments(user);
         for (Assignment assignment: assignments) {
             if (assignment.getTitle().equals(assignmentPage.getTitle())) {
@@ -80,28 +81,36 @@ public class PageServiceDaoImpl implements PageService {
     }
 
     @Override
-    public List<Assignment> getAssignments() {
-        return null;
+    public List<Assignment> getAssignments() throws SQLException, UserNotFoundException {
+        return dao.getAssignments();
     }
 
     @Override
-    public double findEvaluatedPercent(Student student) {
-        return 0;
+    public double findEvaluatedPercent(Student student) throws SQLException {
+        double sum = dao.findSumOfGrades(student);
+        int number = dao.findNumberOfGradedAssignments(student);
+        return sum / number;
     }
 
     @Override
-    public void removeStudentAssignments(Student student) {
-
+    public void removeStudentAssignments(Student student) throws SQLException {
+        dao.removeStudentAssignments(student);
     }
 
     @Override
-    public void addAssignmentToAssignmentPage(Assignment assignment) {
-
+    public void addAssignmentToAssignmentPage(User user, String title, String answer, int maxScore) throws SQLException {
+        AssignmentPage assignmentPage = (AssignmentPage) dao.findByTitle(title);
+        String date = Assignment.setDate();
+        dao.insertAssignment((Student) user, assignmentPage, title, answer, maxScore, date);
     }
 
     @Override
-    public void editPage(String title, String content, String type, int maxScore, String oldTitle) {
-
+    public void editPage(String title, String content, String type, int maxScore, String oldTitle) throws SQLException {
+        if (type.equals("text")) {
+            dao.updatePage(title, content, oldTitle);
+        } else {
+            dao.updatePage(title, content, maxScore, oldTitle);
+        }
     }
 
 }

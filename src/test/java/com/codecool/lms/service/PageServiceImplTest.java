@@ -27,7 +27,7 @@ class PageServiceImplTest {
         testAssignmentPage = new AssignmentPage(2, "Kitties Test", "Do you love kitties?", 10);
         pageServiceImpl.addNewPage(testAssignmentPage);
         testStudent = new Student(2, "Steve", "steveo@gmail.com", "asdasdasd");
-        testAssignment = new Assignment(testStudent, "good answer", "Kitties Test",10);
+        testAssignment = new Assignment(3, testStudent, "good answer", "Kitties Test", 10);
         testAssignmentPage.addAssignment(testAssignment);
         testAssignment.setGrade(10);
     }
@@ -81,7 +81,7 @@ class PageServiceImplTest {
 
     @Test
     void getAssignmentByStudentName() {
-        assertEquals(testAssignment, pageServiceImpl.getAssignmentByStudentName(testAssignmentPage, testStudent));
+        assertEquals(testAssignment, pageServiceImpl.getAssignmentByStudent(testAssignmentPage, testStudent));
     }
 
     @Test

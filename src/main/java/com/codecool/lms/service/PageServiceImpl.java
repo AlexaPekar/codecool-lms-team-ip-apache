@@ -77,7 +77,7 @@ public class PageServiceImpl implements PageService {
         return assignmentPages;
     }
 
-    public synchronized Assignment getAssignmentByStudentName(AssignmentPage page, Student student) {
+    public synchronized Assignment getAssignmentByStudent(AssignmentPage page, Student student) {
         for (Assignment assignment : page.getAssignments()) {
             if (assignment.getStudent().getEmail().equals(student.getEmail())) {
                 return assignment;
@@ -139,7 +139,7 @@ public class PageServiceImpl implements PageService {
         List<AssignmentPage> assignmentPages = getAssignmentPages();
         for (AssignmentPage page : assignmentPages) {
             if (userAlreadySubmitted(student, page)) {
-                Assignment assignment = getAssignmentByStudentName(page, student);
+                Assignment assignment = getAssignmentByStudent(page, student);
                 score += assignment.getGrade();
                 maxScore += assignment.getMaxScore();
             }
@@ -152,16 +152,19 @@ public class PageServiceImpl implements PageService {
         List<AssignmentPage> assignmentPages = getAssignmentPages();
         for (AssignmentPage assignmentPage : assignmentPages) {
             if (userAlreadySubmitted(student, assignmentPage)) {
-                Assignment assignment = getAssignmentByStudentName(assignmentPage, student);
+                Assignment assignment = getAssignmentByStudent(assignmentPage, student);
                 assignmentPage.getAssignments().remove(assignment);
             }
         }
     }
 
-    public synchronized void addAssignmentToAssignmentPage(Assignment assignment) {
-        AssignmentPage assignmentPage = (AssignmentPage) findPageByTitle(assignment.getTitle());
+    @Override
+    public synchronized void addAssignmentToAssignmentPage(User user, String title, String answer, int maxScore) throws SQLException {
+        AssignmentPage assignmentPage = (AssignmentPage) findPageByTitle(title);
+        Assignment assignment = new Assignment(AssignmentID, (Student) user, answer, title, maxScore);
         assignmentPage.addAssignment(assignment);
     }
+
 
     public synchronized Page createNewPage(String title, String content, String type, int maxscore) {
         if (type.equals("text")) {
