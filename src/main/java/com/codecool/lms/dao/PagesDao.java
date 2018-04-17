@@ -50,4 +50,6 @@ public interface PagesDao {
     void updatePage(String title, String content,int maxScore, String oldTitle) throws SQLException;
 
     void updatePage(String title, String content,String oldTitle) throws SQLException;
+
+    void updatePage(String title, boolean published) throws SQLException;
 }

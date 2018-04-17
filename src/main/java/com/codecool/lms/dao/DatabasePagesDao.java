@@ -313,4 +313,17 @@ public class DatabasePagesDao extends AbstractDao implements PagesDao {
             statement.executeQuery();
         }
     }
+
+    public void updatePage(String title, boolean published) throws SQLException {
+        String sql = "UPDATE assignment_pages SET published=? WHERE title =?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setBoolean(1, published);
+            statement.executeQuery();
+        }
+        sql = "UPDATE text_pages SET published=? WHERE title =?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setBoolean(1, published);
+            statement.executeQuery();
+        }
+    }
 }

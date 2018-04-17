@@ -1,14 +1,17 @@
 package com.codecool.lms.servlet;
 
+import com.codecool.lms.dao.DatabasePagesDao;
 import com.codecool.lms.model.*;
+import com.codecool.lms.service.PageServiceDaoImpl;
 import com.codecool.lms.service.PageServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 @WebServlet("/showpage")
 public class PageServlet extends AbstractServlet {
@@ -40,17 +43,21 @@ public class PageServlet extends AbstractServlet {
     }
 
     @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String title = req.getParameter("title");
-        String published = req.getParameter("published");
-        if (published.equals("true")) {
-            PageServiceImpl.getPageService().findPageByTitle(title).depublish();
-        } else {
-            PageServiceImpl.getPageService().findPageByTitle(title).publish();
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        try (Connection connection = getConnection(req.getServletContext())) {
+            DatabasePagesDao databasePagesDao = new DatabasePagesDao(connection);
+            PageServiceDaoImpl pageServiceDao = new PageServiceDaoImpl(databasePagesDao);
+            String title = req.getParameter("title");
+            String published = req.getParameter("published");
+            if (published.equals("true")) {
+                pageServiceDao.editPage(title, false);
+            } else {
+                pageServiceDao.editPage(title, true);
+            }
+            resp.sendRedirect("home");
+        } catch (SQLException e) {
+            req.setAttribute("message", e.getMessage());
+            req.getRequestDispatcher("index.jsp").forward(req, resp);
         }
-        Page myPage = PageServiceImpl.getPageService().findPageByTitle(title);
-
-        req.setAttribute("page", myPage);
-        resp.sendRedirect("home");
     }
 }

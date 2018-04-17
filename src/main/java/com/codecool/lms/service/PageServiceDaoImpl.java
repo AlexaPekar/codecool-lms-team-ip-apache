@@ -114,4 +114,8 @@ public class PageServiceDaoImpl implements PageService {
         }
     }
 
+    public void editPage(String title, boolean published) throws SQLException {
+        dao.updatePage(title, published);
+
+    }
 }
