@@ -17,7 +17,7 @@ public class CreateServlet extends AbstractServlet {
 
 
     @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         try (Connection connection = getConnection(req.getServletContext())) {
             DatabasePagesDao databasePagesDao = new DatabasePagesDao(connection);
             PageServiceDaoImpl pageServiceDao = new PageServiceDaoImpl(databasePagesDao);
@@ -25,12 +25,12 @@ public class CreateServlet extends AbstractServlet {
             String title = req.getParameter("title");
             String content = req.getParameter("content");
             int maxPoint = Integer.parseInt(req.getParameter("maxScore"));
+            resp.sendRedirect("home");
 
             pageServiceDao.addNewPage(title, content, type, maxPoint);
         } catch (SQLException e) {
-            req.setAttribute("error", e.getMessage());
-        } finally {
-            resp.sendRedirect("home");
+            req.setAttribute("message", e.getMessage());
+            req.getRequestDispatcher("index.jsp").forward(req, resp);
         }
     }
 

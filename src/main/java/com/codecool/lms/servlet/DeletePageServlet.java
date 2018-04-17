@@ -20,10 +20,11 @@ public class DeletePageServlet extends AbstractServlet {
             PageServiceDaoImpl pageServiceDao = new PageServiceDaoImpl(databasePagesDao);
             String pageName = req.getParameter("page");
             pageServiceDao.removePage(pageName);
-        } catch (SQLException e) {
-            req.setAttribute("error", e.getMessage());
-        } finally {
             resp.sendRedirect("home");
+        } catch (SQLException e) {
+            req.setAttribute("message", e.getMessage());
+        } finally {
+
         }
     }
 }

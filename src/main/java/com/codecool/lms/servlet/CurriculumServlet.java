@@ -30,11 +30,11 @@ public class CurriculumServlet extends AbstractServlet {
             req.setAttribute("current", currentUser);
             req.setAttribute("pages", pages);
             req.setAttribute("submitted", PageServiceImpl.getPageService().findSubmittedPages(currentUser));
+            req.getRequestDispatcher("home.jsp").forward(req, resp);
 
         } catch (SQLException e) {
-            req.setAttribute("error", e.getMessage());
-        } finally {
-            req.getRequestDispatcher("home.jsp").forward(req, resp);
+            req.setAttribute("message", e.getMessage());
+            req.getRequestDispatcher("index.jsp").forward(req, resp);
         }
     }
 }
