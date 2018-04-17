@@ -254,6 +254,18 @@ public class DatabasePagesDao extends AbstractDao implements PagesDao {
     }
 
     @Override
+    public int findNumberOfGradedAssignments(Student student) throws SQLException {
+        int result = 0;
+        String sql = "SELECT COUNT(grade) AS result FROM assignments WHERE student_id = ? AND grade IS NOT NULL";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, student.getId());
+            ResultSet resultSet = statement.executeQuery();
+            result = resultSet.getInt("result");
+        }
+        return result;
+    }
+
+    @Override
     public void removeStudentAssignments(Student student) throws SQLException {
         String sql = "DELETE  FROM assignments WHERE student_id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
