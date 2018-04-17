@@ -254,13 +254,14 @@ public class DatabasePagesDao extends AbstractDao implements PagesDao {
     }
 
     @Override
-    public int findNumberOfGradedAssignments(Student student) throws SQLException {
-        int result = 0;
-        String sql = "SELECT COUNT(grade) AS result FROM assignments WHERE student_id = ? AND grade IS NOT NULL";
+    public double findSumOfMaxScore(Student student) throws SQLException {
+        double result = 0;
+        String sql = "SELECT SUM(max_score) AS result FROM assignments WHERE student_id = ? AND grade IS NOT NULL";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, student.getId());
             ResultSet resultSet = statement.executeQuery();
-            result = resultSet.getInt("result");
+            int intResult = resultSet.getInt("result");
+            result = ((double) intResult);
         }
         return result;
     }

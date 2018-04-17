@@ -41,7 +41,7 @@ public interface PagesDao {
 
     double findSumOfGrades(Student student) throws SQLException;
 
-    public int findNumberOfGradedAssignments(Student student) throws SQLException;
+    double findSumOfMaxScore(Student student) throws SQLException;
 
     void removeStudentAssignments(Student student) throws SQLException;
 
