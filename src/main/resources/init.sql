@@ -1,9 +1,13 @@
 DROP TABLE IF EXISTS assignments;
 DROP TABLE IF EXISTS attendance;
+DROP TABLE IF EXISTS repositories;
+DROP TABLE IF EXISTS githubs;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS text_pages;
 DROP TABLE IF EXISTS assignment_pages;
 DROP TABLE IF EXISTS days;
+
+
 
 CREATE TABLE users (
     "id"  SERIAL PRIMARY KEY,
@@ -51,6 +55,33 @@ CREATE TABLE attendance (
 	day_id INTEGER NOT NULL,
 	student_id INTEGER NOT NULL,
 	FOREIGN KEY (day_id) REFERENCES days("id"),
+	FOREIGN KEY (student_id) REFERENCES users("id")
+);
+
+CREATE TABLE repositories (
+    "id"  SERIAL PRIMARY KEY,
+	github_id INTEGER NOT NULL,
+    "html" TEXT NOT NULL,
+    "name" TEXT UNIQUE NOT NULL,
+    stars INTEGER NOT NULL,
+    watchers INTEGER NOT NULL,
+    forks TEXT NOT NULL,
+	FOREIGN KEY (github_id) REFERENCES githubs("id")
+);
+
+CREATE TABLE githubs (
+    "id"  SERIAL PRIMARY KEY,
+	student_id INTEGER NOT NULL,
+	avatar TEXT NOT NULL,
+    html TEXT NOT NULL,
+    repos INTEGER NOT NULL,
+    gists INTEGER NOT NULL,
+   	followers INTEGER NOT NULL,
+	"following" INTEGER NOT NULL,
+    company TEXT NOT NULL,
+	blog TEXT NOT NULL,
+	"location" TEXT NOT NULL,
+	created TEXT NOT NULL,
 	FOREIGN KEY (student_id) REFERENCES users("id")
 );
 
