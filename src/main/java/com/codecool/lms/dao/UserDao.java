@@ -19,6 +19,8 @@ public interface UserDao {
 
     User findUserByName(String name) throws SQLException, UserNotFoundException;
 
+    User findUserById(int id) throws SQLException, UserNotFoundException;
+
     void insertDay(String date);
 
     List<Day> getDays();

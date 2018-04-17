@@ -79,7 +79,20 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
         }
         throw new UserNotFoundException();
     }
-    
+
+    @Override
+    public User findUserById(int id) throws SQLException, UserNotFoundException {
+        String sql = "SELECT * FROM users WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery()) {
+            statement.setInt(1, id);
+            while (resultSet.next()) {
+                return fetchUser(resultSet);
+            }
+        }
+        throw new UserNotFoundException();
+    }
+
     //inserts new day(date) to days table
     @Override
     public void insertDay(String date) {
