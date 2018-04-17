@@ -23,8 +23,8 @@ class PageServiceImplTest {
     @BeforeEach
     void setUp() {
         pageServiceImpl = new PageServiceImpl();
-        testTextPage = new TextPage("Kitties", "Kitties must be loved!");
-        testAssignmentPage = new AssignmentPage("Kitties Test", "Do you love kitties?", 10);
+        testTextPage = new TextPage(1, "Kitties", "Kitties must be loved!");
+        testAssignmentPage = new AssignmentPage(2, "Kitties Test", "Do you love kitties?", 10);
         pageServiceImpl.addNewPage(testAssignmentPage);
         testStudent = new Student(2, "Steve", "steveo@gmail.com", "asdasdasd");
         testAssignment = new Assignment(testStudent, "good answer", "Kitties Test",10);
