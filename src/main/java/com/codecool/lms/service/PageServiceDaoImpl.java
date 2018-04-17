@@ -70,6 +70,12 @@ public class PageServiceDaoImpl implements PageService {
 
     @Override
     public boolean userAlreadySubmitted(User user, AssignmentPage assignmentPage) {
+        List<Assignment> assignments = currentUserAssingments(user);
+        for (Assignment assignment: assignments) {
+            if (assignment.getTitle().equals(assignmentPage.getTitle())) {
+                return true;
+            }
+        }
         return false;
     }
 

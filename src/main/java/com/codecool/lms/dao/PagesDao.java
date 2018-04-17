@@ -1,5 +1,6 @@
 package com.codecool.lms.dao;
 
+import com.codecool.lms.exception.UserNotFoundException;
 import com.codecool.lms.model.*;
 
 import java.sql.ResultSet;
@@ -20,31 +21,31 @@ public interface PagesDao {
 
     void deletePage(String title) throws SQLException;
 
-    Page findByTitle(String title);
+    Page findByTitle(String title) throws SQLException;
 
-    String findAnswerbyPage(AssignmentPage page, Student student);
+    String findAnswerByPage(AssignmentPage page, Student student) throws SQLException;
 
-    String findGrade(AssignmentPage page, Student student);
+    String findGrade(AssignmentPage page, Student student) throws SQLException;
 
-    List<AssignmentPage> getAssignmentPages();
+    List<AssignmentPage> findAssignmentPages() throws SQLException;
 
-    Assignment getAssignmentByStudentName(AssignmentPage page, Student student);
+    Assignment findAssignmentByStudent(AssignmentPage page, Student student) throws SQLException, UserNotFoundException;
 
-    List<AssignmentPage> findSubmittedPages(User user);
+    Assignment fetchAssignment(ResultSet resultSet) throws SQLException, UserNotFoundException;
 
-    List<Assignment> currentUserAssingments(User currentUser);
+    List<AssignmentPage> findSubmittedPages(User user) throws SQLException;
 
-    boolean userAlreadySubmitted(User user, AssignmentPage assignmentPage);
+    List<Assignment> currentUserAssignments(User currentUser) throws SQLException, UserNotFoundException;
 
-    List<Assignment> getAssignments();
+    List<Assignment> getAssignments() throws SQLException, UserNotFoundException;
 
-    double findEvaluatedPercent(Student student);
+    double findSumOfGrades(Student student) throws SQLException;
 
-    void removeStudentAssignments(Student student);
+    void removeStudentAssignments(Student student) throws SQLException;
 
-    void addAssignmentToAssignmentPage(Assignment assignment);
+    void insertAssignment(Student student, AssignmentPage assignmentPage, String title, String answer, int maxScore, String date) throws SQLException;
 
-    Page createNewPage(String title, String content, String type, int maxscore);
+    void updatePage(String title, String content,int maxScore, String oldTitle) throws SQLException;
 
-    void editPage(String title, String content, String type, int maxScore, String oldTitle);
+    void updatePage(String title, String content,String oldTitle) throws SQLException;
 }
