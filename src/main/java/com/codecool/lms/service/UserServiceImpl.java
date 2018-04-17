@@ -5,6 +5,7 @@ import com.codecool.lms.exception.UserNotFoundException;
 import com.codecool.lms.exception.WrongPasswordException;
 import com.codecool.lms.model.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ public class UserServiceImpl implements UserService {
     public static final UserServiceImpl userService = new UserServiceImpl();
     public final List<User> users = new ArrayList<>();
     public final List<Day> days = new ArrayList<>();
+    public static int userId = 1;
 
 
     //Visible for testing
@@ -36,15 +38,21 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
-    public synchronized void register(User user) throws UserAlreadyRegisteredException {
-        if (!containsUser(user.getEmail())) {
-            users.add(user);
+    @Override
+    public void register(String name, String email, String password, String type) throws SQLException, UserAlreadyRegisteredException {
+        if (!containsUser(email)) {
+            if (type.equals("Mentor")) {
+                users.add(new Mentor(userId++, name, email, password));
+            } else {
+                users.add(new Student(userId++, name, email, password));
+            }
         } else {
             throw new UserAlreadyRegisteredException();
         }
     }
 
-    public synchronized User findUserByEmail(String email, String password) throws UserNotFoundException, WrongPasswordException {
+    @Override
+    public User findUserByLoginData(String email, String password) throws UserNotFoundException, SQLException, WrongPasswordException {
         for (User user : users) {
             if (user.getEmail().equals(email)) {
                 if (user.getPassword().equals(password)) {
@@ -158,7 +166,7 @@ public class UserServiceImpl implements UserService {
         PageServiceImpl.getPageService().getAssignmentByStudentName(assignmentPage, student).setGrade(grade);
     }
 
-    public synchronized User changeUserRole(User user, String type) {
+    public synchronized User changeUserRole(User user, String type) throws SQLException {
         if (user instanceof Mentor && type.equals("Mentor")) {
             return user;
         } else if (user instanceof Student && type.equals("Student")) {
@@ -174,7 +182,7 @@ public class UserServiceImpl implements UserService {
             user = new Student(2, user.getName(), user.getEmail(), user.getPassword());
         }
         try {
-            UserServiceImpl.getUserService().register(user);
+            UserServiceImpl.getUserService().register(user.getName(), user.getEmail(), user.getPassword(), type);
         } catch (UserAlreadyRegisteredException e) {
             e.printStackTrace();
         }

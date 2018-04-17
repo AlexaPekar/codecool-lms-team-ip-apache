@@ -5,21 +5,20 @@ import com.codecool.lms.exception.UserNotFoundException;
 import com.codecool.lms.exception.WrongPasswordException;
 import com.codecool.lms.model.*;
 
+import java.sql.SQLException;
 import java.util.List;
 
 interface UserService {
 
-    List<User> getUsers();
+    List<User> getUsers() throws SQLException;
 
-    boolean containsUser(String email);
+    boolean containsUser(String email) throws SQLException;
 
-    void register(User user) throws UserAlreadyRegisteredException;
+    void register(String name, String email, String password, String type) throws SQLException, UserAlreadyRegisteredException;
 
-    User findUserByEmail(String email, String password) throws UserNotFoundException, WrongPasswordException;
+    User findUserByLoginData(String email, String password) throws WrongPasswordException, SQLException, UserNotFoundException;
 
-    User createUser(String email, String name, String password, String type);
-
-    User findUserByName(String name);
+    User findUserByName(String name) throws SQLException, UserNotFoundException;
 
     void addDay(Day day);
 
@@ -47,7 +46,7 @@ interface UserService {
 
     void gradeAssignment(int grade, String studentName, String title);
 
-    User changeUserRole(User user, String type);
+    User changeUserRole(User user, String type) throws SQLException;
 
     User changeUserName(User user, String newName);
 

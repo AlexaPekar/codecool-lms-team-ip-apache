@@ -1,6 +1,7 @@
 package com.codecool.lms.dao;
 
 import com.codecool.lms.exception.UserNotFoundException;
+import com.codecool.lms.exception.WrongPasswordException;
 import com.codecool.lms.model.*;
 
 import java.sql.ResultSet;
@@ -16,6 +17,8 @@ public interface UserDao {
     void register(String name, String email, String password, String type) throws SQLException;
 
     User findUserByEmail(String email) throws SQLException, UserNotFoundException;
+
+    User findUserByEmailAndPassword(String email, String password) throws SQLException, WrongPasswordException;
 
     User findUserByName(String name) throws SQLException, UserNotFoundException;
 

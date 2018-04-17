@@ -1,6 +1,7 @@
 package com.codecool.lms.dao;
 
 import com.codecool.lms.exception.UserNotFoundException;
+import com.codecool.lms.exception.WrongPasswordException;
 import com.codecool.lms.model.*;
 
 import java.sql.*;
@@ -57,13 +58,27 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
     public User findUserByEmail(String email) throws SQLException, UserNotFoundException {
         String sql = "SELECT * FROM users WHERE email = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet resultSet = statement.executeQuery()) {
+             ResultSet resultSet = statement.executeQuery()) {
             statement.setString(1, email);
             while (resultSet.next()) {
                 return fetchUser(resultSet);
             }
         }
         throw new UserNotFoundException();
+    }
+
+    @Override
+    public User findUserByEmailAndPassword(String email, String password) throws SQLException, WrongPasswordException {
+        String sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+            statement.setString(1, email);
+            statement.setString(2, password);
+            while (resultSet.next()) {
+                return fetchUser(resultSet);
+            }
+        }
+        throw new WrongPasswordException();
     }
 
 
