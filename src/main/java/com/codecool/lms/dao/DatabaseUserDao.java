@@ -1,8 +1,5 @@
 package com.codecool.lms.dao;
 
-import com.codecool.lms.exception.UserAlreadyRegisteredException;
-import com.codecool.lms.exception.UserNotFoundException;
-import com.codecool.lms.exception.WrongPasswordException;
 import com.codecool.lms.model.*;
 
 import java.sql.*;
@@ -34,15 +31,16 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
     }
 
     @Override
-    public void register(User user) throws SQLException {
+    public void register(String name, String email, String password, String type) throws SQLException {
         boolean autoCommit = connection.getAutoCommit();
         connection.setAutoCommit(false);
-        String sql = "INSERT INTO users (name, email, password, connected) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO users ('name', email, password, connected, 'type') VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql);) {
-            statement.setString(1, user.getName());
-            statement.setString(2, user.getEmail());
-            statement.setString(3, user.getPassword());
-            statement.setBoolean(4, user.isConnected());
+            statement.setString(1, name);
+            statement.setString(2, email);
+            statement.setString(3, password);
+            statement.setBoolean(4, false);
+            statement.setString(5, type);
             executeInsert(statement);
             connection.commit();
         } catch (SQLException e) {
@@ -66,13 +64,13 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
 
     //inserts new day(date) to days table
     @Override
-    public void insertDay(Day day) {
+    public void insertDay(String date) {
 
     }
 
     //TODO: write to interface
     //inserts dayid, studentids to attendance table
-    public void insertAttendance(Day day) {
+    public void insertAttendance(Day day, List<Student> students) {
 
     }
 
@@ -80,6 +78,7 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
     public List<Day> getDays() {
         return null;
     }
+
 
     @Override
     public Day findDayByDate(String date) {
