@@ -62,8 +62,8 @@ public class DatabasePagesDao extends AbstractDao implements PagesDao {
     @Override
     public List<Page> findAllPage() throws SQLException {
         List<Page> pages = new ArrayList<>();
-        String assignmentSql = "SELECT * FROM assignment_pages";
-        String textPageSql = "SELECT * FROM text_pages";
+        String assignmentSql = "SELECT * FROM assignment_pages ORDER BY id";
+        String textPageSql = "SELECT * FROM text_pages ORDER BY id";
         try (Statement assignmentPageStatement = connection.createStatement();
              ResultSet assignmentPageResultSet = assignmentPageStatement.executeQuery(assignmentSql)) {
             while (assignmentPageResultSet.next()) {
@@ -117,7 +117,7 @@ public class DatabasePagesDao extends AbstractDao implements PagesDao {
 
     @Override
     public void deletePage(String title) throws SQLException {
-        String sql = "DELETE FROM assignment_pages WHERE title = ?; " +
+        String sql = "DELETE FROM text_pages WHERE title = ?; " +
                 "DELETE FROM assignment_pages WHERE title = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, title);
@@ -302,7 +302,7 @@ public class DatabasePagesDao extends AbstractDao implements PagesDao {
             statement.setString(1, title);
             statement.setString(2, content);
             statement.setString(3, oldTitle);
-            statement.executeQuery();
+            statement.executeUpdate();
         }
 
     }
@@ -315,7 +315,7 @@ public class DatabasePagesDao extends AbstractDao implements PagesDao {
             statement.setString(2, content);
             statement.setInt(3, maxScore);
             statement.setString(4, oldTitle);
-            statement.executeQuery();
+            statement.executeUpdate();
         }
     }
 
