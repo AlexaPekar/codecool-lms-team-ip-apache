@@ -1,6 +1,9 @@
 package com.codecool.lms.servlet;
 
+import com.codecool.lms.dao.DatabaseUserDao;
+import com.codecool.lms.exception.UserNotFoundException;
 import com.codecool.lms.model.User;
+import com.codecool.lms.service.UserServiceDaoImpl;
 import com.codecool.lms.service.UserServiceImpl;
 
 import javax.servlet.ServletException;
@@ -9,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 
 @WebServlet("/profile")
@@ -30,45 +34,58 @@ public class ProfileServlet extends AbstractServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User currentUser = (User) req.getSession().getAttribute("currentUser");
 
-        //Type
-        String type;
-        if (req.getParameter("type").equals("Mentor")) {
-            type = "Mentor";
-        } else {
-            type = "Student";
-        }
-        try {
-            currentUser = UserServiceImpl.getUserService().changeUserRole(currentUser, type);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        try (Connection connection = getConnection(req.getServletContext())) {
+            DatabaseUserDao userDao = new DatabaseUserDao(connection);
+            UserServiceDaoImpl userServiceDao = new UserServiceDaoImpl(userDao);
 
-        //Name
-        if (req.getParameter("newName").length() > 0) {
-            String newName = req.getParameter("newName");
-            currentUser = UserServiceImpl.getUserService().changeUserName(currentUser, newName);
-        }
+            //Type
+            String type;
+            if (req.getParameter("type").equals("Mentor")) {
+                type = "Mentor";
+            } else {
+                type = "Student";
+            }
+            try {
+                currentUser = userServiceDao.changeUserRole(currentUser, type);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (UserNotFoundException e) {
+                e.printStackTrace();
+            }
 
-        //Password
-        String passwordIsValid = validatePassword(req, resp);
+            //Name
+            if (req.getParameter("newName").length() > 0) {
+                String newName = req.getParameter("newName");
+                currentUser = userServiceDao.changeUserName(currentUser, newName);
+            }
 
-        if (passwordIsValid.equals("Valid")) {
-            String password = req.getParameter("newPassword");
-            currentUser = UserServiceImpl.getUserService().changeUserPassword(currentUser, password);
+            //Password
+            String passwordIsValid = validatePassword(req, resp);
 
-        } else if (passwordIsValid.equals("Invalid")) {
+            if (passwordIsValid.equals("Valid")) {
+                String password = req.getParameter("newPassword");
+                currentUser = userServiceDao.changeUserPassword(currentUser, password);
 
-            req.setAttribute("message", "Invalid password. Try again.");
-            req.setAttribute("user", currentUser);
-            req.setAttribute("github", currentUser.getGitHub());
-            if (currentUser.isConnected()) {
-                req.setAttribute("repos", currentUser.getGitHub().getRepositories());
+            } else if (passwordIsValid.equals("Invalid")) {
+
+                req.setAttribute("message", "Invalid password. Try again.");
+                req.setAttribute("user", currentUser);
+                req.setAttribute("github", currentUser.getGitHub());
+                if (currentUser.isConnected()) {
+                    req.setAttribute("repos", currentUser.getGitHub().getRepositories());
+                }
+                req.getSession().setAttribute("currentUser", currentUser);
+                req.getRequestDispatcher("profile.jsp").forward(req, resp);
             }
             req.getSession().setAttribute("currentUser", currentUser);
-            req.getRequestDispatcher("profile.jsp").forward(req, resp);
+            resp.sendRedirect("profile");
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
         }
-        req.getSession().setAttribute("currentUser", currentUser);
-        resp.sendRedirect("profile");
     }
 
     private String validatePassword(HttpServletRequest req, HttpServletResponse resp) {

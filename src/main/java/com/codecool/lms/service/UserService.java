@@ -30,7 +30,7 @@ interface UserService {
 
     void updateAttendance(String date, List<Student> students) throws SQLException;
 
-    List<Student> getStudents();
+    List<Student> getStudents() throws SQLException;
 
     List<Student> createAttendStudentList(String[] studentNames) throws SQLException, UserNotFoundException;
 

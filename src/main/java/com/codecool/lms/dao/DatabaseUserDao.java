@@ -16,14 +16,14 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
     @Override
     public List<User> findUsers() throws SQLException {
         List<User> users = new ArrayList<>();
-        String sql = "SELECT id, name, email, password, connected, type FROM users ORDER BY id;";
+        String sql = "SELECT * FROM users ORDER BY id;";
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
             while (resultSet.next()) {
                 users.add(fetchUser(resultSet));
             }
         }
-        return null;
+        return users;
     }
 
     @Override
@@ -37,7 +37,7 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
             statement.setString(3, password);
             statement.setBoolean(4, false);
             statement.setString(5, type);
-            executeInsert(statement);
+            statement.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
             connection.rollback();
@@ -109,7 +109,7 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
         String sql = "INSERT INTO days (date) VALUES (?);";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, date);
-            executeInsert(statement);
+            statement.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
             connection.rollback();
@@ -129,7 +129,7 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
                 days.add(fetchDay(resultSet));
             }
         }
-        return null;
+        return days;
     }
 
     @Override
@@ -138,7 +138,7 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, date);
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 return fetchDay(resultSet);
             }
         }
@@ -152,20 +152,12 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
     }
 
     public void insertAttendance(Day day, List<Student> students) throws SQLException {
-        boolean autoCommit = connection.getAutoCommit();
-        connection.setAutoCommit(false);
         String sql = "INSERT INTO attendance (day_id, student_id) VALUES (?, ?);";
         for (Student student : students) {
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setInt(1, day.getId());
                 statement.setInt(2, student.getId());
-                executeInsert(statement);
-                connection.commit();
-            } catch (SQLException e) {
-                connection.rollback();
-                throw e;
-            } finally {
-                connection.setAutoCommit(autoCommit);
+                statement.executeUpdate();
             }
         }
     }

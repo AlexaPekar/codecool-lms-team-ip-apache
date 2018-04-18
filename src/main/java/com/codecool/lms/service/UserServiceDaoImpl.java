@@ -95,8 +95,9 @@ public class UserServiceDaoImpl implements UserService {
     }
 
     @Override
-    public List<Student> getStudents() {
-        return null;
+    public List<Student> getStudents() throws SQLException {
+
+        return dao.findStudents();
     }
 
     @Override
