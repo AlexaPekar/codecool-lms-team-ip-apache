@@ -40,4 +40,6 @@ interface PageService {
 
     void editPage(String title, String content, String type, int maxScore, String oldTitle) throws SQLException;
 
+    void gradeAssignment(Student student, int grade, String title) throws SQLException;
+
 }

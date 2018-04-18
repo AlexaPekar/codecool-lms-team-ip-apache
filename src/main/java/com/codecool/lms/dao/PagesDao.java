@@ -52,4 +52,6 @@ public interface PagesDao {
     void updatePage(String title, String content,String oldTitle) throws SQLException;
 
     void updatePage(String title, boolean published) throws SQLException;
+
+    void gradeAssignment(Student student, int grade, AssignmentPage assignmentPage) throws SQLException;
 }
