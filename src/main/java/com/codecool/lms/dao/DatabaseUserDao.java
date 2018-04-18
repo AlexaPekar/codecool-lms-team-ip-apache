@@ -219,13 +219,39 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
     }
 
     @Override
-    public User changeUserName(User user, String newName) {
-        return null;
+    public void changeUserName(User user, String newName) throws SQLException {
+        boolean autoCommit = connection.getAutoCommit();
+        connection.setAutoCommit(false);
+        String sql = "UPDATE users SET \"name\" = ? WHERE \"id\" = ?;";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, newName);
+            statement.setInt(2, user.getId());
+            statement.executeUpdate();
+            connection.commit();
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.setAutoCommit(autoCommit);
+        }
     }
 
     @Override
-    public User changeUserPassword(User user, String password) {
-        return null;
+    public void changeUserPassword(User user, String password) throws SQLException {
+        boolean autoCommit = connection.getAutoCommit();
+        connection.setAutoCommit(false);
+        String sql = "UPDATE users SET \"password\" = ? WHERE \"id\" = ?;";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, password);
+            statement.setInt(2, user.getId());
+            statement.executeUpdate();
+            connection.commit();
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.setAutoCommit(autoCommit);
+        }
     }
 
     public User fetchUser(ResultSet resultSet) throws SQLException {
