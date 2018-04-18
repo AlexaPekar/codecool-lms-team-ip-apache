@@ -58,17 +58,6 @@ CREATE TABLE attendance (
 	FOREIGN KEY (student_id) REFERENCES users("id")
 );
 
-CREATE TABLE repositories (
-    "id"  SERIAL PRIMARY KEY,
-	github_id INTEGER NOT NULL,
-    "html" TEXT NOT NULL,
-    "name" TEXT UNIQUE NOT NULL,
-    stars INTEGER NOT NULL,
-    watchers INTEGER NOT NULL,
-    forks TEXT NOT NULL,
-	FOREIGN KEY (github_id) REFERENCES githubs("id")
-);
-
 CREATE TABLE githubs (
     "id"  SERIAL PRIMARY KEY,
 	student_id INTEGER NOT NULL,
@@ -83,6 +72,17 @@ CREATE TABLE githubs (
 	"location" TEXT NOT NULL,
 	created TEXT NOT NULL,
 	FOREIGN KEY (student_id) REFERENCES users("id")
+);
+
+CREATE TABLE repositories (
+    "id"  SERIAL PRIMARY KEY,
+	github_id INTEGER NOT NULL,
+    "html" TEXT NOT NULL,
+    "name" TEXT UNIQUE NOT NULL,
+    stars INTEGER NOT NULL,
+    watchers INTEGER NOT NULL,
+    forks TEXT NOT NULL,
+	FOREIGN KEY (github_id) REFERENCES githubs("id")
 );
 
 

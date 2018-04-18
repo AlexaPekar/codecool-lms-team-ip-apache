@@ -32,7 +32,7 @@ public class LoginServlet extends AbstractServlet {
             req.getSession().setAttribute("currentUser", currentUser);
             req.getRequestDispatcher("loginForward.jsp").forward(req, resp);
         } catch (SQLException e) {
-            e.printStackTrace();
+            req.setAttribute("message", e.getMessage());
         } catch (UserNotFoundException e) {
             req.setAttribute("message", "No user found with the given email.");
         } catch (WrongPasswordException e) {

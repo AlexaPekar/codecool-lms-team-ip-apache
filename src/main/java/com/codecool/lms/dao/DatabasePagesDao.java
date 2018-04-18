@@ -64,10 +64,10 @@ public class DatabasePagesDao extends AbstractDao implements PagesDao {
         List<Page> pages = new ArrayList<>();
         String assignmentSql = "SELECT * FROM assignment_pages";
         String textPageSql = "SELECT * FROM text_pages";
-        try (Statement AssignmentPageStatement = connection.createStatement();
-             ResultSet AssignmentPageResultSet = AssignmentPageStatement.executeQuery(assignmentSql)) {
-            while (AssignmentPageResultSet.next()) {
-                pages.add(fetchAssignmentPage(AssignmentPageResultSet));
+        try (Statement assignmentPageStatement = connection.createStatement();
+             ResultSet assignmentPageResultSet = assignmentPageStatement.executeQuery(assignmentSql)) {
+            while (assignmentPageResultSet.next()) {
+                pages.add(fetchAssignmentPage(assignmentPageResultSet));
             }
             try (Statement textPageStatement = connection.createStatement();
                  ResultSet textPageResultSet = textPageStatement.executeQuery(textPageSql)) {
@@ -127,62 +127,67 @@ public class DatabasePagesDao extends AbstractDao implements PagesDao {
 
     @Override
     public Page findByTitle(String title) throws SQLException {
-        Page page = null;
+        Page page;
         String textSql = "SELECT * FROM text_pages WHERE title = ?";
-        String assignmentSql = "SELECT * FROM assignments_pages WHERE title = ?";
+        String assignmentSql = "SELECT * FROM assignment_pages WHERE title = ?";
         try (PreparedStatement statement = connection.prepareStatement(textSql)) {
             statement.setString(1, "title");
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 page = fetchTextPage(resultSet);
+                return page;
             }
         }
-        if (page == null) {
-            try (PreparedStatement statement = connection.prepareStatement(assignmentSql)) {
-                statement.setString(1, "title");
-                ResultSet resultSet = statement.executeQuery();
-                while (resultSet.next()) {
-                    page = fetchAssignmentPage(resultSet);
-                }
+        try (PreparedStatement statement = connection.prepareStatement(assignmentSql)) {
+            statement.setString(1, "title");
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                page = fetchAssignmentPage(resultSet);
+                return page;
             }
         }
-        return page;
+        return null;
     }
 
     @Override
     public String findAnswerByPage(AssignmentPage page, Student student) throws SQLException {
-        String result;
         String sql = "SELECT answer FROM assignments WHERE student_id = ? AND assignment_page_id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, student.getId());
             statement.setInt(2, page.getId());
             ResultSet resultSet = statement.executeQuery();
-            result = resultSet.getString("answer");
+            if (resultSet.next()) {
+                return resultSet.getString("answer");
+            } else {
+                return null;
+            }
         }
-        return result;
+
     }
 
     @Override
     public String findGrade(AssignmentPage page, Student student) throws SQLException {
-        String result;
         String sql = "SELECT grade FROM assignments WHERE student_id = ? AND assignment_page_id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, student.getId());
             statement.setInt(2, page.getId());
             ResultSet resultSet = statement.executeQuery();
-            result = resultSet.getString("grade");
+            if (resultSet.next()) {
+                return resultSet.getString("grade");
+            } else {
+                return null;
+            }
         }
-        return result;
     }
 
     @Override
     public List<AssignmentPage> findAssignmentPages() throws SQLException {
         List<AssignmentPage> pages = new ArrayList<>();
         String sql = "SELECT * FROM assignment_pages";
-        try (Statement AssignmentPageStatement = connection.createStatement();
-             ResultSet AssignmentPageResultSet = AssignmentPageStatement.executeQuery(sql)) {
-            while (AssignmentPageResultSet.next()) {
-                pages.add(fetchAssignmentPage(AssignmentPageResultSet));
+        try (Statement assignmentPageStatement = connection.createStatement();
+             ResultSet assignmentPageResultSet = assignmentPageStatement.executeQuery(sql)) {
+            while (assignmentPageResultSet.next()) {
+                pages.add(fetchAssignmentPage(assignmentPageResultSet));
             }
         }
         return pages;
@@ -318,12 +323,14 @@ public class DatabasePagesDao extends AbstractDao implements PagesDao {
         String sql = "UPDATE assignment_pages SET published=? WHERE title =?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setBoolean(1, published);
-            statement.executeQuery();
+            statement.setString(2, title);
+            statement.executeUpdate();
         }
         sql = "UPDATE text_pages SET published=? WHERE title =?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setBoolean(1, published);
-            statement.executeQuery();
+            statement.setString(2, title);
+            statement.executeUpdate();
         }
     }
 }

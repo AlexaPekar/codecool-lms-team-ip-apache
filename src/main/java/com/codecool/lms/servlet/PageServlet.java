@@ -1,9 +1,9 @@
 package com.codecool.lms.servlet;
 
 import com.codecool.lms.dao.DatabasePagesDao;
+import com.codecool.lms.exception.UserNotFoundException;
 import com.codecool.lms.model.*;
 import com.codecool.lms.service.PageServiceDaoImpl;
-import com.codecool.lms.service.PageServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,28 +18,38 @@ public class PageServlet extends AbstractServlet {
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String title = req.getParameter("title");
+        try (Connection connection = getConnection(req.getServletContext())) {
+            DatabasePagesDao databasePagesDao = new DatabasePagesDao(connection);
+            PageServiceDaoImpl pageServiceDao = new PageServiceDaoImpl(databasePagesDao);
+            String title = req.getParameter("title");
 
-        Page myPage = PageServiceImpl.getPageService().findPageByTitle(title);
-        req.setAttribute("page", myPage);
-        req.setAttribute("current", req.getSession().getAttribute("currentUser"));
-        if (myPage instanceof TextPage) {
-            req.getRequestDispatcher("textPage.jsp").forward(req, resp);
-        } else {
-            if (req.getSession().getAttribute("currentUser") instanceof Student) {
-                String answer = PageServiceImpl.getPageService().findAnswer((AssignmentPage) myPage, (Student) req.getSession().getAttribute("currentUser"));
-                req.setAttribute("answer", answer);
-                req.setAttribute("point", PageServiceImpl.getPageService().findGrade((AssignmentPage) myPage, (Student) req.getSession().getAttribute("currentUser")));
+            Page myPage = pageServiceDao.findPageByTitle(title);
+            req.setAttribute("page", myPage);
+            User currentUser = (User) req.getSession().getAttribute("currentUser");
+            req.setAttribute("current", currentUser);
+            if (myPage instanceof TextPage) {
+                req.getRequestDispatcher("textPage.jsp").forward(req, resp);
+            } else {
+                if (req.getSession().getAttribute("currentUser") instanceof Student) {
+                    String answer = pageServiceDao.findAnswer((AssignmentPage) myPage, (Student) currentUser);
+                    req.setAttribute("answer", answer);
+                    req.setAttribute("point", pageServiceDao.findGrade((AssignmentPage) myPage, (Student) currentUser));
+                }
+                AssignmentPage assignmentPage = (AssignmentPage) myPage;
+                boolean submitted = pageServiceDao.userAlreadySubmitted(currentUser, assignmentPage);
+                req.setAttribute("userAlreadySubmitted", submitted);
+                if (currentUser.isConnected()) {
+                    req.setAttribute("repos", currentUser.getGitHub().getRepositories());
+                }
+                req.getRequestDispatcher("assignmentPage.jsp").forward(req, resp);
             }
-            AssignmentPage assignmentPage = (AssignmentPage) myPage;
-            boolean submitted = PageServiceImpl.getPageService().userAlreadySubmitted((User) req.getSession().getAttribute("currentUser"), assignmentPage);
-            req.setAttribute("userAlreadySubmitted", submitted);
-            if (((User) req.getSession().getAttribute("currentUser")).isConnected()) {
-                req.setAttribute("repos", ((User) req.getSession().getAttribute("currentUser")).getGitHub().getRepositories());
-            }
-            req.getRequestDispatcher("assignmentPage.jsp").forward(req, resp);
+        } catch (SQLException e) {
+            req.setAttribute("message", e.getMessage());
+            req.getRequestDispatcher("index.jsp").forward(req, resp);
+        } catch (UserNotFoundException e) {
+            req.setAttribute("message", "User not found!");
+            req.getRequestDispatcher("index.jsp").forward(req, resp);
         }
-
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.codecool.lms.servlet;
 import com.codecool.lms.dao.DatabasePagesDao;
 import com.codecool.lms.service.PageServiceDaoImpl;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +15,7 @@ import java.sql.SQLException;
 @WebServlet("/delete")
 public class DeletePageServlet extends AbstractServlet {
     @Override
-    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         try (Connection connection = getConnection(req.getServletContext())) {
             DatabasePagesDao databasePagesDao = new DatabasePagesDao(connection);
             PageServiceDaoImpl pageServiceDao = new PageServiceDaoImpl(databasePagesDao);
@@ -23,8 +24,7 @@ public class DeletePageServlet extends AbstractServlet {
             resp.sendRedirect("home");
         } catch (SQLException e) {
             req.setAttribute("message", e.getMessage());
-        } finally {
-
+            req.getRequestDispatcher("index.jsp").forward(req, resp);
         }
     }
 }
