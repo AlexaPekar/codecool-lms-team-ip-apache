@@ -181,12 +181,20 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
 
     //Delete rows from attendance table by dayID
     public void deleteDayFromAttendance(Day day) {
-        
+
     }
 
     @Override
-    public List<Student> getStudents() {
-        return null;
+    public List<Student> findStudents() throws SQLException {
+        List<Student> students = new ArrayList<>();
+        String sql = "SELECT * FROM users WHERE type = 'Student';";
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
+            while (resultSet.next()) {
+                students.add((Student) fetchUser(resultSet));
+            }
+        }
+        return students;
     }
 
     @Override

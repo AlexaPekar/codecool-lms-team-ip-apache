@@ -34,7 +34,7 @@ public interface UserDao {
 
     void updateAttendance(Day day, List<Student> students);
 
-    List<Student> getStudents();
+    List<Student> findStudents() throws SQLException;
 
     void connectUserWithGithub(User user, GitHub gitHub);
 
