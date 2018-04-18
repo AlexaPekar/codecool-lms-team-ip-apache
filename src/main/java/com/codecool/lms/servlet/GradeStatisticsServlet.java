@@ -47,7 +47,7 @@ public class GradeStatisticsServlet extends AbstractServlet {
 
             //Chart
             GradeStatisticsChart gradeStatisticsChart = new GradeStatisticsChart();
-            DefaultCategoryDataset dataset = gradeStatisticsChart.createDataset(currentUser);
+            DefaultCategoryDataset dataset = gradeStatisticsChart.createDataset(currentUser, userAssignments);
             JFreeChart chart = gradeStatisticsChart.createChart(dataset);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             OutputStream b64os = Base64.getEncoder().wrap(baos);

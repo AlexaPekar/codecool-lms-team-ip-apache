@@ -1,6 +1,5 @@
 package com.codecool.lms.model;
 
-import com.codecool.lms.service.PageServiceImpl;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.CategoryPlot;
@@ -14,9 +13,8 @@ public class GradeStatisticsChart {
 
     public GradeStatisticsChart() {}
 
-    public DefaultCategoryDataset createDataset(User currentUser) {
+    public DefaultCategoryDataset createDataset(User currentUser, List<Assignment> currentUserAssignments) {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        List<Assignment> currentUserAssignments = PageServiceImpl.getPageService().currentUserAssingments(currentUser);
         for (Assignment assignment : currentUserAssignments) {
             dataset.setValue(calculateGradePercentage((double)assignment.getGrade(),
                                                     (double)assignment.getMaxScore()),

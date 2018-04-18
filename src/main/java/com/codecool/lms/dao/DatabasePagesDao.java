@@ -184,7 +184,7 @@ public class DatabasePagesDao extends AbstractDao implements PagesDao {
     @Override
     public List<AssignmentPage> findAssignmentPages() throws SQLException {
         List<AssignmentPage> pages = new ArrayList<>();
-        String sql = "SELECT * FROM assignment_pages";
+        String sql = "SELECT * FROM assignment_pages ORDER BY id";
         try (Statement assignmentPageStatement = connection.createStatement();
              ResultSet assignmentPageResultSet = assignmentPageStatement.executeQuery(sql)) {
             while (assignmentPageResultSet.next()) {
@@ -198,8 +198,10 @@ public class DatabasePagesDao extends AbstractDao implements PagesDao {
     public Assignment findAssignmentByStudent(AssignmentPage page, Student student) throws SQLException, UserNotFoundException {
         Assignment assignment;
         String sql = "SELECT * FROM assignments WHERE student_id =? AND assignment_page_id = ?";
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, student.getId());
+            statement.setInt(2, page.getId());
+            ResultSet resultSet = statement.executeQuery();
             assignment = fetchAssignment(resultSet);
         }
         return assignment;
@@ -210,9 +212,10 @@ public class DatabasePagesDao extends AbstractDao implements PagesDao {
     public List<AssignmentPage> findSubmittedPages(User user) throws SQLException {
         List<AssignmentPage> assignmentPages = new ArrayList<>();
         String sql = "SELECT * FROM assignment_pages JOIN assignments ON assignment_pages.id" +
-                " = assignment.assignment_pages_id WHERE student_id = ?";
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+                " = assignment.assignment_pages_id WHERE student_id = ? ORDER BY id";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, user.getId());
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 assignmentPages.add(fetchAssignmentPage(resultSet));
             }
@@ -223,9 +226,10 @@ public class DatabasePagesDao extends AbstractDao implements PagesDao {
     @Override
     public List<Assignment> currentUserAssignments(User currentUser) throws SQLException, UserNotFoundException {
         List<Assignment> assignments = new ArrayList<>();
-        String sql = "SELECT * FROM assignments WHERE student_id = ?";
-        try (Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(sql);
+        String sql = "SELECT * FROM assignments WHERE student_id = ? ORDER BY id";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, currentUser.getId());
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 assignments.add(fetchAssignment(resultSet));
             }
@@ -236,7 +240,7 @@ public class DatabasePagesDao extends AbstractDao implements PagesDao {
     @Override
     public List<Assignment> getAssignments() throws SQLException, UserNotFoundException {
         List<Assignment> assignments = new ArrayList<>();
-        String sql = "SELECT * FROM assignments";
+        String sql = "SELECT * FROM assignments ORDER BY id";
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
@@ -253,8 +257,10 @@ public class DatabasePagesDao extends AbstractDao implements PagesDao {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, student.getId());
             ResultSet resultSet = statement.executeQuery();
-            int intResult = resultSet.getInt("result");
-            result = ((double) intResult);
+            if (resultSet.next()) {
+                int intResult = resultSet.getInt("result");
+                result = ((double) intResult);
+            }
         }
         return result;
     }
@@ -266,8 +272,11 @@ public class DatabasePagesDao extends AbstractDao implements PagesDao {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, student.getId());
             ResultSet resultSet = statement.executeQuery();
-            int intResult = resultSet.getInt("result");
-            result = ((double) intResult);
+            if (resultSet.next()) {
+                int intResult = resultSet.getInt("result");
+                result = ((double) intResult);
+            }
+
         }
         return result;
     }
@@ -277,7 +286,7 @@ public class DatabasePagesDao extends AbstractDao implements PagesDao {
         String sql = "DELETE  FROM assignments WHERE student_id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, student.getId());
-            statement.executeQuery();
+            statement.executeUpdate();
         }
     }
 
@@ -291,7 +300,7 @@ public class DatabasePagesDao extends AbstractDao implements PagesDao {
             statement.setString(4, title);
             statement.setString(5, date);
             statement.setInt(6, maxScore);
-            statement.executeQuery();
+            statement.executeUpdate();
         }
     }
 
