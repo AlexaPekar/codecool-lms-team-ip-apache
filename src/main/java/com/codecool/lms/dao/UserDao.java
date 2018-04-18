@@ -12,8 +12,6 @@ public interface UserDao {
 
     List<User> findUsers() throws SQLException;
 
-    boolean containsUser(String email);
-
     void register(String name, String email, String password, String type) throws SQLException;
 
     User findUserByEmail(String email) throws SQLException;
@@ -32,7 +30,7 @@ public interface UserDao {
 
     Day findDayByDate(String date) throws SQLException;
 
-    void updateAttendance(Day day, List<Student> students);
+    void updateAttendance(Day day, List<Student> students) throws SQLException;
 
     List<Student> findStudents() throws SQLException;
 
@@ -40,7 +38,7 @@ public interface UserDao {
 
     void disconnectUserFromGithub(User user);
 
-    User changeUserRole(User user, String type);
+    void changeUserRole(User user, String type) throws SQLException;
 
     User changeUserName(User user, String newName);
 

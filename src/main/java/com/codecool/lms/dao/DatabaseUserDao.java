@@ -26,12 +26,6 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
         return null;
     }
 
-    //Service
-    @Override
-    public boolean containsUser(String email) {
-        return false;
-    }
-
     @Override
     public void register(String name, String email, String password, String type) throws SQLException {
         boolean autoCommit = connection.getAutoCommit();
@@ -125,7 +119,38 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
         }
     }
 
-    //inserts dayid, studentids to attendance table
+    @Override
+    public List<Day> findDays() throws SQLException {
+        List<Day> days = new ArrayList<>();
+        String sql = "SELECT id, \"date\" FROM days;";
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
+            while (resultSet.next()) {
+                days.add(fetchDay(resultSet));
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Day findDayByDate(String date) throws SQLException {
+        String sql = "SELECT id, \"date\" FROM days WHERE \"date\" = ?;";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, date);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                return fetchDay(resultSet);
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void updateAttendance(Day day, List<Student> students) throws SQLException {
+        deleteDayFromAttendance(day);
+        insertAttendance(day, students);
+    }
+
     public void insertAttendance(Day day, List<Student> students) throws SQLException {
         boolean autoCommit = connection.getAutoCommit();
         connection.setAutoCommit(false);
@@ -145,43 +170,20 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
         }
     }
 
-    @Override
-    public List<Day> findDays() throws SQLException {
-        List<Day> days = new ArrayList<>();
-        String sql = "SELECT id, \"date\" FROM days;";
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
-            while (resultSet.next()) {
-                days.add(fetchDay(resultSet));
-            }
-        }
-        return null;
-    }
-
-
-    @Override
-    public Day findDayByDate(String date) throws SQLException {
-        String sql = "SELECT id, \"date\" FROM days WHERE \"date\" = ?;";
+    public void deleteDayFromAttendance(Day day) throws SQLException {
+        boolean autoCommit = connection.getAutoCommit();
+        connection.setAutoCommit(false);
+        String sql = "DELETE FROM attendance WHERE day_id = ?;";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, date);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                return fetchDay(resultSet);
-            }
+            statement.setInt(1, day.getId());
+            statement.executeUpdate();
+            connection.commit();
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.setAutoCommit(autoCommit);
         }
-        return null;
-    }
-
-    @Override
-    public void updateAttendance(Day day, List<Student> students) {
-        //
-        //Day -> deleteDayFromAttendance(Day) -> insertAttendance(new Day(Day.getID, Day.getDate, students))
-        //delete(where day_id, )
-    }
-
-    //Delete rows from attendance table by dayID
-    public void deleteDayFromAttendance(Day day) {
-
     }
 
     @Override
@@ -198,8 +200,22 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
     }
 
     @Override
-    public User changeUserRole(User user, String type) {
-        return null;
+    public void changeUserRole(User user, String type) throws SQLException {
+        boolean autoCommit = connection.getAutoCommit();
+        connection.setAutoCommit(false);
+        String sql = "UPDATE users SET \"type\" = ? WHERE \"id\" = ?;";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, type);
+            statement.setInt(2, user.getId());
+            statement.executeUpdate();
+            connection.commit();
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.setAutoCommit(autoCommit);
+        }
+
     }
 
     @Override
@@ -254,7 +270,7 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
 
     @Override
     public List<Student> findStudentById(List<Integer> studentIds) throws SQLException {
-        List<Student> students= new ArrayList<>();
+        List<Student> students = new ArrayList<>();
         String sql = "SELECT * FROM users WHERE id = ? AND type = 'Student';";
         for (int studentId : studentIds) {
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
