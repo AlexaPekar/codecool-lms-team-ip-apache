@@ -122,6 +122,7 @@ public class DatabasePagesDao extends AbstractDao implements PagesDao {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, title);
             statement.setString(2, title);
+            statement.executeUpdate();
         }
     }
 
