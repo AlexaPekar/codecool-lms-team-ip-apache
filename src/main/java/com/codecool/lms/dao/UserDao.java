@@ -40,9 +40,9 @@ public interface UserDao {
 
     void changeUserRole(User user, String type) throws SQLException;
 
-    User changeUserName(User user, String newName);
+    void changeUserName(User user, String newName) throws SQLException;
 
-    User changeUserPassword(User user, String password);
+    void changeUserPassword(User user, String password) throws SQLException;
 
     Day fetchDay(ResultSet resultSet) throws SQLException;
 
