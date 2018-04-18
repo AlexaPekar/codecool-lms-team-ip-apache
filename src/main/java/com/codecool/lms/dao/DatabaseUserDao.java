@@ -146,13 +146,29 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
     }
 
     @Override
-    public List<Day> getDays() {
+    public List<Day> findDays() throws SQLException {
+        List<Day> days = new ArrayList<>();
+        String sql = "SELECT id, \"date\" FROM days;";
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
+            while (resultSet.next()) {
+                days.add(fetchDay(resultSet));
+            }
+        }
         return null;
     }
 
 
     @Override
-    public Day findDayByDate(String date) {
+    public Day findDayByDate(String date) throws SQLException {
+        String sql = "SELECT id, \"date\" FROM days WHERE \"date\" = ?;";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, date);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                return fetchDay(resultSet);
+            }
+        }
         return null;
     }
 
@@ -160,22 +176,17 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
     public void updateAttendance(Day day, List<Student> students) {
         //
         //Day -> deleteDayFromAttendance(Day) -> insertAttendance(new Day(Day.getID, Day.getDate, students))
-
+        //delete(where day_id, )
     }
 
     //Delete rows from attendance table by dayID
     public void deleteDayFromAttendance(Day day) {
-
+        
     }
 
     @Override
     public List<Student> getStudents() {
         return null;
-    }
-
-    //set grade in assignment table
-    @Override
-    public void gradeAssignment(int grade, int studentID, int assignmentPageID) {
     }
 
     @Override
@@ -212,8 +223,41 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
     }
 
     //TODO: implement fetchDay
-    public Day fetchDay(ResultSet resultSet) {
-        return null;
+    public Day fetchDay(ResultSet resultSet) throws SQLException {
+        int id = resultSet.getInt("id");
+        String date = resultSet.getString("date");
+        List<Student> students = findStudentById(findStudentIdsByDayId(id));
+        return new Day(id, students, date);
+    }
+
+    @Override
+    public List<Integer> findStudentIdsByDayId(int dayId) throws SQLException {
+        List<Integer> studentIds = new ArrayList<>();
+        String sql = "SELECT student_id FROM attendance WHERE day_id = ?;";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, dayId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                studentIds.add(resultSet.getInt("student_id"));
+            }
+        }
+        return studentIds;
+    }
+
+    @Override
+    public List<Student> findStudentById(List<Integer> studentIds) throws SQLException {
+        List<Student> students= new ArrayList<>();
+        String sql = "SELECT * FROM users WHERE id = ? AND type = 'Student';";
+        for (int studentId : studentIds) {
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setInt(1, studentId);
+                ResultSet resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    students.add((Student) fetchUser(resultSet));
+                }
+            }
+        }
+        return students;
     }
 
     @Override

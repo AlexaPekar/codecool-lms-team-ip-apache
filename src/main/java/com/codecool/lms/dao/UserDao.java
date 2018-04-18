@@ -28,9 +28,9 @@ public interface UserDao {
 
     void insertAttendance(Day day, List<Student> students) throws SQLException;
 
-    List<Day> getDays();
+    List<Day> findDays() throws SQLException;
 
-    Day findDayByDate(String date);
+    Day findDayByDate(String date) throws SQLException;
 
     void updateAttendance(Day day, List<Student> students);
 
@@ -40,15 +40,17 @@ public interface UserDao {
 
     void disconnectUserFromGithub(User user);
 
-    void gradeAssignment(int grade, int studentID, int assignmentPageID);
-
     User changeUserRole(User user, String type);
 
     User changeUserName(User user, String newName);
 
     User changeUserPassword(User user, String password);
 
-    Day fetchDay(ResultSet resultSet);
+    Day fetchDay(ResultSet resultSet) throws SQLException;
+
+    List<Integer> findStudentIdsByDayId(int dayId) throws SQLException;
+
+    List<Student> findStudentById(List<Integer> studentIds) throws SQLException;
 
     User fetchUser(ResultSet resultSet) throws SQLException;
 }
