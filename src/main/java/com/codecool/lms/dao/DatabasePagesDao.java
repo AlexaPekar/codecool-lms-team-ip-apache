@@ -131,7 +131,7 @@ public class DatabasePagesDao extends AbstractDao implements PagesDao {
         String textSql = "SELECT * FROM text_pages WHERE title = ?";
         String assignmentSql = "SELECT * FROM assignment_pages WHERE title = ?";
         try (PreparedStatement statement = connection.prepareStatement(textSql)) {
-            statement.setString(1, "title");
+            statement.setString(1, title);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 page = fetchTextPage(resultSet);
@@ -139,7 +139,7 @@ public class DatabasePagesDao extends AbstractDao implements PagesDao {
             }
         }
         try (PreparedStatement statement = connection.prepareStatement(assignmentSql)) {
-            statement.setString(1, "title");
+            statement.setString(1, title);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 page = fetchAssignmentPage(resultSet);
@@ -330,6 +330,17 @@ public class DatabasePagesDao extends AbstractDao implements PagesDao {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setBoolean(1, published);
             statement.setString(2, title);
+            statement.executeUpdate();
+        }
+    }
+
+    @Override
+    public void gradeAssignment(Student student, int grade, AssignmentPage assignmentPage) throws SQLException {
+        String sql = "UPDATE assignments SET grade = ? WHERE student_id = ? AND assignment_page_id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, grade);
+            statement.setInt(2, student.getId());
+            statement.setInt(3, assignmentPage.getId());
             statement.executeUpdate();
         }
     }
