@@ -20,21 +20,19 @@ interface UserService {
 
     User findUserByName(String name) throws SQLException, UserNotFoundException;
 
-    void addDay(Day day);
+    void addDay(String date, List<Student> students) throws SQLException;
 
-    List<Day> getDays();
+    List<Day> getDays() throws SQLException;
 
-    boolean dayExist(String date);
+    boolean dayExist(String date) throws SQLException;
 
-    Day findDayByDate(String date);
+    Day findDayByDate(String date) throws SQLException;
 
-    void SetStudentListbyDate(String date, List<Student> students);
-
-    void deleteUser(String username);
+    void updateAttendance(String date, List<Student> students) throws SQLException;
 
     List<Student> getStudents();
 
-    List<Student> createAttendStudentList(String[] studentNames);
+    List<Student> createAttendStudentList(String[] studentNames) throws SQLException, UserNotFoundException;
 
     List<Repository> createRepositoryList(String[] htmls, String[] names, String[] stars, String[] watchers, String[] forks);
 
@@ -44,11 +42,9 @@ interface UserService {
 
     void disconnectUserFromGithub(User user);
 
-    void gradeAssignment(int grade, String studentName, String title);
+    User changeUserRole(User user, String type) throws SQLException, UserNotFoundException;
 
-    User changeUserRole(User user, String type) throws SQLException;
+    User changeUserName(User user, String newName) throws SQLException, UserNotFoundException;
 
-    User changeUserName(User user, String newName);
-
-    User changeUserPassword(User user, String password);
+    User changeUserPassword(User user, String password) throws SQLException, UserNotFoundException;
 }

@@ -7,7 +7,6 @@ import com.codecool.lms.service.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -50,7 +49,7 @@ public class AttendanceServlet extends AbstractServlet {
         String[] studentNames = req.getParameterValues("selected");
         List<Student> selectedStudents = UserServiceImpl.getUserService().createAttendStudentList(studentNames);
         String attendanceDate = req.getParameter("attendance");
-        UserServiceImpl.getUserService().SetStudentListbyDate(attendanceDate, selectedStudents);
+        UserServiceImpl.getUserService().updateAttendance(attendanceDate, selectedStudents);
 
         List<User> users = UserServiceImpl.getUserService().getUsers();
         List<Student> students = UserServiceImpl.getUserService().getStudents();

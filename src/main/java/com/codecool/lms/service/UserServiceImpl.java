@@ -15,6 +15,7 @@ public class UserServiceImpl implements UserService {
     public final List<User> users = new ArrayList<>();
     public final List<Day> days = new ArrayList<>();
     public static int userId = 1;
+    public static int dayId = 1;
 
 
     //Visible for testing
@@ -82,8 +83,9 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    public synchronized void addDay(Day day) {
-        days.add(day);
+    @Override
+    public void addDay(String date, List<Student> students) throws SQLException {
+        days.add(new Day(dayId++, students, date));
     }
 
     public synchronized List<Day> getDays() {
@@ -108,7 +110,7 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-    public synchronized void SetStudentListbyDate(String date, List<Student> students) {
+    public synchronized void updateAttendance(String date, List<Student> students) {
         UserServiceImpl.getUserService().findDayByDate(date).setStudents(students);
     }
 
@@ -158,12 +160,6 @@ public class UserServiceImpl implements UserService {
     public synchronized void disconnectUserFromGithub(User user) {
         user.setConnected(false);
         user.setGitHub(null);
-    }
-
-    public synchronized void gradeAssignment(int grade, String studentName, String title) {
-        Student student = (Student) UserServiceImpl.getUserService().findUserByName(studentName);
-        AssignmentPage assignmentPage = (AssignmentPage) PageServiceImpl.getPageService().findPageByTitle(title);
-        PageServiceImpl.getPageService().getAssignmentByStudentName(assignmentPage, student).setGrade(grade);
     }
 
     public synchronized User changeUserRole(User user, String type) throws SQLException {
