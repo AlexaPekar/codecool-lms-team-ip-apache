@@ -185,4 +185,10 @@ public class PageServiceImpl implements PageService {
             ((AssignmentPage) page).setMaxScore(maxScore);
         }
     }
+
+    public synchronized void gradeAssignment(Student student, int grade, String title) {
+        AssignmentPage assignmentPage = (AssignmentPage) PageServiceImpl.getPageService().findPageByTitle(title);
+        getAssignmentByStudent(assignmentPage, student).setGrade(grade);
+    }
+
 }

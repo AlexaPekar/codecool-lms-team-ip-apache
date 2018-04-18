@@ -4,6 +4,7 @@ package com.codecool.lms.servlet;
 import com.codecool.lms.dao.DatabasePagesDao;
 import com.codecool.lms.exception.UserNotFoundException;
 import com.codecool.lms.model.Assignment;
+import com.codecool.lms.model.Student;
 import com.codecool.lms.service.PageServiceDaoImpl;
 import com.codecool.lms.service.UserServiceImpl;
 
@@ -42,8 +43,10 @@ public class GradingServlet extends AbstractServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         int grade = Integer.parseInt(req.getParameter("grade"));
         String studentName = req.getParameter("student");
+        Student student = (Student) UserServiceImpl.getUserService().findUserByName(studentName);
         String title = req.getParameter("title");
         UserServiceImpl.getUserService().gradeAssignment(grade, studentName, title);
         resp.sendRedirect("grading");
     }
+
 }
