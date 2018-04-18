@@ -127,7 +127,7 @@ public class UserServiceDaoImpl implements UserService {
     public void disconnectUserFromGithub(User user) {
 
     }
-    
+
     @Override
     public User changeUserRole(User user, String type) throws SQLException, UserNotFoundException {
         dao.changeUserRole(user, type);
