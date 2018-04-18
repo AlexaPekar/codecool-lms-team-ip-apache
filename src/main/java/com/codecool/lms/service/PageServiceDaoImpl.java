@@ -42,12 +42,14 @@ public class PageServiceDaoImpl implements PageService {
 
     @Override
     public String findAnswer(AssignmentPage page, Student student) throws SQLException {
-        return dao.findAnswerByPage(page, student);
+        //dao.findAnswerByPage(page, student);
+        return " ";
     }
 
     @Override
     public String findGrade(AssignmentPage page, Student student) throws SQLException {
-        return dao.findGrade(page, student);
+        //return dao.findGrade(page, student);
+        return " ";
     }
 
     @Override
@@ -115,8 +117,9 @@ public class PageServiceDaoImpl implements PageService {
     }
 
     @Override
-    public void gradeAssignment(Student student, int grade, String title) {
-
+    public void gradeAssignment(Student student, int grade, String title) throws SQLException {
+        AssignmentPage assignmentPage = (AssignmentPage) dao.findByTitle(title);
+        dao.gradeAssignment(student, grade, assignmentPage);
     }
 
     public void editPage(String title, boolean published) throws SQLException {
