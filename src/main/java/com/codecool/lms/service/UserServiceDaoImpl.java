@@ -4,7 +4,10 @@ import com.codecool.lms.dao.DatabaseUserDao;
 import com.codecool.lms.exception.UserAlreadyRegisteredException;
 import com.codecool.lms.exception.UserNotFoundException;
 import com.codecool.lms.exception.WrongPasswordException;
-import com.codecool.lms.model.*;
+import com.codecool.lms.model.Day;
+import com.codecool.lms.model.GitHub;
+import com.codecool.lms.model.Student;
+import com.codecool.lms.model.User;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -109,10 +112,6 @@ public class UserServiceDaoImpl implements UserService {
         return students;
     }
 
-    public List<Repository> createRepositoryList() {
-        return null;
-    }
-
     @Override
     public User connectUserWithGithub(User user, String avatar, String html, int repos, int gists, int followers, int following, String company, String blog, String location, String created, String[] htmls, String[] names, String[] stars, String[] watchers, String[] forks) throws SQLException {
         dao.insertGithub(user, avatar, html, repos, gists, followers, following, company, blog, location, created);
@@ -131,8 +130,8 @@ public class UserServiceDaoImpl implements UserService {
 
     @Override
     public User disconnectUserFromGithub(User user, GitHub gitHub) throws SQLException {
-        //dao.deleteGithub(user.getid)
-        //dao.deleteRepositories(github.getId)
+        dao.deleteGithubByUserId(user.getId());
+        dao.deleteRepositoriesbygithubId(gitHub.getId());
         dao.changeUserConnectionState(user, false);
         user.setGitHub(null);
         user.setConnected(false);
