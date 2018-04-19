@@ -79,13 +79,14 @@ public class AttendanceServlet extends AbstractServlet {
             req.setAttribute("currentDate", simpleDateFormat.format(date));
             req.setAttribute("users", students);
             req.setAttribute("here", day.getStudents());
+            req.getRequestDispatcher("attendance.jsp").forward(req, resp);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            req.setAttribute("message", e.getMessage());
+            req.getRequestDispatcher("index.jsp").forward(req, resp);
         } catch (UserNotFoundException e) {
-            e.printStackTrace();
+            req.setAttribute("message", "User not found!");
+            req.getRequestDispatcher("index.jsp").forward(req, resp);
         }
-
-        req.getRequestDispatcher("attendance.jsp").forward(req, resp);
     }
 }
