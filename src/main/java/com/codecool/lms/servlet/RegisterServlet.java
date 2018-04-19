@@ -32,7 +32,7 @@ public class RegisterServlet extends AbstractServlet {
             userServiceDao.register(name, email, password, type);
             req.setAttribute("message", "Registration is successful, you can login now!");
         } catch (SQLException e) {
-            e.printStackTrace();
+            req.setAttribute("message", e.getMessage());
         } catch (UserAlreadyRegisteredException e) {
             req.setAttribute("message", "You are already registered!");
         }

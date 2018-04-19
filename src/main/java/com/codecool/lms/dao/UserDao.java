@@ -40,11 +40,15 @@ public interface UserDao {
 
     GitHub fetchGitHub(ResultSet resultSet) throws SQLException;
 
+    void deleteGithubByUserId(int userId) throws SQLException;
+
     void insertRepository(String html, String name, String star, String watcher, String fork, int githubID) throws SQLException;
 
     List<Repository> findRepositoriesByGitHubId(int githubId) throws SQLException;
 
     Repository fetchRepository(ResultSet resultSet) throws SQLException;
+
+    void deleteRepositoriesbygithubId(int githubId) throws SQLException;
 
     void disconnectUserFromGithub(User user);
 

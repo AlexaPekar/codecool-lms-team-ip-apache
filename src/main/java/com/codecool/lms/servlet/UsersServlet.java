@@ -31,7 +31,8 @@ public class UsersServlet extends AbstractServlet {
             req.setAttribute("current", req.getSession().getAttribute("currentUser"));
             req.getRequestDispatcher("users.jsp").forward(req, resp);
         } catch (SQLException e) {
-            e.printStackTrace();
+            req.setAttribute("message", e.getMessage());
+            req.getRequestDispatcher("index.jsp").forward(req, resp);
         }
     }
 

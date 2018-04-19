@@ -371,6 +371,15 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
         return new GitHub(id, avatar, html, repos, gists, followers, following, company, blog, location, created, repositories);
     }
 
+    @Override
+    public void deleteGithubByUserId(int userId) throws SQLException {
+        String sql = "DELETE  FROM githubs WHERE user_id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, userId);
+            statement.executeUpdate();
+        }
+    }
+
 
     @Override
     public void insertRepository(String html, String name, String star, String watcher, String fork, int githubID) throws SQLException {
@@ -409,6 +418,15 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
         int watchers = resultSet.getInt("watchers");
         String forks = resultSet.getString("forks");
         return new Repository(id, html, name, stars, watchers, forks);
+    }
+
+    @Override
+    public void deleteRepositoriesbygithubId(int githubId) throws SQLException {
+        String sql = "DELETE  FROM repositories WHERE github_id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, githubId);
+            statement.executeUpdate();
+        }
     }
 
     @Override
