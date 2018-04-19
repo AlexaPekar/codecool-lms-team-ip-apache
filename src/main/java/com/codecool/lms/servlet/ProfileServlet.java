@@ -54,9 +54,11 @@ public class ProfileServlet extends AbstractServlet {
             try {
                 currentUser = userServiceDao.changeUserRole(currentUser, type);
             } catch (SQLException e) {
-                e.printStackTrace();
+                req.setAttribute("message", e.getMessage());
+                req.getRequestDispatcher("index.jsp").forward(req, resp);
             } catch (UserNotFoundException e) {
-                e.printStackTrace();
+                req.setAttribute("message", "User not found!");
+                req.getRequestDispatcher("index.jsp").forward(req, resp);
             }
 
             //Name
@@ -88,9 +90,11 @@ public class ProfileServlet extends AbstractServlet {
 
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            req.setAttribute("message", e.getMessage());
+            req.getRequestDispatcher("index.jsp").forward(req, resp);
         } catch (UserNotFoundException e) {
-            e.printStackTrace();
+            req.setAttribute("message", "User not found!");
+            req.getRequestDispatcher("index.jsp").forward(req, resp);
         }
     }
 
