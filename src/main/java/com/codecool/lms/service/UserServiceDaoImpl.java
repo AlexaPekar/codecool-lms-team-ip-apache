@@ -109,24 +109,34 @@ public class UserServiceDaoImpl implements UserService {
         return students;
     }
 
-    @Override
-    public List<Repository> createRepositoryList(String[] htmls, String[] names, String[] stars, String[] watchers, String[] forks) {
+    public List<Repository> createRepositoryList() {
         return null;
     }
 
     @Override
-    public GitHub createGithub(String avatar, String html, int repos, int gists, int followers, int following, String company, String blog, String location, String created, List<Repository> repositories) {
-        return null;
+    public User connectUserWithGithub(User user, String avatar, String html, int repos, int gists, int followers, int following, String company, String blog, String location, String created, String[] htmls, String[] names, String[] stars, String[] watchers, String[] forks) throws SQLException {
+        dao.insertGithub(user, avatar, html, repos, gists, followers, following, company, blog, location, created);
+        GitHub gitHub = dao.findGithubByUserName(user.getId());
+        if (htmls != null) {
+            for (int i = 0; i < htmls.length; i++) {
+                dao.insertRepository(htmls[i], names[i], stars[i], watchers[i], forks[i], gitHub.getId());
+            }
+            gitHub = dao.findGithubByUserName(user.getId());
+        }
+        dao.changeUserConnectionState(user, true);
+        user.setGitHub(gitHub);
+        user.setConnected(true);
+        return user;
     }
 
     @Override
-    public void connectUserWithGithub(User user, GitHub gitHub) {
-
-    }
-
-    @Override
-    public void disconnectUserFromGithub(User user) {
-
+    public User disconnectUserFromGithub(User user, GitHub gitHub) throws SQLException {
+        //dao.deleteGithub(user.getid)
+        //dao.deleteRepositories(github.getId)
+        dao.changeUserConnectionState(user, false);
+        user.setGitHub(null);
+        user.setConnected(false);
+        return user;
     }
 
     @Override

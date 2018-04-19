@@ -246,6 +246,24 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
         }
     }
 
+    @Override
+    public void changeUserConnectionState(User user, boolean connected) throws SQLException {
+        boolean autoCommit = connection.getAutoCommit();
+        connection.setAutoCommit(false);
+        String sql = "UPDATE users SET connected = ? WHERE id = ?;";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setBoolean(1, connected);
+            statement.setInt(2, user.getId());
+            statement.executeUpdate();
+            connection.commit();
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.setAutoCommit(autoCommit);
+        }
+    }
+
     public User fetchUser(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("id");
         String name = resultSet.getString("name");
@@ -303,8 +321,94 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
     }
 
     @Override
-    public void connectUserWithGithub(User user, GitHub gitHub) {
+    public void insertGithub(User user, String avatar, String html, int repos, int gists, int followers, int following, String company, String blog, String location, String created) throws SQLException {
+        String sql = "INSERT INTO githubss (student_id, avatar, html, repos, gists, followers, following, company, blog, location, created) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, user.getId());
+            statement.setString(2, avatar);
+            statement.setString(3, html);
+            statement.setInt(4, repos);
+            statement.setInt(5, gists);
+            statement.setInt(6, followers);
+            statement.setInt(7, following);
+            statement.setString(8, company);
+            statement.setString(9, blog);
+            statement.setString(10, location);
+            statement.setString(11, created);
+            statement.executeUpdate();
+        }
+    }
 
+    @Override
+    public GitHub findGithubByUserName(int userId) throws SQLException {
+        String sql = "SELECT * FROM githubs WHERE student_id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return fetchGitHub(resultSet);
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public GitHub fetchGitHub(ResultSet resultSet) throws SQLException {
+        int id = resultSet.getInt("id");
+        String avatar = resultSet.getString("avatar");
+        String html = resultSet.getString("html");
+        int repos = resultSet.getInt("repos");
+        int gists = resultSet.getInt("gists");
+        int followers = resultSet.getInt("followers");
+        int following = resultSet.getInt("following");
+        String company = resultSet.getString("blog");
+        String blog = resultSet.getString("blog");
+        String location = resultSet.getString("location");
+        String created = resultSet.getString("created");
+        List<Repository> repositories = findRepositoriesByGitHubId(id);
+
+
+        return new GitHub(id, avatar, html, repos, gists, followers, following, company, blog, location, created, repositories);
+    }
+
+
+    @Override
+    public void insertRepository(String html, String name, String star, String watcher, String fork, int githubID) throws SQLException {
+        String sql = "INSERT INTO repositories (github_id, html, name, stars, watchers, forks) VALUES (?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, githubID);
+            statement.setString(2, html);
+            statement.setString(3, name);
+            statement.setInt(4, Integer.parseInt(star));
+            statement.setInt(5, Integer.parseInt(watcher));
+            statement.setString(6, fork);
+            statement.executeUpdate();
+        }
+    }
+
+    @Override
+    public List<Repository> findRepositoriesByGitHubId(int githubId) throws SQLException {
+        List<Repository> repositories = new ArrayList<>();
+        String sql = "SELECT * FROM repositories WHERE github_id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, githubId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                repositories.add(fetchRepository(resultSet));
+            }
+        }
+        return repositories;
+    }
+
+    @Override
+    public Repository fetchRepository(ResultSet resultSet) throws SQLException {
+        int id = resultSet.getInt("id");
+        String html = resultSet.getString("html");
+        String name = resultSet.getString("name");
+        int stars = resultSet.getInt("stars");
+        int watchers = resultSet.getInt("watchers");
+        String forks = resultSet.getString("forks");
+        return new Repository(id, html, name, stars, watchers, forks);
     }
 
     @Override

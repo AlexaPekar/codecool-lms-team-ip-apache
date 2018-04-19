@@ -3,6 +3,7 @@ package com.codecool.lms.model;
 import java.util.List;
 
 public class GitHub {
+    private final int id;
     private final String avatar;
     private final String html;
     private final int repos;
@@ -16,7 +17,8 @@ public class GitHub {
     private final List<Repository> repositories;
 
 
-    public GitHub(String avatar, String html, int repos, int gists, int followers, int following, String company, String blog, String location, String created, List<Repository> repositories) {
+    public GitHub(int id, String avatar, String html, int repos, int gists, int followers, int following, String company, String blog, String location, String created, List<Repository> repositories) {
+        this.id = id;
         this.avatar = avatar;
         this.html = html;
         this.repos = repos;
@@ -72,5 +74,9 @@ public class GitHub {
 
     public List<Repository> getRepositories() {
         return repositories;
+    }
+
+    public int getId() {
+        return id;
     }
 }

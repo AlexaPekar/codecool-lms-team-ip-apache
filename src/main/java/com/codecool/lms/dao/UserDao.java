@@ -34,7 +34,17 @@ public interface UserDao {
 
     List<Student> findStudents() throws SQLException;
 
-    void connectUserWithGithub(User user, GitHub gitHub);
+    void insertGithub(User user, String avatar, String html, int repos, int gists, int followers, int following, String company, String blog, String location, String created) throws SQLException;
+
+    GitHub findGithubByUserName(int userId) throws SQLException;
+
+    GitHub fetchGitHub(ResultSet resultSet) throws SQLException;
+
+    void insertRepository(String html, String name, String star, String watcher, String fork, int githubID) throws SQLException;
+
+    List<Repository> findRepositoriesByGitHubId(int githubId) throws SQLException;
+
+    Repository fetchRepository(ResultSet resultSet) throws SQLException;
 
     void disconnectUserFromGithub(User user);
 
@@ -43,6 +53,8 @@ public interface UserDao {
     void changeUserName(User user, String newName) throws SQLException;
 
     void changeUserPassword(User user, String password) throws SQLException;
+
+    void changeUserConnectionState(User user, boolean connected) throws SQLException;
 
     Day fetchDay(ResultSet resultSet) throws SQLException;
 

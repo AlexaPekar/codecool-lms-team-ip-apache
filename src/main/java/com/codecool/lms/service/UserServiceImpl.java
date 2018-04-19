@@ -16,6 +16,8 @@ public class UserServiceImpl implements UserService {
     public final List<Day> days = new ArrayList<>();
     public static int userId = 1;
     public static int dayId = 1;
+    public static int githubId = 1;
+    public static int repositoryId = 1;
 
 
     //Visible for testing
@@ -138,28 +140,23 @@ public class UserServiceImpl implements UserService {
         return selectedStudents;
     }
 
-    public synchronized List<Repository> createRepositoryList(String[] htmls, String[] names, String[] stars, String[] watchers, String[] forks) {
+    @Override
+    public User connectUserWithGithub(User user, String avatar, String html, int repos, int gists, int followers, int following, String company, String blog, String location, String created, String[] htmls, String[] names, String[] stars, String[] watchers, String[] forks) {
         List<Repository> repositories = new ArrayList<>();
         if (htmls != null) {
             for (int i = 0; i < htmls.length; i++) {
-                repositories.add(new Repository(htmls[i], names[i], Integer.parseInt(stars[i]), Integer.parseInt(watchers[i]), forks[i]));
+                repositories.add(new Repository(repositoryId++, htmls[i], names[i], Integer.parseInt(stars[i]), Integer.parseInt(watchers[i]), forks[i]));
             }
         }
-        return repositories;
-    }
-
-    public synchronized GitHub createGithub(String avatar, String html, int repos, int gists, int followers, int following, String company, String blog, String location, String created, List<Repository> repositories) {
-        return new GitHub(avatar, html, repos, gists, followers, following, company, blog, location, created, repositories);
-    }
-
-    public synchronized void connectUserWithGithub(User user, GitHub gitHub) {
         user.setConnected(true);
-        user.setGitHub(gitHub);
+        user.setGitHub(new GitHub(githubId++, avatar, html, repos, gists, followers, following, company, blog, location, created, repositories));
+        return user;
     }
 
-    public synchronized void disconnectUserFromGithub(User user) {
+    public synchronized User disconnectUserFromGithub(User user, GitHub gitHub) {
         user.setConnected(false);
         user.setGitHub(null);
+        return user;
     }
 
     public synchronized User changeUserRole(User user, String type) throws SQLException {
