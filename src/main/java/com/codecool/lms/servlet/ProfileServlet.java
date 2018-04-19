@@ -1,8 +1,11 @@
 package com.codecool.lms.servlet;
 
+import com.codecool.lms.dao.DatabasePagesDao;
 import com.codecool.lms.dao.DatabaseUserDao;
 import com.codecool.lms.exception.UserNotFoundException;
+import com.codecool.lms.model.Student;
 import com.codecool.lms.model.User;
+import com.codecool.lms.service.PageServiceDaoImpl;
 import com.codecool.lms.service.UserServiceDaoImpl;
 import com.codecool.lms.service.UserServiceImpl;
 
@@ -37,10 +40,13 @@ public class ProfileServlet extends AbstractServlet {
         try (Connection connection = getConnection(req.getServletContext())) {
             DatabaseUserDao userDao = new DatabaseUserDao(connection);
             UserServiceDaoImpl userServiceDao = new UserServiceDaoImpl(userDao);
+            DatabasePagesDao pagesDao = new DatabasePagesDao(connection);
+            PageServiceDaoImpl pageServiceDao = new PageServiceDaoImpl(pagesDao);
 
             //Type
             String type;
             if (req.getParameter("type").equals("Mentor")) {
+                pageServiceDao.removeStudentAssignments((Student) currentUser);
                 type = "Mentor";
             } else {
                 type = "Student";
@@ -48,9 +54,11 @@ public class ProfileServlet extends AbstractServlet {
             try {
                 currentUser = userServiceDao.changeUserRole(currentUser, type);
             } catch (SQLException e) {
-                e.printStackTrace();
+                req.setAttribute("message", e.getMessage());
+                req.getRequestDispatcher("index.jsp").forward(req, resp);
             } catch (UserNotFoundException e) {
-                e.printStackTrace();
+                req.setAttribute("message", "User not found!");
+                req.getRequestDispatcher("index.jsp").forward(req, resp);
             }
 
             //Name
@@ -82,9 +90,11 @@ public class ProfileServlet extends AbstractServlet {
 
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            req.setAttribute("message", e.getMessage());
+            req.getRequestDispatcher("index.jsp").forward(req, resp);
         } catch (UserNotFoundException e) {
-            e.printStackTrace();
+            req.setAttribute("message", "User not found!");
+            req.getRequestDispatcher("index.jsp").forward(req, resp);
         }
     }
 

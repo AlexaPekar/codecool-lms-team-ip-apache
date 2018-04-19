@@ -1,8 +1,6 @@
 package com.codecool.lms.service;
-/*
+
 import com.codecool.lms.exception.UserAlreadyRegisteredException;
-import com.codecool.lms.exception.UserNotFoundException;
-import com.codecool.lms.exception.WrongPasswordException;
 import com.codecool.lms.model.Day;
 import com.codecool.lms.model.Mentor;
 import com.codecool.lms.model.Student;
@@ -10,6 +8,7 @@ import com.codecool.lms.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +20,11 @@ class UserServiceImplTest {
     User user2;
     User user3;
     Day day1;
-    Day day2;
+    List<Student> studentList1 = new ArrayList<>();
+    List<Student> studentList2 = new ArrayList<>();
 
     @BeforeEach
-    void setUp() throws UserAlreadyRegisteredException {
+    void setUp() throws UserAlreadyRegisteredException, SQLException {
         userServiceImpl = new UserServiceImpl();
         user1 = userServiceImpl.createUser("kacsamesek@gmail.com", "Dagobert", "cash", "Student");
         user2 = userServiceImpl.createUser("iamagardener@freemail.hu", "Gardener", "palm3", "Student");
@@ -34,38 +34,25 @@ class UserServiceImplTest {
         studentList1.add((Student) user1);
         studentList2.add((Student) user2);
         studentList2.add((Student) user1);
-        day1 = new Day(studentList1, "2017-09-13");
-        day2 = new Day(studentList1, "2017-09-14");
-        userServiceImpl.addDay(day1);
-        userServiceImpl.register(user1);
-        userServiceImpl.register(user2);
+
+        userServiceImpl.addDay("2017-09-13", studentList1);
+        userServiceImpl.register("Dagobert","kacsamesek@gmail.com", "cash", "Student");
+        userServiceImpl.register( "Conchita Wurst","ihavebeard@homo.com", "celeb88", "Student");
 
     }
 
     @Test
     void containsUser() {
         assertTrue(userServiceImpl.containsUser("kacsamesek@gmail.com"));
-        assertFalse(userServiceImpl.containsUser("ihavebeard@homo.com"));
+        assertFalse(userServiceImpl.containsUser("iamagardener@freemail.hu"));
     }
 
     @Test
-    void register() throws UserAlreadyRegisteredException {
+    void register() throws UserAlreadyRegisteredException, SQLException {
         assertEquals(2, userServiceImpl.getUsers().size());
-        userServiceImpl.register(user3);
+        userServiceImpl.register("ihavebeard@homo.com", "Conchita Wurst", "celeb88", "Student");
         assertEquals(3, userServiceImpl.getUsers().size());
     }
-
-    @Test
-    void findUserByEmail() throws UserNotFoundException, WrongPasswordException {
-        assertEquals(user1, userServiceImpl.findUserByEmail("kacsamesek@gmail.com", "cash"));
-        assertThrows(UserNotFoundException.class, () -> {
-            userServiceImpl.findUserByEmail("ihavebeard@homo.com", "celeb88");
-        });
-        assertThrows(WrongPasswordException.class, () -> {
-            userServiceImpl.findUserByEmail("kacsamesek@gmail.com", "123");
-        });
-    }
-
 
     @Test
     void createUser() {
@@ -75,14 +62,14 @@ class UserServiceImplTest {
 
     @Test
     void findUserByName() {
-        assertEquals(user1, userServiceImpl.findUserByName("Dagobert"));
-        assertEquals("palm3", userServiceImpl.findUserByName("Gardener").getPassword());
+        assertEquals("kacsamesek@gmail.com", userServiceImpl.findUserByName("Dagobert").getEmail());
+        assertEquals("celeb88", userServiceImpl.findUserByName("Conchita Wurst").getPassword());
     }
 
     @Test
-    void addDay() {
+    void addDay() throws SQLException {
         assertEquals(1, userServiceImpl.getDays().size());
-        userServiceImpl.addDay(day2);
+        userServiceImpl.addDay("2017-09-14", studentList1);
         assertEquals(2, userServiceImpl.getDays().size());
 
     }
@@ -95,7 +82,7 @@ class UserServiceImplTest {
 
     @Test
     void findDayByDate() {
-        assertEquals(day1, userServiceImpl.findDayByDate("2017-09-13"));
+        assertEquals("2017-09-13", userServiceImpl.findDayByDate("2017-09-13").getDate());
     }
 
     @Test
@@ -113,4 +100,4 @@ class UserServiceImplTest {
         assertEquals(1, students.size());
 
     }
-}*/
+}
