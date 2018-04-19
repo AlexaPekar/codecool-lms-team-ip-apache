@@ -52,6 +52,9 @@ public class UserServiceDaoImpl implements UserService {
         if(userByEmail != null) {
             User userByEmailAndPassword = dao.findUserByEmailAndPassword(email, password);
             if(userByEmailAndPassword != null) {
+                if (userByEmailAndPassword.isConnected()) {
+                    userByEmailAndPassword.setGitHub(dao.findGithubByUserId(userByEmailAndPassword.getId()));
+                }
                 return userByEmailAndPassword;
             } else {
                 throw new WrongPasswordException();
@@ -115,12 +118,12 @@ public class UserServiceDaoImpl implements UserService {
     @Override
     public User connectUserWithGithub(User user, String avatar, String html, int repos, int gists, int followers, int following, String company, String blog, String location, String created, String[] htmls, String[] names, String[] stars, String[] watchers, String[] forks) throws SQLException {
         dao.insertGithub(user, avatar, html, repos, gists, followers, following, company, blog, location, created);
-        GitHub gitHub = dao.findGithubByUserName(user.getId());
+        GitHub gitHub = dao.findGithubByUserId(user.getId());
         if (htmls != null) {
             for (int i = 0; i < htmls.length; i++) {
                 dao.insertRepository(htmls[i], names[i], stars[i], watchers[i], forks[i], gitHub.getId());
             }
-            gitHub = dao.findGithubByUserName(user.getId());
+            gitHub = dao.findGithubByUserId(user.getId());
         }
         dao.changeUserConnectionState(user, true);
         user.setGitHub(gitHub);
@@ -130,8 +133,8 @@ public class UserServiceDaoImpl implements UserService {
 
     @Override
     public User disconnectUserFromGithub(User user, GitHub gitHub) throws SQLException {
-        dao.deleteGithubByUserId(user.getId());
         dao.deleteRepositoriesbygithubId(gitHub.getId());
+        dao.deleteGithubByUserId(user.getId());
         dao.changeUserConnectionState(user, false);
         user.setGitHub(null);
         user.setConnected(false);

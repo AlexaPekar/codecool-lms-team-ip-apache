@@ -275,9 +275,17 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
         boolean connected = resultSet.getBoolean("connected");
         String type = resultSet.getString("type");
         if (type.equals("Mentor")) {
-            return new Mentor(id, name, email, password);
+            Mentor mentor = new Mentor(id, name, email, password);
+            if (connected) {
+                mentor.setConnected(true);
+            }
+            return mentor;
         } else if (type.equals("Student")) {
-            return new Student(id, name, email, password);
+            Student student = new Student(id, name, email, password);
+            if (connected) {
+                student.setConnected(true);
+            }
+            return student;
         }
         return null;
     }
@@ -322,7 +330,7 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
 
     @Override
     public void insertGithub(User user, String avatar, String html, int repos, int gists, int followers, int following, String company, String blog, String location, String created) throws SQLException {
-        String sql = "INSERT INTO githubss (student_id, avatar, html, repos, gists, followers, following, company, blog, location, created) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO githubs (student_id, avatar, html, repos, gists, followers, following, company, blog, location, created) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, user.getId());
             statement.setString(2, avatar);
@@ -340,7 +348,7 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
     }
 
     @Override
-    public GitHub findGithubByUserName(int userId) throws SQLException {
+    public GitHub findGithubByUserId(int userId) throws SQLException {
         String sql = "SELECT * FROM githubs WHERE student_id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, userId);
@@ -373,7 +381,7 @@ public class DatabaseUserDao extends AbstractDao implements UserDao {
 
     @Override
     public void deleteGithubByUserId(int userId) throws SQLException {
-        String sql = "DELETE  FROM githubs WHERE user_id = ?";
+        String sql = "DELETE  FROM githubs WHERE student_id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, userId);
             statement.executeUpdate();

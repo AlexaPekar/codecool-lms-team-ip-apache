@@ -54,7 +54,7 @@ public class GitHubServlet extends AbstractServlet {
             DatabaseUserDao userDao = new DatabaseUserDao(connection);
             UserServiceDaoImpl userServiceDao = new UserServiceDaoImpl(userDao);
             User user = (User) req.getSession().getAttribute("currentUser");
-            GitHub gitHub = userDao.findGithubByUserName(user.getId());
+            GitHub gitHub = userDao.findGithubByUserId(user.getId());
             user = userServiceDao.disconnectUserFromGithub(user, gitHub);
             req.getSession().setAttribute("currentUser", user);
             resp.sendRedirect("profile");

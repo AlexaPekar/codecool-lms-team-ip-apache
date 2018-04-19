@@ -36,7 +36,7 @@ public interface UserDao {
 
     void insertGithub(User user, String avatar, String html, int repos, int gists, int followers, int following, String company, String blog, String location, String created) throws SQLException;
 
-    GitHub findGithubByUserName(int userId) throws SQLException;
+    GitHub findGithubByUserId(int userId) throws SQLException;
 
     GitHub fetchGitHub(ResultSet resultSet) throws SQLException;
 
